@@ -82,7 +82,8 @@ text-align: right;
   color: #fff;
 }
 
-.nav-link{
+
+.nav-link {
   display:flex;
   align-items: center;
   width: 100%;
@@ -91,7 +92,8 @@ text-align: right;
   color: #fff;
   padding: 0.5em 1rem;
   text-align: center;
-}
+} 
+
 
 .nav-item{
     padding: 0.5em 1rem;
@@ -112,6 +114,7 @@ ul{
   height: 20px; 
   font-size: 13px;
 }
+
 
 
 .navbar-nav .nav-item .nav-link .badge {

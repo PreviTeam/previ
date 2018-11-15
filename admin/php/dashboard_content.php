@@ -1,0 +1,1 @@
+<p> Ceci représente le contenu de la page Dashboard </p>

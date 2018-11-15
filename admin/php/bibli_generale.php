@@ -2,11 +2,13 @@
 /*################################################################################################
 									Bibliotheque Générale HTML
 ################################################################################################*/
-
+function test(){
+  echo 'test';
+}
 
 
 /*################################################################################################
-									Génération page générique
+									Génération de la page générique (dashboard)
 ################################################################################################*/
 
 function generic_page_start(){
@@ -20,7 +22,6 @@ echo  '<!DOCTYPE html>',
        '<title>Previ</title>',
 
         '<link href="../css/bootstrap.min.css" rel="stylesheet">',
-        '<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">',
         '<link href="../css/login.css" rel="stylesheet">',
 
 
@@ -38,7 +39,7 @@ echo  '<!DOCTYPE html>',
 
           '<nav class="navbar header static-top">',
 
-            '<a id="logo" class="col-md-2" href="dashboard.php">PREVI</a>',
+            '<a id="logo" class="col-md-2" href="dashboarard.php"">PREVI</a>',
              '<form class="d-md-inline-block form-inline col-md-8">',
                 '<div class="input-group">',
                   '<input type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">',
@@ -55,7 +56,7 @@ echo  '<!DOCTYPE html>',
                 '<a  class="nav_icone" href="#">',
                   '<img src="../img/icones/SVG/autre/settings.svg" alt="options" height="30">',
                 '</a>',
-                '<a class="nav_icone" href="#">',
+                '<a class="nav_icone phplink" href="account.php">',
                   '<img src="../img/icones/PNG/avatar/man.png" alt="avatar" height="30">',
               ' </a>',
               '</div>',
@@ -63,9 +64,9 @@ echo  '<!DOCTYPE html>',
 
 
 
-          '<div class="wrapper">',
+          '<div id="menu" class="wrapper">',
                   '<ul class=" sidebar navbar-nav components">',
-                      '<li class="nav-item"><a class="nav-link" href="#">',
+                      '<li class="nav-item"><a class="nav-link phplink" href="dashboard_content.php">',
                       '<img class="nav-icon" src="../img/icones/SVG/autre/briefcase.svg" alt="logout"/>', 
                       'Dashboard</a></li>',
 
@@ -75,22 +76,22 @@ echo  '<!DOCTYPE html>',
                           'Administration</a>',
                           '<ul class="collapse" id="homeSubmenu">',
                               '<li class="nav-item">',
-                                 '<a class="nav-link sub-item" href="#">',
+                                 '<a class="nav-link sub-item phplink" href="user.php">',
                                  '<img class="nav-icon" src="../img/icones/SVG/autre/avatar-1.svg" alt="a"/>',
                                  '<span>Users</span></a>',
                               '</li>',
                               '<li class="nav-item">',
-                                 '<a class="nav-link sub-item" href="#">',
+                                 '<a class="nav-link sub-item phplink" href="visite.php">',
                                  '<img class="nav-icon" src="../img/icones/SVG/autre/map.svg" alt="a"/>',
                                  '<span>Visites</span></a>',
                               '</li>',
                               '<li class="nav-item">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="fiche.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/copy.svg" alt="a"/>',
                                   '<span>Fiches</span></a>',
                              '</li>',
                             ' <li class="nav-item">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="operation.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/file.svg" alt="a"/>',
                                   '<span>Opération</span></a>',
                              '</li>',
@@ -103,12 +104,12 @@ echo  '<!DOCTYPE html>',
                           'Passations</a>',
                           '<ul class="collapse" id="pageSubmenu">',
                              '<li class="nav-item ">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="encours.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/calendar.svg" alt="a"/>',
                                   '<span>En Cours</span></a>',
                               '</li>',
                             ' <li class="nav-item">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="historise.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/folder.svg" alt="a"/>',
                                   '<span>Historisées</span></a>',
                              ' </li>',
@@ -121,24 +122,24 @@ echo  '<!DOCTYPE html>',
                           'Equipements</a>',
                           '<ul class="collapse" id="pageSubequip">',
                              '<li class="nav-item">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="organisation.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/settings-1.svg" alt="a"/>',
                                   '<span>Organisation</span></a>',
                               '</li>',
                              '<li class="nav-item ">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="modele.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/copy.svg" alt="a"/>',
                                   '<span>Modèles</span></a>',
                               '</li>',
                               '<li class="nav-item ">',
-                                  '<a class="nav-link sub-item" href="#">',
+                                  '<a class="nav-link sub-item phplink" href="outil.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/puzzle.svg" alt="a"/>',
                                   '<span>Outils</span></a>',
                               '</li>',
                           '</ul>',
                       '</li>',
 
-                      '<li class="nav-item"><a class="nav-link" href="#">',
+                      '<li class="nav-item"><a class="nav-link phplink" href="arborescence.php">',
                       '<img class="nav-icon" src="../img/icones/SVG/autre/family-tree.svg" alt="a"/>',
                       'Arborescence</a></li>',
                   '</ul>',
