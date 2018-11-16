@@ -53,10 +53,10 @@ INSERT INTO OUTIL VALUES
 ##########################################################
 
 #codeActeur, prenom, nom, status, mdp, inactif
-INSERT INTO EMPLOYE (em_code, em_prenom, em_nom, em_status, em_mdp , em_inactif) VALUES
-("02451", "Jean", "LEBLANC", "ADMIN", "7951c6075a0694c5c0ef0c77db80e4d2", false), 
-("5065", "Paul", "Guillert", "CE", "7951c6075a0694c5c0ef0c77db80e4d2", false), 
-("STAG1", "Henri", "Dupont", "TECH", "7951c6075a0694c5c0ef0c77db80e4d2", false);
+INSERT INTO EMPLOYE VALUES
+(0,"02451", "Jean", "LEBLANC", "ADMIN", "7951c6075a0694c5c0ef0c77db80e4d2", false), 
+(1,"5065", "Paul", "Guillert", "CE", "7951c6075a0694c5c0ef0c77db80e4d2", false), 
+(2,"STAG1", "Henri", "Dupont", "TECH", "7951c6075a0694c5c0ef0c77db80e4d2", false);
 
 
 
@@ -207,15 +207,15 @@ INSERT INTO VISITE_ATTACHEMENT VALUES
 (0, 3),
 (1, 4),
 (1, 5),
-(1, 6),
-(1, 10),
-(1, 11),
-(3, 10),
-(3, 11),
-(4, 10),
-(4, 11),
-(5, 10),
-(5, 11);
+(1, 6);
+#(1, 10),
+#(1, 11),
+#(3, 10),
+#(3, 11),
+#(4, 10),
+#(4, 11),
+#(5, 10),
+#(5, 11);
 
 
 ##########################################################
@@ -225,13 +225,13 @@ INSERT INTO VISITE_ATTACHEMENT VALUES
 #idreal, idVisite, idOutil, DateDebut, DateFin, Etat
 #etat : false = En Cours,  True = Terminée
 INSERT INTO REALISATION_VISITE VALUES
-(0, 0, 0, '01-05-2018',  '02-05-2018', true);
+(0, 0, 0, '2018-05-01',  '2018-05-02', true);
 
 #idRealisation, idFiche, idRealVisite, idActeur, DateDebut, DateFin, Etat 
 #etat : false = En Cours,  True = Terminée
 INSERT INTO REALISATION_FICHE VALUES
-(0, 0, 0, 0, '01-05-2018', '01-05-2018', true),
-(1, 1, 0, 0, '02-05-2018', '02-05-2018', true);
+(0, 0, 0, 0, '2018-05-01', '2018-05-01', true),
+(1, 1, 0, 0, '2018-05-02', '2018-05-02', true);
 
 #idReal, idOperation, IdRealFiche, resultat
 INSERT INTO REALISATION_OPERATION VALUES

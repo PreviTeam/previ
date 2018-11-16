@@ -37,7 +37,7 @@ create table EMPLOYE(
 	em_code VARCHAR(10),
 	em_prenom VARCHAR(60),
 	em_nom VARCHAR(40),
-	em_status INT,
+	em_status VARCHAR(10),
 	em_mdp VARCHAR(32),
 	em_inactif BOOLEAN
 );
@@ -54,7 +54,7 @@ create table EPI(
 create table VISITE(
 	vi_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	vi_designation VARCHAR(100),
-	vi_num_vers INT,
+	vi_num_vers VARCHAR(10),
 	vi_type INT,
 	vi_inactif BOOLEAN
 );
@@ -62,7 +62,7 @@ create table VISITE(
 create table FICHE(
 	fi_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	fi_designation VARCHAR(100),
-	fi_num_vers INT,
+	fi_num_vers VARCHAR(10),
 	fi_inactif BOOLEAN
 );
 
