@@ -366,4 +366,11 @@ span{
   }
 }
 
-
+#erreur {
+  border: red solid 1px;
+  text-align: center;
+  background-color: rgba(255,0,0,0.3);
+  color: red;
+  padding: 5px;
+  margin-bottom: 7px;
+}

@@ -358,5 +358,14 @@ function bd_erreur($bd, $sql) {
     tbd_erreurExit($msg);	// => ARRET DU SCRIPT
 }
 
+function url_get_nom_fichier($url){
+    $nom = basename($url);
+    $pos = mb_strpos($nom, '?', 0, 'UTF-8');
+    if ($pos !== false){
+        $nom = mb_substr($nom, 0, $pos, 'UTF-8');
+    }
+    return $nom;
+}
+
 
 ?>
