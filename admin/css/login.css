@@ -1,7 +1,7 @@
 
-/*##########################################
-        LOGIN
-############################################*/
+/*########################################################################
+                                 LOGIN
+##########################################################################*/
 
 html, body {
   width: 100%;
@@ -40,6 +40,12 @@ html, body {
   height: 100%;
 }
 
+/*########################################################################
+                                PAGE GENERIQUE
+##########################################################################*/
+
+
+
 /*##########################################
         NAVBAR - HEADER
 ############################################*/
@@ -70,6 +76,10 @@ text-align: right;
 .wrapper {
   flex: 1;
   display: flex;
+}
+
+.nav-link:hover{
+  color: #afc6ea;
 }
 
 
@@ -146,8 +156,14 @@ span{
   flex:1;
 }
 
+#middle{
+  display: flex;
+  flex:1;
+}
+
 #content-data{
   flex: 1;
+  margin: 2em 3em;
 }
 
 .sticky-footer{
@@ -158,6 +174,56 @@ span{
   padding: 0.8em 0;
   display: flex;
 }
+
+#right_sider{
+  right: 0;
+  width: 300px;
+  height: 95%;
+  margin: auto 0;
+  border-left: solid 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+#notifications{
+  flex:1;
+  display:flex;
+  flex-direction: column;
+}
+
+#statistiques{
+  flex: 1;
+  display:flex;
+  flex-direction: column;
+  text-align: center;
+
+}
+
+.sider_icone{
+  width: 50px;
+  height: 50px;
+  margin: auto;
+}
+
+.positif{
+  color: #109B10;
+  font-weight: bold;
+}
+
+.negatif{
+  color: #E61E1E;
+  font-weight: bold;
+}
+
+.title_table{
+  color:#9E6524;
+}
+
+.table{
+  margin-bottom: 5em;
+}
+
+
 
 /*  ------------ Footer ------------------ */
 
@@ -176,12 +242,6 @@ span{
 .github > img, .facebook > img{
   height: 30px;
 }
-
-
-
-
-
-
 
 
 
@@ -366,11 +426,70 @@ span{
   }
 }
 
-#erreur {
-  border: red solid 1px;
-  text-align: center;
-  background-color: rgba(255,0,0,0.3);
-  color: red;
-  padding: 5px;
-  margin-bottom: 7px;
+
+
+/*########################################################################
+                           PAGES SPECIFIQUES
+##########################################################################*/
+
+
+
+
+/*########################
+        Arboresences
+##########################*/
+
+.tree, .tree ul {
+    margin:0;
+    padding:0;
+    list-style:none
+}
+.tree ul {
+    margin-left:1em;
+    position:relative
+}
+.tree ul ul {
+    margin-left:.5em
+}
+.tree ul:before {
+    content:"";
+    display:block;
+    width:0;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    border-left:1px solid
+}
+.tree li {
+    margin:0;
+    padding:0 1em;
+    line-height:2em;
+    color:#369;
+    font-weight:700;
+    position:relative
+}
+.tree ul li:before {
+    content:"";
+    display:block;
+    width:10px;
+    height:0;
+    border-top:1px solid;
+    margin-top:-1px;
+    position:absolute;
+    top:1em;
+    left:0
+}
+.tree ul li:last-child:before {
+    background:#fff;
+    height:auto;
+    top:1em;
+    bottom:0
+}
+.indicator {
+    margin-right:5px;
+}
+.tree li a {
+    text-decoration: none;
+    color:#369;
 }

@@ -13,9 +13,11 @@ error_reporting(E_ALL);
 
 generic_page_start();
 
-// Page unique dont le contenu sera actualisé en JS par un clique ?
 
-generic_page_ending();
+$bd = bd_connect();
+generic_page_ending($bd);
+mysqli_close($bd);
+
 ob_end_flush();
 
 ?>

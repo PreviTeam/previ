@@ -2,17 +2,162 @@
 /*################################################################################################
 									Bibliotheque Générale HTML
 ################################################################################################*/
-function test(){
-  echo 'test';
+
+/**
+ * Fonction comptant le nombre de visites et de fiches terminées durant le mois en cours et le mois dernier
+ * 
+ * @param       $nbVisiteMoisEnCours    Nombre de visites terminées sur le mois en cours à modifier et renvoyer
+ * @param       $nbFichesMoisEnCours    Nombre de fiches terminées sur le mois en cours à modifier et renvoyer
+  * @param      $nbVisiteMoisDernier    Nombre de visites terminées sur le mois précédent à modifier et renvoyer
+ * @param       $nbFichesMoisDernier    Nombre de fiches terminées sur le mois précédent à modifier et renvoyer
+ * @param       $bd                     connexion à la base de donnée
+ *
+ * @return  void 
+ */            
+function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteMoisDernier, &$nbFicheMoisDernier, $bd){
+
+  //Modifier pour limiter la sélection au deux mois voulus
+  $sql='SELECT *
+            FROM realisation_visite, realisation_fiche
+            WHERE rf_rv_id = rv_id 
+            AND rf_etat="1"
+            AND rv_fin LIKE "%-11-%"
+        UNION 
+        SELECT *
+            FROM realisation_visite, realisation_fiche
+            WHERE rf_rv_id = rv_id 
+            AND rf_etat="1"
+            AND rv_fin LIKE "%-10-%"';
+
+  $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+  $dateEnCours= date('Y-m');
+  $dateMoisDernier= date('Y-m', mktime(0, 0, 0, date('m')-1));
+
+
+  $lastVisite = -1;
+
+  while($tableau = mysqli_fetch_assoc($res)){
+
+    if(intval(explode('-',$tableau['rv_fin'])[1]) === 11){
+       if($lastVisite === -1 || $lastVisite != $tableau['rv_vi_id'])
+        $nbVisiteMoisEnCours++;
+      if(intval($tableau['rf_etat']) === 1)
+        $nbFicheMoisEnCours++;
+    }
+    else{
+      if($lastVisite === -1 || $lastVisite != $tableau['rv_vi_id'])
+        $nbVisiteMoisDernier++;
+      if(intval($tableau['rf_etat']) === 1)
+        $nbFicheMoisDernier++;
+    }
+     
+    $lastVisite =  $tableau['rv_vi_id'];
+   } 
 }
 
 
+
+/**
+ * Fonction de création d'une dataGrid
+ * 
+ * @param       String[]  $tableau_entete     Tableau contenant le Nom des entêtes de colones
+ * @param       Lignes[]  $tableau_ligne      Tableau contenant les lignes à inserrer. A créer avec create_table_ligne
+ * @param       String    $class              Classe à attribuer au la DataGrid.Si aucune classe n'est à ajouter, mettre la valeur null
+ * @param       String    $titre              Titre de la datagid
+ *
+ * @return      void
+ */ 
+function create_table($tableau_entete, $tableau_ligne, $class, $titre){
+   $classe = isset($class) ? 'class="'.$class.'"' : '';
+   echo '<h1 class="title_table">', $titre,'</h1><table class="table ', $classe, '"><thead>';
+   $colones_entete = sizeof($tableau_entete);
+   $colones_ligne = sizeof($tableau_ligne);
+
+   //Formation de la ligne d'entête
+  for($i=0; $i < $colones_entete; $i++){
+    echo '<th scope="col">', $tableau_entete[$i], '</th>';
+  }
+  echo '</thead>';
+
+  for($i=0; $i < $colones_ligne; $i++){
+    echo $tableau_ligne[$i];
+  }
+
+  echo'</table>';
+}
+
+/**
+ * Fonction de création d'une ligne de DataGrig. La ligne résultante est à ajouter dans un tableau de lignes
+ * à envoyer à la fonction create_table.
+ * Exemple d'usage : create_table_ligne(null, array(data1, data2, data3))
+ * 
+ * @param       String  $class              classe de l'élément de ligne. Si aucune classe n'est à ajouter, mettre la valeur null
+ * @param       Data[]  $tableau_contenu    tableau de valeurs Une valeur équivaut à une colone dans la table. 
+ *
+ * @return      Strin   $res                Code HTML d'un ligne de tableau 
+ */  
+function create_table_ligne($class, $tableau_contenu){
+  $classe = isset($class) ? 'class="'.$class.'"' : '';
+  $res= '<tr '. $classe. '>';
+  $colones = sizeof($tableau_contenu);
+  for($i=0; $i < $colones; $i++){
+    $res+= '<td>'. $tableau_contenu[$i]. '</td>';
+  }
+  $res+= '</tr>';
+
+  return $res;
+
+}
+
+/**
+ * Fonction de création d'une dataGrid
+ * 
+ * @param       String    $title              Titre de l'arborescence
+ * @param       Data[]    $niveaux            Arborescence à 3 niveaux à afficher 
+ *
+ * @return      void
+ */ 
+function create_treeview($title, $niveaux){
+  $sizeOrg=count($niveaux);
+  
+  echo '<article><h1 class="title_table">', $title, '</h1>';
+  echo '<ul class="tree">';
+
+  for($i=0; $i < $sizeOrg; $i++){
+    $sizeMod = count($niveaux[$i][1]);
+
+    echo  '<li><a href="#subModel', $i, '" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">', 
+          $niveaux[$i][0], 
+          '</a><ul class="collapse" id="subModel', $i, '">';
+
+             for($j=0; $j < $sizeMod; $j++){
+                echo '<li><a href="#subOutil' , $j, '" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">',
+                      $niveaux[$i][1][$j][0] , 
+                      '</a><ul class="collapse" id="subOutil' , $j, '">';
+
+                        $sizeOut = count($niveaux[$i][1][$j][1]);
+                        for($k=0; $k < $sizeOut; $k++){
+                          echo'<li>', $niveaux[$i][1][$j][1][$k], '</li>';
+                        }
+                         
+               echo  '</ul></li>';
+              }
+    echo  '</ul></li>';    
+  }
+
+  echo '</ul></article>';
+}
 /*################################################################################################
 									Génération de la page générique (dashboard)
 ################################################################################################*/
 
+
+/**
+ * Fonction d'affichage de la page générique Dashboard jusqu'à son bloc contenu. Doit être suivi de la 
+ * fonction generic_page_ending pour cloturer la page correctement.
+ */ 
 function generic_page_start(){
-echo  '<!DOCTYPE html>',
+  echo  '<!DOCTYPE html>',
     '<html lang="fr">',
 
       '<head>',
@@ -50,7 +195,7 @@ echo  '<!DOCTYPE html>',
                 '</div>',
               '</form>',
              ' <div class="inline-icon col-md-2">',
-               '<a  class="nav_icone" href="login.php">',
+               '<a  class="nav_icone" href="deconnexion.php">',
                   '<img src="../img/icones/SVG/autre/padlock.svg" alt="logout" height="30">',
                '</a>',
                 '<a  class="nav_icone" href="#">',
@@ -124,7 +269,7 @@ echo  '<!DOCTYPE html>',
                              '<li class="nav-item">',
                                   '<a class="nav-link sub-item phplink" href="organisation.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/settings-1.svg" alt="a"/>',
-                                  '<span>Organisation</span></a>',
+                                  '<span>Organisations</span></a>',
                               '</li>',
                              '<li class="nav-item ">',
                                   '<a class="nav-link sub-item phplink" href="modele.php">',
@@ -139,38 +284,107 @@ echo  '<!DOCTYPE html>',
                           '</ul>',
                       '</li>',
 
-                      '<li class="nav-item"><a class="nav-link phplink" href="arborescence.php">',
-                      '<img class="nav-icon" src="../img/icones/SVG/autre/family-tree.svg" alt="a"/>',
-                      'Arborescence</a></li>',
+                       '<li class="nav-item">',
+                          '<a href="#pageSubarbo" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">',
+                          '<img class="nav-icon" src="../img/icones/SVG/autre/family-tree.svg" alt="a"/>',
+                          'Arborescence</a>',
+                          '<ul class="collapse" id="pageSubarbo">',
+                             '<li class="nav-item">',
+                                  '<a class="nav-link sub-item phplink" href="arborescence_equ.php">',
+                                  '<img class="nav-icon" src="../img/icones/SVG/autre/wrench.svg" alt="a"/>',
+                                  '<span>Equipements</span></a>',
+                              '</li>',
+                             '<li class="nav-item ">',
+                                  '<a class="nav-link sub-item phplink" href="arborescence_vis.php">',
+                                  '<img class="nav-icon" src="../img/icones/SVG/autre/padnote.svg" alt="a"/>',
+                                  '<span>Visites</span></a>',
+                              '</li>',
+                              '</ul>',
+                      '</li>',
                   '</ul>',
 
               '<div id="content">',
+                '<div id="middle">',
 
-              '<div id="content-data">';
+                  '<div id="content-data">';
 }
 
-function generic_page_ending(){
-    echo    
-            ' </div>',
 
-               ' <footer class="sticky-footer">',
-                    '<div class="foot-link col-md-11">',
-                      '<a href="#">Aide</a>',
-                      '<a href="#">Contacter le support</a>',
-                      '<a href="#">Licence</a>',
-                    '</div>',
-                    '<div class="media" col-md-1>',
-                      '<a href="https://github.com/PreviTeam/previ" class="github"><img class="nav-icon" src="../img/icones/SVG/social/github-logo.svg" alt="a"/></a>',
-                      '<a href="#" class="facebook"><img class="nav-icon" src="../img/icones/SVG/social/facebook.svg" alt="a"/></a>',
-                    '</div>',
-                '</footer>',
+/**
+ * Fonction d'affichage de la seconde partie de la page générique. Doit être précédée de la 
+ * fonction generic_page_start pour cloturer la page correctement.
+ * @param    $bd   instance de la base de donnée
+ */
+function generic_page_ending($bd){
+  
+  //Calcul des statistiques à afficher
+  $nbVisiteMoisEnCours= 0;
+  $nbFichesMoisEnCours= 0;
+  $nbVisiteMoisDernier= 0;
+  $nbFichesMoisDernier= 0;
+  get_sider_stats($nbVisiteMoisEnCours, $nbFicheMoisEnCours, $nbVisiteMoisDernier, $nbFicheMoisDernier, $bd);
+  $ecartVisitesMois =   $nbVisiteMoisEnCours  -  $nbVisiteMoisDernier;
+  $ecartFichesMois  =   $nbFichesMoisEnCours   -  $nbFicheMoisDernier;
 
+  $couleurVisite    =   $ecartVisitesMois >= 0  ? 'class="positif"' : 'class="negatif"';
+  $couleurFiche     =   $ecartFichesMois  >= 0  ? 'class="positif"' : 'class="negatif"';
+
+        echo    
+                    ' </div>',
+
+                    '<div id="right_sider">',
+
+                      '<div id="notifications">',
+                      '</div>',
+
+                      '<div id="statistiques">',
+                        '<img class="sider_icone" src="../img/icones/PNG/sider_droit/seo.png" alt="a"/>',
+                        '<table class="table">',
+                            '<thead>',
+                              '<th scope="col">Type</th>',
+                              '<th scope="col">', date('M', mktime(0, 0, 0, date('m')-1)), '</th>',
+                              '<th scope="col">', date('M'), '</th>',
+                              '<th scope="col">Value</th>',
+                            '</thead>',
+
+                            '<tr>',
+                              '<th scope="row">Visites</th>',
+                              '<td>',$nbVisiteMoisDernier,'</td>',
+                              '<td>', $nbVisiteMoisEnCours, '</td>',
+                              '<td ', $couleurVisite,'>', $ecartVisitesMois ,'</td>',
+                            '</tr>',
+
+                            '<tr>',
+                              '<th scope="row">Fiches</th>',
+                              '<td>',$nbFicheMoisDernier,'</td>',
+                              '<td>',$nbFichesMoisEnCours,'</td>',
+                              '<td ', $couleurFiche,'>', $ecartFichesMois  , '</td>',
+                            '</tr>',
+
+                          '</table>',
+                      '</div>',
+
+                    '</div>',
+                  '</div>',
+
+                 ' <footer class="sticky-footer">',
+                      '<div class="foot-link col-md-11">',
+                        '<a href="#">Aide</a>',
+                        '<a href="#">Contacter le support</a>',
+                        '<a href="#">Licence</a>',
+                      '</div>',
+                      '<div class="media" col-md-1>',
+                        '<a href="https://github.com/PreviTeam/previ" class="github"><img class="nav-icon" src="../img/icones/SVG/social/github-logo.svg" alt="a"/></a>',
+                        '<a href="#" class="facebook"><img class="nav-icon" src="../img/icones/SVG/social/facebook.svg" alt="a"/></a>',
+                      '</div>',
+                  '</footer>',
+
+              '</div>',
             '</div>',
-          '</div>',
 
-        '</div>',
-      '</body>',
-'</html>';
+          '</div>',
+        '</body>',
+  '</html>';
 }
 
 /*################################################################################
@@ -356,15 +570,6 @@ function bd_erreur($bd, $sql) {
     $msg .= '</table>';
 
     tbd_erreurExit($msg);	// => ARRET DU SCRIPT
-}
-
-function url_get_nom_fichier($url){
-    $nom = basename($url);
-    $pos = mb_strpos($nom, '?', 0, 'UTF-8');
-    if ($pos !== false){
-        $nom = mb_substr($nom, 0, $pos, 'UTF-8');
-    }
-    return $nom;
 }
 
 
