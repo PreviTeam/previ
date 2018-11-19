@@ -68,7 +68,7 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
  * @return      void
  */ 
 function create_table($tableau_entete, $tableau_ligne, $class, $titre){
-   $classe = isset($class) ? 'class="'.$class.'"' : '';
+   $classe = $class != null ? 'class="'.$class.'"' : '';
    echo '<h1 class="title_table">', $titre,'</h1><table class="table ', $classe, '"><thead>';
    $colones_entete = sizeof($tableau_entete);
    $colones_ligne = sizeof($tableau_ligne);
@@ -97,13 +97,13 @@ function create_table($tableau_entete, $tableau_ligne, $class, $titre){
  * @return      Strin   $res                Code HTML d'un ligne de tableau 
  */  
 function create_table_ligne($class, $tableau_contenu){
-  $classe = isset($class) ? 'class="'.$class.'"' : '';
-  $res= '<tr '. $classe. '>';
+  $classe = $class != null ? 'class="'.$class.'"' : '';
+  $res= '<tr '.$classe.'>';
   $colones = sizeof($tableau_contenu);
   for($i=0; $i < $colones; $i++){
-    $res+= '<td>'. $tableau_contenu[$i]. '</td>';
+    $res.= '<td>'.$tableau_contenu[$i].'</td>';
   }
-  $res+= '</tr>';
+  $res.= '</tr>';
 
   return $res;
 

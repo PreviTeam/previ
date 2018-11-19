@@ -9,13 +9,9 @@
     <title>Login</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
-    <link href="css/login.css" rel="stylesheet">
+    <link href="../css/login.css" rel="stylesheet">
 
   </head>
 
@@ -97,7 +93,7 @@
 
                   mysqli_free_result($res);
                   mysqli_close($bd);
-                  redirige('index.php');
+                  redirige('dashboard.php');
                 }
               }
 
