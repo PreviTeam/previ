@@ -11,21 +11,44 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	//Fake Datas --------------------------------------
-	$nums=array("412", "413", "414");
-	$nums2=array("512", "513", "514");
+	$bd = bd_connect();
+	$sql = "SELECT *
+			FROM organisation, modele, outil
+			where or_id = mo_or_id
+			and ou_mo_id = mo_id";
 
-	$modele=array("Urbanway", $nums);
-	$modele2=array("Mecos", $nums2);	
+	$content =array();
+	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+	$last_org = -1;
+	$last_mod = -1;
 
-	$org=array("Bus", array($modele, $modele2));
+	$org = array();
+	$models = array();
+	$outil = array();
+
+	while($tableau = mysqli_fetch_assoc($res)){
+
+		if($last_org != -1){
+
+			if($last_mod != $tableau['mo_designation']){
+				$models[] = array($last_mod, $outil);
+				$outil = array();
+			}
+			if($last_org != $tableau['or_designation']){
+				$org[] = array($last_org, $models);
+				$models = array();
+				$outil = array();
+			}
+			
+		}
+
+		$outil[] = $tableau['ou_designation'];
+		$last_org=$tableau['or_designation'];
+		$last_mod=$tableau['mo_designation'];
+		
+	}
+	create_treeview("Arborescence Equipement", $org);
 	
-	$tree=array($org);
-
-	//end of Fake Datas --------------------------------------
-
-	create_treeview("Arborescence Equipement", $tree);
-	
-
+	mysqli_close($bd);
 	ob_end_flush();
 ?>

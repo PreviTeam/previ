@@ -1,1 +1,0 @@
-<p>Ceci est le contenu de la page Arborescence</p>

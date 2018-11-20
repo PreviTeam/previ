@@ -11,12 +11,12 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
+	// ------------------------ Contenu de la Page -----------------------------------------------//
 	$entete=array("Code Utilisateur", "Nom", "Prénom", "Status", '' ,'');
 	$bd = bd_connect();
 	$sql = "SELECT *
 			FROM employe";
 	$content =array();
-
 
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -33,11 +33,19 @@
 				$status= 'Technicien';
 				break;
 		}
-		$ligne=array($tableau['em_code'], $tableau['em_nom'], $tableau['em_prenom'], $status, 'Voir', 'Modifier');
+		$ligne=array($tableau['em_code'], $tableau['em_nom'], $tableau['em_prenom'], $status, 'Voir', '<a href="user_modify.php" class="modal-link">Modifier</a>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 
 	create_table($entete, $content, null, "Utilisateurs");
+
+	// ------------------------ Contenu Modal -----------------------------------------------//
+
+	// Conteneur des fenêtres popup Ajout / Mofification de l'utilisateur
+	// Le contenu de ces fenêtres sont chargés dynamiquement via Ajax
+	echo 
+	'<div id="modal">',
+	'</div>';
 	
 	mysqli_close($bd);
 	ob_end_flush();

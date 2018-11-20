@@ -131,9 +131,9 @@ function create_treeview($title, $niveaux){
           '</a><ul class="collapse" id="subModel', $i, '">';
 
              for($j=0; $j < $sizeMod; $j++){
-                echo '<li><a href="#subOutil' , $j, '" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">',
+                echo '<li><a href="#subOutil' , $niveaux[$i][0], $niveaux[$i][1][$j][0], '" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">',
                       $niveaux[$i][1][$j][0] , 
-                      '</a><ul class="collapse" id="subOutil' , $j, '">';
+                      '</a><ul class="collapse" id="subOutil' , $niveaux[$i][0], $niveaux[$i][1][$j][0], '">';
 
                         $sizeOut = count($niveaux[$i][1][$j][1]);
                         for($k=0; $k < $sizeOut; $k++){
