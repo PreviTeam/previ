@@ -419,7 +419,7 @@ function generic_page_start(){
               '<div id="content">',
                 '<div id="middle">',
 
-                  '<div id="content-data">';
+                  '<div id="content-data" class="scrollbar">';
 }
 
 
