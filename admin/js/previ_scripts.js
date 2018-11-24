@@ -26,24 +26,6 @@ $(document).ready(function () {
 });
 
 
-function f() {  
-  var btn = document.getElementsByClassName('modal-link');
-
-  var close = document.getElementById('close');
-
-  for(i = 0; i < btn.length; i++){
-     btn[i].addEventListener('click', function(e) {
-      e.preventDefault();
-      $('#modal').css("display", "block");
-      loadpage('#modal', this.getAttribute('href'));
-
-    });
-  }
-
-  
-}
-
-
  /**
   * Fonction de chargement d'une page de manière assynchrone avec Fetch
   * @param fname : url de la page à charger
@@ -67,16 +49,30 @@ function f() {
       var str = await fetch(fname);
       $(name).html(await str.text());
       name == '#content-data' && f();
-      name == '#modal' && close();
 }
 
-function close(){
-  $('#close').click(function(){
-    $('#modal').css("display", "none");
-  });
- 
+
+function f() {  
+  var btn = document.getElementsByClassName('btn-link');
+   
+
+  for(i = 0; i < btn.length; i++){
+     btn[i].addEventListener('click', function(e) {
+      e.preventDefault();
+      test(this.getAttribute('href'), this.getAttribute('id'));
+      });
+  }
 }
 
+async function test(fname, id){
+  var str = await fetch(fname, {  
+    method: 'POST',  
+    body: 'id='+id,
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
+
+})
+      $('#modal-body').html(await str.text());
+}
 
 
 

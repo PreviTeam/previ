@@ -11,7 +11,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	$entete=array("Code Visite", "Désignation", "Fiches", "Vesions", "Modèle");
+	$entete=array("Code Visite", "Désignation", "Vesions", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
 			FROM visite";
@@ -22,11 +22,27 @@
 
 	while($tableau = mysqli_fetch_assoc($res)){
 
-		$ligne=array($tableau['vi_id'], $tableau['vi_designation'], 'Autre', $tableau['vi_num_vers'], 'Autre', 'Modifier');
+		$ligne=array($tableau['vi_id'],
+					 $tableau['vi_designation'], 
+					 $tableau['vi_num_vers'], 
+					 'Voir',
+					'<button type="button" id="', $tableau['vi_id'] ,'" class="btn btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Visites");
-	
 
+	echo '<div class="adder">',
+			'<a  href="#" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
+	
+	// Ajout des fenêtres modales
+	// Ajout des fenêtres modales
+	modal_start('Modify');
+	modal_start('Add');
+
+
+	mysqli_close($bd);
 	ob_end_flush();
+
+
 ?>

@@ -1,4 +1,10 @@
 <?php
+
+/* ----------- Constantes -----------------*/
+
+define("MODIFIER", "Modify");
+define("NOUVEAU", "Add");
+
 /*################################################################################################
 									Bibliotheque Générale HTML
 ################################################################################################*/
@@ -56,7 +62,6 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
 }
 
 
-
 /**
  * Fonction de création d'une dataGrid
  * 
@@ -82,7 +87,6 @@ function create_table($tableau_entete, $tableau_ligne, $class, $titre){
   for($i=0; $i < $colones_ligne; $i++){
     echo $tableau_ligne[$i];
   }
-
   echo'</table>';
 }
 
@@ -106,7 +110,6 @@ function create_table_ligne($class, $tableau_contenu){
   $res.= '</tr>';
 
   return $res;
-
 }
 
 /**
@@ -138,15 +141,124 @@ function create_treeview($title, $niveaux){
                         $sizeOut = count($niveaux[$i][1][$j][1]);
                         for($k=0; $k < $sizeOut; $k++){
                           echo'<li>', $niveaux[$i][1][$j][1][$k], '</li>';
-                        }
-                         
+                        }                      
                echo  '</ul></li>';
               }
     echo  '</ul></li>';    
   }
-
   echo '</ul></article>';
 }
+
+/**
+ * Créatoin de fenêtres modales dans la page
+ * 
+ * @param       String    $type      type de la fenetre modale. Constantes : MODIFIER pour une fenetre de modification NOUVEAU pour une fenetre d'ajout
+ *
+ * @return      void
+ */ 
+function modal_start($type){
+  $titre = ($type === 'Modify') ? 'Modifier' : 'Nouveau';
+  $btns = ($type === 'Modify') ? '<button type="button" class="btn btn-danger">Supprimer</button> <button type="button" class="btn btn-success">Sauvegarder les modifications</button>' :
+                                ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-primary">Créer</button>';
+  echo 
+  '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">',
+    '<div class="modal-dialog" role="document">',
+      '<div class="modal-content">',
+      '  <div class="modal-header">',
+          '<h5 class="modal-title" id="exampleModalLabel">', $titre, '</h5>',
+          '<button type="button" class="close" data-dismiss="modal" aria-label="Close"  id="close">',
+            '<span aria-hidden="true">&times;</span>',
+         ' </button>',
+        '</div>',
+       ' <div id="modal-body" class="modal-body">',
+       '</div>',
+          '<div class="modal-footer">',
+          $btns,
+          '</div>',
+        '</div>',
+     ' </div>',
+    '</div>';
+}
+
+
+/**
+ * Créatoin de fenêtres modales dans la page
+ * 
+ * @param       String    $type      type de la fenetre modale. Constantes : MODIFIER pour une fenetre de modification NOUVEAU pour une fenetre d'ajout
+ *
+ * @return      void
+ */ 
+function get_visites($bd, $entete){
+    
+    $sql = "SELECT vi_id, vi_designation, ou_designation, rv_debut, count(rf_fi_id) as totFiches
+        FROM realisation_visite, realisation_fiche, visite, outil
+        WHERE vi_id = rv_vi_id
+        AND rv_id = rf_rv_id
+        AND rv_ou_id = ou_id
+        AND rv_etat = 0
+        AND rf_etat = 1
+        GROUP BY rv_id";
+
+    $content =array();
+    $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+    while($tableau = mysqli_fetch_assoc($res)){
+      $sql2 = "SELECT count(fi_id) as nbFiches
+           FROM fiche, compo_visite, visite 
+           WHERE fi_id = cv_fi_id
+           AND vi_id = cv_vi_id
+           AND vi_id = '".$tableau['vi_id']."'";
+      $res2 = mysqli_query($bd, $sql2) or bd_erreur($bd, $sql);
+      $nbFicheParVisite =  mysqli_fetch_assoc($res2);
+
+      $ligne=array($tableau['vi_designation'],
+             $tableau['ou_designation'], 
+             $tableau['rv_debut'],
+             ($tableau['totFiches'] * 100 / $nbFicheParVisite['nbFiches']).'%');
+      $content[] = create_table_ligne(null, $ligne);
+    }
+
+    if(empty($content))
+      $content[] = create_table_ligne(null, array("Rien a afficher"));
+    create_table($entete, $content, null, "Visites");
+  }
+
+  function get_fiches($bd, $entete){
+    
+    $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, count(ro_id) as totOp
+        FROM realisation_fiche, realisation_visite, outil, fiche, realisation_operation
+        WHERE rf_fi_id = fi_id
+        AND ro_rf_id = rf_id
+        AND rf_rv_id = rv_id
+        AND rv_ou_id = ou_id
+        AND rf_etat = 0
+        GROUP BY rf_id";
+
+    $content =array();
+    $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+    while($tableau = mysqli_fetch_assoc($res)){
+      $sql2 = "SELECT count(op_id) as nbOp
+           FROM fiche, compo_fiche, operation
+           WHERE fi_id = cf_fi_id
+           AND op_id = cf_op_id
+           AND fi_id = '".$tableau['fi_id']."'";
+      $res2 = mysqli_query($bd, $sql2) or bd_erreur($bd, $sql);
+      $nbOperationParFiche =  mysqli_fetch_assoc($res2);
+
+      $ligne=array($tableau['fi_designation'],
+             $tableau['ou_designation'], 
+             $tableau['rf_debut'],
+             ($tableau['totOp'] *100 / $nbOperationParFiche['nbOp'])."%");
+      $content[] = create_table_ligne(null, $ligne);
+    }
+
+    if(empty($content))
+      $content[] = create_table_ligne(null, array("Rien a afficher"));
+
+    create_table($entete, $content, null, "Fiches");
+  }
+
 /*################################################################################################
 									Génération de la page générique (dashboard)
 ################################################################################################*/
@@ -168,6 +280,7 @@ function generic_page_start(){
 
         '<link href="../css/bootstrap.min.css" rel="stylesheet">',
         '<link href="../css/login.css" rel="stylesheet">',
+        '<meta name="viewport" content="width-device-width, initial-scale=1.0">',
 
 
         '<script src="../js/jquery-3.3.1.slim.min.js"></script>',

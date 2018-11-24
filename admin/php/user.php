@@ -8,7 +8,7 @@
 
 
 	/*###################################################################
-							Contenu de la page Dashboard
+							Contenu de la page Utilisateurs
 	###################################################################*/
 
 	// ------------------------ Contenu de la Page -----------------------------------------------//
@@ -19,6 +19,8 @@
 	$content =array();
 
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+	$memoire = array(); // mémorisation pour la modification ulterieure
+	$i = 0;
 
 	while($tableau = mysqli_fetch_assoc($res)){
 		$status = null;
@@ -33,20 +35,30 @@
 				$status= 'Technicien';
 				break;
 		}
-		$ligne=array($tableau['em_code'], $tableau['em_nom'], $tableau['em_prenom'], $status, 'Voir', '<a href="user_modify.php" class="modal-link">Modifier</a>');
+		$ligne=array($tableau['em_code'], 
+					$tableau['em_nom'], 
+					$tableau['em_prenom'], 
+					$status, 'Voir', 
+					'<button type="button" id="', $tableau['em_code'] ,'" class="btn btn-link" data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
+
+		$ligne[] += $i;
+		$memoire[] = $ligne;
+		
+		$i++;
 	}
 
 	create_table($entete, $content, null, "Utilisateurs");
+	echo '<div class="adder">',
+			'<a  href="#" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 
-	// ------------------------ Contenu Modal -----------------------------------------------//
+	// Ajout des fenêtres modales
+	modal_start(MODIFIER);
+	modal_start(NOUVEAU);
 
-	// Conteneur des fenêtres popup Ajout / Mofification de l'utilisateur
-	// Le contenu de ces fenêtres sont chargés dynamiquement via Ajax
-	echo 
-	'<div id="modal">',
-	'</div>';
-	
 	mysqli_close($bd);
 	ob_end_flush();
+
+	
 ?>

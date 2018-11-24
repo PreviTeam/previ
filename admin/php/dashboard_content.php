@@ -11,10 +11,13 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	$entete=array("En Cours", "Equipement", "Agent", "Fait");
-	create_table($entete, array(), null, "Visites");
-	create_table($entete, array(), null, "Fiches");
+	$bd = bd_connect();
+	$entete=array("En Cours", "Equipement", "Débuté le", "Fait");
+	get_visites($bd, $entete);
+	get_fiches($bd, $entete);
 	
-
+	mysqli_close($bd);
 	ob_end_flush();
+
+
 ?>

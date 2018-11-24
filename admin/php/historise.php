@@ -12,7 +12,11 @@
 	###################################################################*/
 
 	$entete=array("Visite", "Equipement", "Début", "Fin");
-	create_table($entete, array(), null, "Historisées");
+	$content= array();
+
+	if(empty($content))
+			$content[] = create_table_ligne(null, array("Rien a afficher"));
+	create_table($entete, $content, null, "Historisées");
 	
 
 	ob_end_flush();
