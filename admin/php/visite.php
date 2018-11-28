@@ -26,7 +26,7 @@
 					 $tableau['vi_designation'], 
 					 $tableau['vi_num_vers'], 
 					 'Voir',
-					'<button type="button" id="', $tableau['vi_id'] ,'" class="btn btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="'. $tableau['vi_id'] .'" class="btn btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Visites");

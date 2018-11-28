@@ -7,6 +7,42 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
+	$adin='';
+	$ce='';
+	$tech = '';
+	$codeAct = '';
+	$nomAct = '';
+	$prenomAct = '';
+
+	if(isset($_POST['id'])){
+		$bd = bd_connect();
+		$id=bd_protect($bd, $_POST['id']);
+		$sql = "SELECT * FROM employe WHERE em_code='$id'";
+		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+		$tableau = mysqli_fetch_assoc($res);
+
+		$nom=entities_protect($tableau['em_nom']);
+		$prenom=entities_protect($tableau['em_prenom']);
+		$codeAct = ' disabled value="'.entities_protect($tableau['em_code']).'"';
+		$nomAct = "value='$nom'";
+		$prenomAct = "value='$prenom'";
+
+		
+		switch($tableau['em_status']){
+			case 0:
+				$admin = 'selected';
+				break;
+			case 1:
+				$ce  = 'selected';
+				break;
+			case 2 :
+				$tech = 'selected';
+				break;
+		}
+
+		mysqli_close($bd);
+	}
 
 
 	echo '<div>',
@@ -20,30 +56,30 @@
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Code acteur</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" aria-label="Default">',
+			  '<input type="text" class="form-control" ', $codeAct, ' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Nom</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" aria-label="Default">',
+			  '<input type="text" class="form-control" ', $nomAct ,' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Prénom</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" aria-label="Default">',
+			  '<input type="text" class="form-control" ', $prenomAct, ' aria-label="Default">',
 			'</div>',
 
 			'<select class="custom-select">',
-				' <option value="un">Administrateur</option>',
-				 '<option value="deux">Chef d\'équipe</option>',
-				 '<option value="trois">Technicien</option>',
+				' <option value="admin" ', $admin, '>Administrateur</option>',
+				 '<option value="CE" ', $ce, '>Chef d\'équipe</option>',
+				 '<option value="tech" ', $tech,'>Technicien</option>',
 			'</select>',
 		'</div>';
 
-
+	
 	ob_end_flush();
 ?>

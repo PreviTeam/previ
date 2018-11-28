@@ -47,6 +47,9 @@
 		$last_mod=$tableau['mo_designation'];
 		
 	}
+	$models[] = array($last_mod, $outil);
+	$org[] = array($last_org, $models);
+
 	create_treeview("Arborescence Equipement", $org);
 	
 	mysqli_close($bd);

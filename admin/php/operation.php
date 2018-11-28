@@ -36,7 +36,7 @@
 					 $tableau['op_contenu'], 
 					 $demande, 
 					 'Voir', 
-					'<button type="button" id="', $tableau['op_id'] ,'" class="btn btn-link" data-toggle="modal" href="modify_operation.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="'.$tableau['op_id'].'" class="btn btn-link" data-toggle="modal" href="modify_operation.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Opérations");

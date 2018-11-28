@@ -28,7 +28,7 @@
 					 $tableau['mo_code'],  
 					 $tableau['mo_designation'], 
 					 'Voir', 
-					'<button type="button" id="', $tableau['mo_id'] ,'" class="btn btn-link" data-toggle="modal" href="modify_modele.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="'.$tableau['mo_id'].'" class="btn btn-link" data-toggle="modal" href="modify_modele.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Modèles");

@@ -86,9 +86,11 @@ async function post_load_modal_add(fname){
 *
 */
 async function post_load_modal(fname, id){
+
+  var i='id='+id;
   var str = await fetch(fname, {  
-    method: 'POST',  
-    body: 'id='+id,
+    method: "POST",  
+    body: i,
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
   

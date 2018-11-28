@@ -50,6 +50,8 @@
 		$last_fi=$tableau['fi_designation'];
 		
 	}
+	$fiches[] = array($last_fi, $ope);
+	$vi[] = array($last_vi, $fiches);
 	create_treeview("Arborescence Equipement", $vi);
 	
 	mysqli_close($bd);
