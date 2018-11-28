@@ -470,8 +470,6 @@ span{
 ##########################################################################*/
 
 
-
-
 /*########################
         Arboresences
 ##########################*/
@@ -515,13 +513,13 @@ span{
     margin-top:-1px;
     position:absolute;
     top:1em;
-    left:0
+    left:0;
 }
 .tree ul li:last-child:before {
     background:#fff;
     height:auto;
     top:1em;
-    bottom:0
+    bottom:0;
 }
 .indicator {
     margin-right:5px;
@@ -531,3 +529,17 @@ span{
     color:#369;
 }
 
+
+/*########################
+       Modify
+##########################*/
+
+.form-check-inline{
+  margin-bottom: 1em;
+}
+
+.assoc_icone{
+  width: 30px;
+  height: 30px;
+  margin: 10px 1em ;
+}

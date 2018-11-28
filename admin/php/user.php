@@ -50,8 +50,8 @@
 
 	create_table($entete, $content, null, "Utilisateurs");
 	echo '<div class="adder">',
-			'<a  href="#" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
-			'</div>';
+			'<a id="add" href="user_modify.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+		'</div>';
 
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER);

@@ -7,7 +7,7 @@ $(document).ready(function () {
   var links= document.getElementsByClassName('phplink');
   var result = document.getElementById('content-data');
 
-
+  loadpage('#content-data', 'dashboard_content.php');
 
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
@@ -19,11 +19,10 @@ $(document).ready(function () {
     });
   }
 
-
-
   // Fermeture des menu déroulant au click sur un nouvel item
   $('.dropdown-toggle').click(function () { $(".collapse").collapse("hide") });
 });
+
 
 
  /**
@@ -51,27 +50,49 @@ $(document).ready(function () {
       name == '#content-data' && f();
 }
 
-
+/**
+* Fonction d'application du chargement des fenêtres modales
+*
+*/
 function f() {  
   var btn = document.getElementsByClassName('btn-link');
-   
+  var add = document.getElementById('add');
+
+  add != null && add.addEventListener('click', function(e) {
+    e.preventDefault();
+    post_load_modal_add(this.getAttribute('href'));
+    });
 
   for(i = 0; i < btn.length; i++){
      btn[i].addEventListener('click', function(e) {
       e.preventDefault();
-      test(this.getAttribute('href'), this.getAttribute('id'));
+      post_load_modal(this.getAttribute('href'), this.getAttribute('id'));
       });
   }
 }
 
-async function test(fname, id){
+/**
+* Chargement de la fenêtre modale d'ajout
+*
+*/
+async function post_load_modal_add(fname){
+  var str = await fetch(fname);
+  $('#Addmodal-body').html(await str.text());
+}
+
+
+/**
+* Chargement de la fenêtre modale de modification
+*
+*/
+async function post_load_modal(fname, id){
   var str = await fetch(fname, {  
     method: 'POST',  
     body: 'id='+id,
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
-
-})
-      $('#modal-body').html(await str.text());
+  });
+  
+  $('#Modifymodal-body').html(await str.text());
 }
 
 

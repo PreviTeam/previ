@@ -42,7 +42,7 @@
 	create_table($entete, $content, null, "Opérations");
 
 	echo '<div class="adder">',
-			'<a  href="#" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'<a id="add" href="modify_operation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 
 	// Ajout des fenêtres modales

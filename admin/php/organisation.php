@@ -34,14 +34,14 @@
 	create_table($entete, $content, null, "Organisations");
 
 	echo '<div class="adder">',
-			'<a  href="#" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'<a  id="add" href="modify_organisation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 	
 
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
-	modal_start('Modify');
-	modal_start('Add');
+	modal_start(MODIFIER);
+	modal_start(NOUVEAU);
 
 	mysqli_close($bd);
 	ob_end_flush();

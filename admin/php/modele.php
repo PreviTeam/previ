@@ -34,7 +34,7 @@
 	create_table($entete, $content, null, "Modèles");
 
 	echo '<div class="adder">',
-			'<a  href="#" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'<a  id="add" href="modify_modele" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 	
 
