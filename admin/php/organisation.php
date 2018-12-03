@@ -11,7 +11,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	$entete=array("ID", "Code", "Designation", '', '');
+	$entete=array("ID", "Code", "Designation", '');
 
 	$bd = bd_connect();
 	$sql = "SELECT *
@@ -27,7 +27,6 @@
 		$ligne=array($tableau['or_id'], 
 					 $tableau['or_code'],  
 					 $tableau['or_designation'], 
-					 'Voir', 
 					'<button type="button" id="', $tableau['or_id'] ,'" class="btn  btn-modal btn-link" data-toggle="modal" href="modify_organisation.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}

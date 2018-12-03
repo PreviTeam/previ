@@ -35,7 +35,7 @@
 		$ligne=array($tableau['op_id'],  
 					 $tableau['op_contenu'], 
 					 $demande, 
-					 'Voir', 
+					'<button id="'. $tableau['op_id'] .'" class="btn btn-link ajaxphplink" href="view_operation.php">Voir</button>',
 					'<button type="button" id="'.$tableau['op_id'].'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_operation.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
@@ -47,8 +47,8 @@
 
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
-	modal_start('Modify');
-	modal_start('Add');
+	modal_start(MODIFIER);
+	modal_start(NOUVEAU);
 
 	mysqli_close($bd);
 	ob_end_flush();

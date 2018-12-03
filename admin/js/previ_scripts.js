@@ -24,7 +24,8 @@ $(document).ready(function () {
 
 
  /**
-  * Fonction de chargement d'une page de manière assynchrone avec Fetch
+  * Fonction de chargement d'une page de manière assynchrone avec Fetch.
+  * Les pages sont appelées depuis le sider statique
   * @param fname : url de la page à charger
   */
   async function loadpage(name, fname){
@@ -71,6 +72,11 @@ function f() {
   }
 }
 
+
+/**
+*Fonction de gestion du chargement Fetch du contenu des pages appelées depuis un autre contenu de page
+*
+*/
 function external_links(){
   var links= document.getElementsByClassName('ajaxphplink');
 
@@ -93,7 +99,6 @@ async function post_load_modal_add(fname){
   $('#Addmodal-body').html(await str.text());
 }
 
-
 /**
 * Chargement de la fenêtre modale de modification
 *
@@ -109,6 +114,7 @@ async function post_load_modal(fname, id, $content){
   
   $($content).html(await str.text());
   f();
+  external_links();
 }
 
 

@@ -25,7 +25,7 @@
 		$ligne=array($tableau['vi_id'],
 					 $tableau['vi_designation'], 
 					 $tableau['vi_num_vers'], 
-					 '<a id="'. $tableau['vi_id'] .'" class="btn btn-link ajaxphplink" href="view_visite.php">Voir</a>',
+					 '<button id="'. $tableau['vi_id'] .'" class="btn btn-link ajaxphplink" href="view_visite.php">Voir</button>',
 					'<button type="button" id="'. $tableau['vi_id'] .'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
@@ -37,8 +37,8 @@
 	
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
-	modal_start('Modify');
-	modal_start('Add');
+	modal_start(MODIFIER);
+	modal_start(NOUVEAU);
 
 
 	

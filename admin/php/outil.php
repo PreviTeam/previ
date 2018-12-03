@@ -11,7 +11,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	$entete=array("ID", "Code", "Designation", '', '');
+	$entete=array("ID", "Code", "Designation", '');
 
 	$bd = bd_connect();
 	$sql = "SELECT *
@@ -27,7 +27,6 @@
 		$ligne=array($tableau['ou_id'], 
 					 $tableau['ou_code'],  
 					 $tableau['ou_designation'],  
-					 'Voir', 
 					'<button type="button" id="'.$tableau['ou_id'].'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_outil.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
@@ -40,8 +39,8 @@
 
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
-	modal_start('Modify');
-	modal_start('Add');
+	modal_start(MODIFIER);
+	modal_start(NOUVEAU);
 
 	mysqli_close($bd);
 	ob_end_flush();

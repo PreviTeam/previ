@@ -25,7 +25,7 @@
 		$ligne=array($tableau['fi_id'],
 					 $tableau['fi_designation'], 
 					 $tableau['fi_num_vers'], 
-					 'Voir',
+					  '<button id="'. $tableau['fi_id'] .'" class="btn btn-link ajaxphplink" href="view_fiche.php">Voir</button>',
 					'<button type="button" id="'.$tableau['fi_id'].'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_fiche.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
