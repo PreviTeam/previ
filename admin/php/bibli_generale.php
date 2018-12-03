@@ -633,7 +633,7 @@ function bd_connect() {
  *
  * @param string	$msg	Message d'erreur à afficher
  */
-function tbd_erreurExit($msg) {
+function bd_erreurExit($msg) {
     ob_end_clean();	// Supression de tout ce qui a pu être déja généré
     ob_start('ob_gzhandler');
     echo    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>',
@@ -682,7 +682,7 @@ function bd_erreur($bd, $sql) {
 
     $msg .= '</table>';
 
-    tbd_erreurExit($msg);	// => ARRET DU SCRIPT
+    bd_erreurExit($msg);	// => ARRET DU SCRIPT
 }
 
 

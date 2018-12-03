@@ -39,7 +39,7 @@
 					$tableau['em_nom'], 
 					$tableau['em_prenom'], 
 					$status, 'Voir', 
-					'<button type="button" id="'.$tableau['em_code'].'" class="btn btn-link" data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="'.$tableau['em_code'].'" class="btn btn-modal btn-link" data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 
 		$ligne[] += $i;

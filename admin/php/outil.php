@@ -28,7 +28,7 @@
 					 $tableau['ou_code'],  
 					 $tableau['ou_designation'],  
 					 'Voir', 
-					'<button type="button" id="'.$tableau['ou_id'].'" class="btn btn-link" data-toggle="modal" href="modify_outil.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="'.$tableau['ou_id'].'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_outil.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Outils");

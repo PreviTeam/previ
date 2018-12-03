@@ -26,7 +26,7 @@
 					 $tableau['fi_designation'], 
 					 $tableau['fi_num_vers'], 
 					 'Voir',
-					'<button type="button" id="'.$tableau['fi_id'].'" class="btn btn-link" data-toggle="modal" href="modify_fiche.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="'.$tableau['fi_id'].'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_fiche.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Fiches");

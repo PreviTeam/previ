@@ -3,12 +3,10 @@
 // Les évenements sont ensuite mis en place  lors d'évènements.
 $(document).ready(function () {  
 
-  //Capture des liens affichant une page et du bloc contenu qui affichera le contenu des pages chargées
-  var links= document.getElementsByClassName('phplink');
-  var result = document.getElementById('content-data');
-
   loadpage('#content-data', 'dashboard_content.php');
 
+  //Capture des liens affichant une page et du bloc contenu qui affichera le contenu des pages chargées
+  var links= document.getElementsByClassName('phplink');
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
@@ -48,6 +46,7 @@ $(document).ready(function () {
       var str = await fetch(fname);
       $(name).html(await str.text());
       name == '#content-data' && f();
+      external_links();
 }
 
 /**
@@ -55,7 +54,8 @@ $(document).ready(function () {
 *
 */
 function f() {  
-  var btn = document.getElementsByClassName('btn-link');
+ 
+  var btn = document.getElementsByClassName('btn-modal');
   var add = document.getElementById('add');
 
   add != null && add.addEventListener('click', function(e) {
@@ -65,9 +65,22 @@ function f() {
 
   for(i = 0; i < btn.length; i++){
      btn[i].addEventListener('click', function(e) {
-      e.preventDefault();
-      post_load_modal(this.getAttribute('href'), this.getAttribute('id'));
+        e.preventDefault();
+        post_load_modal(this.getAttribute('href'), this.getAttribute('id'), '#Modifymodal-body');
       });
+  }
+}
+
+function external_links(){
+  var links= document.getElementsByClassName('ajaxphplink');
+
+  // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
+  // Récupération de la page cible via l'attribut href
+  for(i = 0; i < links.length; i++){
+      links[i].addEventListener('click', function(e) {
+      e.preventDefault();
+      post_load_modal(this.getAttribute('href'), this.getAttribute('id'), "#content-data");
+    });
   }
 }
 
@@ -85,7 +98,7 @@ async function post_load_modal_add(fname){
 * Chargement de la fenêtre modale de modification
 *
 */
-async function post_load_modal(fname, id){
+async function post_load_modal(fname, id, $content){
 
   var i='id='+id;
   var str = await fetch(fname, {  
@@ -94,7 +107,8 @@ async function post_load_modal(fname, id){
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
   
-  $('#Modifymodal-body').html(await str.text());
+  $($content).html(await str.text());
+  f();
 }
 
 

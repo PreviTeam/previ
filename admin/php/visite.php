@@ -25,8 +25,8 @@
 		$ligne=array($tableau['vi_id'],
 					 $tableau['vi_designation'], 
 					 $tableau['vi_num_vers'], 
-					 'Voir',
-					'<button type="button" id="'. $tableau['vi_id'] .'" class="btn btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
+					 '<a id="'. $tableau['vi_id'] .'" class="btn btn-link ajaxphplink" href="view_visite.php">Voir</a>',
+					'<button type="button" id="'. $tableau['vi_id'] .'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Visites");
@@ -41,7 +41,7 @@
 	modal_start('Add');
 
 
-	mysqli_close($bd);
+	
 	ob_end_flush();
 
 

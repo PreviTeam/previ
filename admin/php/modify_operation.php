@@ -6,7 +6,44 @@
 	/*###################################################################
 							Contenu de la page Dashboard
 	###################################################################*/
-/*	echo $_POST['id'];*/
+	$code = '';
+    $id = '';
+	$design = '';
+	$cd='';
+	$de='';
+	$content='';
+	$text ='';
+	$o_n = '';
+	$epi = array();
+
+	if(isset($_POST['id'])){
+		$bd = bd_connect();
+		$id2=bd_protect($bd, $_POST['id']);
+		$sql = "SELECT * 
+		        FROM operation left OUTER JOIN compo_operation ON op_id = co_op_id 
+		        left OUTER JOIN epi ON epi_id = co_epi_id 
+		        where op_id =".$id2;
+
+		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+		while($tableau = mysqli_fetch_assoc($res)){
+			$id = ' disabled value="'.entities_protect($tableau['op_id']).'"';
+			if($tableau['epi_designation'] != null)
+				$epi[] = create_table_ligne(null, array(entities_protect($tableau['epi_designation']), "Supprimer"));
+			$de=entities_protect($tableau['op_type']);
+			$content = entities_protect($tableau['op_contenu']);
+
+			switch($tableau['op_type']){
+			case 0:
+				$o_n = 'selected';			
+				break;
+			case 1:
+				$text = 'selected';
+				break;
+			}
+		}
+
+		mysqli_close($bd);
+	}
 
 echo '<div class="container-fluid">',
 			'<div class="inputs">',
@@ -16,40 +53,31 @@ echo '<div class="container-fluid">',
 				  '</label>',
 				'</div>',
 
-				 '<div class="input-group mb-3">',
-				  '<div class="input-group-prepend">',
-				    '<span class="input-group-text" id="inputGroup-sizing-default">Code Operation</span>',
-				  '</div>',
-				  '<input type="text" class="form-control" aria-label="Default">',
-				'</div>',
-
 				'<div class="input-group mb-3">',
 				  '<div class="input-group-prepend">',
-				    '<span class="input-group-text" id="inputGroup-sizing-default">Type</span>',
+				    '<span class="input-group-text" id="inputGroup-sizing-default">Id</span>',
 				  '</div>',
-				  '<input type="text" class="form-control" aria-label="Default">',
+				  '<input type="text" class="form-control" ', $id ,' aria-label="Default">',
 				'</div>',
 
 				'<div class="input-group mb-3">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Contenu</span>',
 				  '</div>',
-				  '<textarea class="form-control"></textarea>',
+				  '<textarea class="form-control"> ', entities_protect($content) ,'</textarea>',
 				'</div>',
 
 				'<select class="custom-select">',
-					' <option value="un">Voir BDD</option>',
-					 '<option value="deux">Voir BDD</option>',
-					 '<option value="trois">Voir BBD</option>',
+					'<option value="oui_non" ', $o_n, '>Oui - Non</option>',
+				 	'<option value="texte" ', $text,'>Texte</option>',
 				'</select>',
 
 			'</div>',
 			'<div class="tableForm">';
 
 			$entete=array("EPI", "Supprimer");
-			$content =array();
 
-			create_table($entete, $content, null, "EPI");
+			create_table($entete, $epi, null, "EPI");
 
 				
 echo		'</div>',

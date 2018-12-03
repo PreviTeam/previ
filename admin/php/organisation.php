@@ -28,7 +28,7 @@
 					 $tableau['or_code'],  
 					 $tableau['or_designation'], 
 					 'Voir', 
-					'<button type="button" id="', $tableau['or_id'] ,'" class="btn btn-link" data-toggle="modal" href="modify_organisation.php" data-target="#ModifyModal">Modifier</button>');
+					'<button type="button" id="', $tableau['or_id'] ,'" class="btn  btn-modal btn-link" data-toggle="modal" href="modify_organisation.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
 	create_table($entete, $content, null, "Organisations");
