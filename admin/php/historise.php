@@ -10,7 +10,7 @@
 	/*###################################################################
 							Contenu de la page Dashboard
 	###################################################################*/
-
+	echo '<div class="scroller">';
 	$entete=array("Visite", "Equipement", "Début", "Fin");
 	$content= array();
 
@@ -18,6 +18,7 @@
 			$content[] = create_table_ligne(null, array("Rien a afficher"));
 	create_table($entete, $content, null, "Historisées");
 	
+	echo '</div>';
 
 	ob_end_flush();
 ?>

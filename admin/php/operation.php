@@ -10,6 +10,7 @@
 	/*###################################################################
 							Contenu de la page Dashboard
 	###################################################################*/
+	echo '<div class="scroller">';
 
 	$entete=array("Code Opération", "Contenu", "Demande", '', '');
 	$bd = bd_connect();
@@ -41,14 +42,16 @@
 	}
 	create_table($entete, $content, null, "Opérations");
 
-	echo '<div class="adder">',
-			'<a id="add" href="modify_operation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+	echo '</div>',
+			'<div class="adder">',
+				'<a id="add" href="modify_operation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER);
 	modal_start(NOUVEAU);
+	modal_select();
 
 	mysqli_close($bd);
 	ob_end_flush();

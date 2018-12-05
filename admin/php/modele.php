@@ -10,7 +10,7 @@
 	/*###################################################################
 							Contenu de la page Dashboard
 	###################################################################*/
-
+	echo '<div class="scroller">';						
 	$entete=array("ID", "Code", "Designation", '', '');
 
 	$bd = bd_connect();
@@ -33,8 +33,9 @@
 	}
 	create_table($entete, $content, null, "Modèles");
 
-	echo '<div class="adder">',
-			'<a  id="add" href="modify_modele" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+	echo '</div>',
+			'<div class="adder">',
+				'<a id="add" href="modify_operation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 	
 

@@ -55,14 +55,23 @@ $(document).ready(function () {
 *
 */
 function f() {  
- 
+  
   var btn = document.getElementsByClassName('btn-modal');
   var add = document.getElementById('add');
+  var select = document.getElementsByClassName('selecteur');
 
   add != null && add.addEventListener('click', function(e) {
     e.preventDefault();
     post_load_modal_add(this.getAttribute('href'));
     });
+
+  
+  for(j = 0; j < select.length; j++){
+    select[j].addEventListener('click', function(e) {
+      e.preventDefault();
+      post_load_modal_select(this.getAttribute('href'), this.getAttribute('id'));
+    });
+   }
 
   for(i = 0; i < btn.length; i++){
      btn[i].addEventListener('click', function(e) {
@@ -90,6 +99,7 @@ function external_links(){
   }
 }
 
+
 /**
 * Chargement de la fenêtre modale d'ajout
 *
@@ -97,6 +107,7 @@ function external_links(){
 async function post_load_modal_add(fname){
   var str = await fetch(fname);
   $('#Addmodal-body').html(await str.text());
+  f();
 }
 
 /**
@@ -119,5 +130,30 @@ async function post_load_modal(fname, id, $content){
 
 
 
+/**
+* Chargement de la fenêtre modale de recherche
+*
+*/
+async function post_load_modal_select(fname, $caller){
+  console.log($caller);
+  var str = await fetch(fname);
+  $('#Selectmodal-body').html(await str.text());
 
+  $('#AddModal').modal('hide');
+  $('#ModifyModal').modal('hide');
 
+   var ret = document.getElementById('return');
+    ret.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      if($caller === 'addcall'){
+        $('#addEPI').prepend("<tr><td>test</td></tr>");
+        $('#AddModal').modal('toggle');
+      }
+      else if($caller === 'modifycall'){
+        $('#modifyEPI').prepend("<tr><td>test</td></tr>");
+        $('#ModifyModal').modal('toggle');
+      }
+    });
+
+}

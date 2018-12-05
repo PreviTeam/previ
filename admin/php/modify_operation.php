@@ -15,8 +15,10 @@
 	$text ='';
 	$o_n = '';
 	$epi = array();
+	$caller = 'add';
 
 	if(isset($_POST['id'])){
+		$caller = 'modify';
 		$bd = bd_connect();
 		$id2=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
@@ -77,12 +79,17 @@ echo '<div class="container-fluid">',
 
 			$entete=array("EPI", "Supprimer");
 
-			create_table($entete, $epi, null, "EPI");
+			create_table($entete, $epi, $caller."EPI", "EPI");
 
 				
-echo		'</div>',
+		echo
+			'<div class="adder">',
+				'<a class="selecteur" id="', $caller,'call" href="test.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 
+echo		'</div>',
 		'</div>';
+		
 
 	ob_end_flush();
 ?>

@@ -9,6 +9,10 @@ html, body {
   height: 100%;
 }
 
+body{
+  overflow:scroll;
+}
+
 
 .back-img{
   height: 100%;
@@ -165,9 +169,15 @@ span{
 
 #content-data{
   flex: 1;
-  margin: 2em 3em;
+  margin: 2em 0 2em 3em;
   padding-right: 1.5em;
   max-height: calc(80vh - 3em);
+  width: 100%;
+}
+
+.scroller{
+  height:95%;
+  width:95%;
   overflow: auto;
 }
 
@@ -547,4 +557,9 @@ span{
 
 .custom-select{
   margin-bottom: 1em;
+}
+
+
+.modal {
+  overflow-y:auto;
 }
