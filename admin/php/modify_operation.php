@@ -1,8 +1,7 @@
 <?php
-	ob_start('ob_gzhandler');
-	session_start();
+
 	require_once 'bibli_generale.php';
-	error_reporting(E_ALL); 
+
 	/*###################################################################
 							Contenu de la page Dashboard
 	###################################################################*/
@@ -84,12 +83,10 @@ echo '<div class="container-fluid">',
 				
 		echo
 			'<div class="adder">',
-				'<a class="selecteur" id="', $caller,'call" href="test.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+				'<a class="selecteur" id="', $caller,'call" href="select_epi.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 
 echo		'</div>',
 		'</div>';
-		
 
-	ob_end_flush();
 ?>

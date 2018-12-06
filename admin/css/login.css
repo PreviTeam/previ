@@ -563,3 +563,14 @@ span{
 .modal {
   overflow-y:auto;
 }
+
+
+/*########################
+       selecteur
+##########################*/
+
+#epi_list{
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}

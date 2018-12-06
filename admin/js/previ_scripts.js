@@ -135,25 +135,55 @@ async function post_load_modal(fname, id, $content){
 *
 */
 async function post_load_modal_select(fname, $caller){
-  console.log($caller);
   var str = await fetch(fname);
   $('#Selectmodal-body').html(await str.text());
+
+  var table_name = 'none'
+  if($caller == 'addcall')
+    table_name = '#addEPI'; // modifier le nom enaddTable et modifyTable pour rendre le code universel
+  else
+    table_name = '#modifyEPI';
+
+  var identifiants = $(table_name+' .cell');
+
+    for(i = 0 ; i < identifiants.length; ++i){
+      $('#'+$(identifiants[i]).attr('value')).css('display','none');
+    }
 
   $('#AddModal').modal('hide');
   $('#ModifyModal').modal('hide');
 
-   var ret = document.getElementById('return');
-    ret.addEventListener('click', function(e) {
+  var ret = document.getElementsByClassName('return');
+  for(i = 0; i < ret.length; i++){
+    ret[i].addEventListener('click', function(e) {
       e.preventDefault();
       
+      var content_line = '<tr class="line-table" value="'+this.getAttribute('value')+'"><td class="cell" value="'+this.getAttribute('value')+'">'+this.getAttribute('value')+'</td>'+
+                                  '<td><button class="supress btn btn-link" href"'+this.getAttribute('value')+'">Supprimer</button></td></tr>';
       if($caller === 'addcall'){
-        $('#addEPI').prepend("<tr><td>test</td></tr>");
+        $('#addEPI').prepend(content_line);
         $('#AddModal').modal('toggle');
       }
       else if($caller === 'modifycall'){
-        $('#modifyEPI').prepend("<tr><td>test</td></tr>");
+        $('#modifyEPI').prepend(content_line);
         $('#ModifyModal').modal('toggle');
       }
-    });
 
+      supressor();
+    });
+  }
+}
+
+
+function supressor(){
+   var supress= document.getElementsByClassName('supress');
+
+  // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
+  // Récupération de la page cible via l'attribut href
+  for(i = 0; i < supress.length; i++){
+      supress[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+    });
+  }
 }
