@@ -108,6 +108,7 @@ async function post_load_modal_add(fname){
   var str = await fetch(fname);
   $('#Addmodal-body').html(await str.text());
   f();
+  supressor();
 }
 
 /**
@@ -125,50 +126,60 @@ async function post_load_modal(fname, id, $content){
   
   $($content).html(await str.text());
   f();
+  supressor();
   external_links();
 }
 
 
 
 /**
-* Chargement de la fenêtre modale de recherche
-*
+* Chargement de la fenêtre modale de recherche générique
+* Le contenu chargé est le contenu du lien Href du bouton appelant 
 */
 async function post_load_modal_select(fname, $caller){
   var str = await fetch(fname);
   $('#Selectmodal-body').html(await str.text());
 
+  // ---- Récupération de la modal appelante (Modify ou Add)
   var table_name = 'none'
   if($caller == 'addcall')
-    table_name = '#addEPI'; // modifier le nom enaddTable et modifyTable pour rendre le code universel
+    table_name = '#addTable'; 
   else
-    table_name = '#modifyEPI';
+    table_name = '#modifyTable';
 
-  var identifiants = $(table_name+' .cell');
-
+  // --- Récupération de toutes les lignes déjà présentes dans le tableau 
+  var identifiants = $(table_name+' .line-table');
     for(i = 0 ; i < identifiants.length; ++i){
-      $('#'+$(identifiants[i]).attr('value')).css('display','none');
+      var cont = identifiants[i].firstChild.firstChild.nodeValue;
+     $('.return:contains("'+cont+'")').css('display','none');
     }
 
+
+  // --- L'ouverture de l'écran de sélection masque les modales précédentes
   $('#AddModal').modal('hide');
   $('#ModifyModal').modal('hide');
 
+
+  // --- Au clique sur un équipement, celui ci est ajouté au tableau du modal appelant
   var ret = document.getElementsByClassName('return');
   for(i = 0; i < ret.length; i++){
     ret[i].addEventListener('click', function(e) {
       e.preventDefault();
       
-      var content_line = '<tr class="line-table" value="'+this.getAttribute('value')+'"><td class="cell" value="'+this.getAttribute('value')+'">'+this.getAttribute('value')+'</td>'+
-                                  '<td><button class="supress btn btn-link" href"'+this.getAttribute('value')+'">Supprimer</button></td></tr>';
+      var content_line = '<tr class="line-table" ><td class="cell">'+this.firstChild.nodeValue+'</td>'+
+                                  '<td><button class="supress btn btn-link" >Supprimer</button></td></tr>';
+
+      // --- Réaffichage De la modale appelante  ----                            
       if($caller === 'addcall'){
-        $('#addEPI').prepend(content_line);
+        $('#addTable').prepend(content_line);
         $('#AddModal').modal('toggle');
       }
       else if($caller === 'modifycall'){
-        $('#modifyEPI').prepend(content_line);
+        $('#modifyTable').prepend(content_line);
         $('#ModifyModal').modal('toggle');
       }
 
+      // Application des liens de supression
       supressor();
     });
   }

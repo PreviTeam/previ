@@ -29,7 +29,7 @@
 		while($tableau = mysqli_fetch_assoc($res)){
 			$id = ' disabled value="'.entities_protect($tableau['op_id']).'"';
 			if($tableau['epi_designation'] != null)
-				$epi[] = create_table_ligne(null, array(entities_protect($tableau['epi_designation']), "Supprimer"));
+				$epi[] = create_table_ligne("line-table", array(entities_protect($tableau['epi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
 			$de=entities_protect($tableau['op_type']);
 			$content = entities_protect($tableau['op_contenu']);
 
@@ -78,7 +78,7 @@ echo '<div class="container-fluid">',
 
 			$entete=array("EPI", "Supprimer");
 
-			create_table($entete, $epi, $caller."EPI", "EPI");
+			create_table($entete, $epi, $caller."Table", "EPI");
 
 				
 		echo

@@ -104,9 +104,16 @@ function create_table($tableau_entete, $tableau_ligne, $class, $titre){
 function create_table_ligne($class, $tableau_contenu){
   $classe = $class != null ? 'class="'.$class.'"' : '';
   $res= '<tr '.$classe.'>';
+  
   $colones = sizeof($tableau_contenu);
   for($i=0; $i < $colones; $i++){
-    $res.= '<td>'.$tableau_contenu[$i].'</td>';
+    if($i == 0){
+       $res.= '<td class="cell">'.$tableau_contenu[$i].'</td>';
+    }
+    else{
+       $res.= '<td>'.$tableau_contenu[$i].'</td>';
+    }
+   
   }
   $res.= '</tr>';
 
