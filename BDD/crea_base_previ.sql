@@ -85,6 +85,7 @@ create table COMPO_OPERATION(
 create table COMPO_FICHE(
 	cf_fi_id INT NOT NULL,
 	cf_op_id INT NOT NULL,
+	cf_ordre INT,
 	constraint pk_compoF PRIMARY KEY (cf_fi_id,cf_op_id)
 );
 
