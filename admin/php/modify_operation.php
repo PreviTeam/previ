@@ -1,8 +1,7 @@
 <?php
-	ob_start('ob_gzhandler');
-	session_start();
+
 	require_once 'bibli_generale.php';
-	error_reporting(E_ALL); 
+
 	/*###################################################################
 							Contenu de la page Dashboard
 	###################################################################*/
@@ -15,8 +14,10 @@
 	$text ='';
 	$o_n = '';
 	$epi = array();
+	$caller = 'add';
 
 	if(isset($_POST['id'])){
+		$caller = 'modify';
 		$bd = bd_connect();
 		$id2=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
@@ -28,7 +29,7 @@
 		while($tableau = mysqli_fetch_assoc($res)){
 			$id = ' disabled value="'.entities_protect($tableau['op_id']).'"';
 			if($tableau['epi_designation'] != null)
-				$epi[] = create_table_ligne(null, array(entities_protect($tableau['epi_designation']), "Supprimer"));
+				$epi[] = create_table_ligne("line-table", array(entities_protect($tableau['epi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
 			$de=entities_protect($tableau['op_type']);
 			$content = entities_protect($tableau['op_contenu']);
 
@@ -77,12 +78,15 @@ echo '<div class="container-fluid">',
 
 			$entete=array("EPI", "Supprimer");
 
-			create_table($entete, $epi, null, "EPI");
+			create_table($entete, $epi, $caller."Table", "EPI");
 
 				
-echo		'</div>',
+		echo
+			'<div class="adder">',
+				'<a class="selecteur" id="', $caller,'call" href="select_epi.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 
+echo		'</div>',
 		'</div>';
 
-	ob_end_flush();
 ?>

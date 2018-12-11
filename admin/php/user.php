@@ -10,7 +10,7 @@
 	/*###################################################################
 							Contenu de la page Utilisateurs
 	###################################################################*/
-
+	echo '<div class="scroller">';						
 	// ------------------------ Contenu de la Page -----------------------------------------------//
 	$entete=array("Code Utilisateur", "Nom", "Prénom", "Status", '' ,'');
 	$bd = bd_connect();
@@ -49,9 +49,10 @@
 	}
 
 	create_table($entete, $content, null, "Utilisateurs");
-	echo '<div class="adder">',
-			'<a id="add" href="user_modify.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
-		'</div>';
+	echo '</div>',
+			'<div class="adder">',
+				'<a id="add" href="modify_operation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER);

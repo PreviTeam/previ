@@ -4,6 +4,7 @@
 
 define("MODIFIER", "Modify");
 define("NOUVEAU", "Add");
+define("SELECTEUR", "Select");
 
 /*################################################################################################
 									Bibliotheque Générale HTML
@@ -73,8 +74,8 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
  * @return      void
  */ 
 function create_table($tableau_entete, $tableau_ligne, $class, $titre){
-   $classe = $class != null ? 'class="'.$class.'"' : '';
-   echo '<h1 class="title_table">', $titre,'</h1><table class="table ', $classe, '"><thead>';
+   $classe = $class != null ? $class : '';
+   echo '<h1 class="title_table">', $titre,'</h1><table class="table" id="', $classe, '""><thead>';
    $colones_entete = sizeof($tableau_entete);
    $colones_ligne = sizeof($tableau_ligne);
 
@@ -103,9 +104,16 @@ function create_table($tableau_entete, $tableau_ligne, $class, $titre){
 function create_table_ligne($class, $tableau_contenu){
   $classe = $class != null ? 'class="'.$class.'"' : '';
   $res= '<tr '.$classe.'>';
+  
   $colones = sizeof($tableau_contenu);
   for($i=0; $i < $colones; $i++){
-    $res.= '<td>'.$tableau_contenu[$i].'</td>';
+    if($i == 0){
+       $res.= '<td class="cell">'.$tableau_contenu[$i].'</td>';
+    }
+    else{
+       $res.= '<td>'.$tableau_contenu[$i].'</td>';
+    }
+   
   }
   $res.= '</tr>';
 
@@ -161,7 +169,7 @@ function modal_start($type){
   $btns = ($type === 'Modify') ? '<button type="button" class="btn btn-danger">Supprimer</button> <button type="button" class="btn btn-success">Sauvegarder les modifications</button>' :
                                 ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-primary">Créer</button>';
   echo 
-  '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">',
+  '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
     '<div class="modal-dialog" role="document">',
       '<div class="modal-content">',
       '  <div class="modal-header">',
@@ -179,6 +187,35 @@ function modal_start($type){
      ' </div>',
     '</div>';
 }
+
+/**
+ * Créatoin de fenêtres modales dans la page
+ * 
+ * @param       String    $type      type de la fenetre modale. Constantes : MODIFIER pour une fenetre de modification NOUVEAU pour une fenetre d'ajout
+ *
+ * @return      void
+ */ 
+function modal_select(){
+
+  echo 
+  '<div class="content-modal">',
+    '<div class="modal fade" id="SelectModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Selecteur" aria-hidden="true">',
+      '<div class="modal-dialog" role="document">',
+        '<div class="modal-content">',
+        '  <div class="modal-header">',
+            '<h5 class="modal-title" id="ModalLabel">Selection</h5>',
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"  id="close">',
+              '<span aria-hidden="true">&times;</span>',
+           ' </button>',
+          '</div>',
+         ' <div id="Selectmodal-body" class="Selectmodal-body">',
+         '</div>',
+          '</div>',
+       ' </div>',
+      '</div>',
+    '</div>';
+}
+
 
 
 /**
