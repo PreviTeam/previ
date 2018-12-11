@@ -34,7 +34,7 @@
 
 	echo '</div>',
 			'<div class="adder">',
-				'<a id="add" href="modify_operation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+				'<a id="add" href="modify_organisation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
 			'</div>';
 	
 
