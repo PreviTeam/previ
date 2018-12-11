@@ -11,6 +11,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
+	echo '<div class="scroller">';
 	$entete=array("Code Visite", "Désignation", "Versions", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
