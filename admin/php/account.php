@@ -33,7 +33,7 @@
 			$t['em_nom'],' ',$t['em_prenom'],' ',($t['em_inactif'])? '<span class="marge inactif" style="color:red">Inactif ' : '<span class="marge inactif" style="color:green">Actif ','</span><br><span class="status">',$status,'</span>',
 		'</div><div class="info">Mon Code Acteur<span class="marge">',$t['em_code'],'</span></div>',
 		'<div class="info">Mot de Passe<span class="marge">****************</span>',
-			'<button type="button" id="modifier" class="btn btn-link" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</button>',
+			'<button type="button" id="modifier" class="btn btn-modal btn-link" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</button>',
 		'</div>';
 
 	echo '<form method="post" action="../test.php">';
