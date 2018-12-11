@@ -25,13 +25,13 @@
 	while($tableau = mysqli_fetch_assoc($res)){
 		$status = null;
 		switch($tableau['em_status']){
-			case 'ADMIN':
+			case 0:
 				$status = 'Admin';
 				break;
-			case 'CE':
+			case 1:
 				$status= 'Chef-Equipe';
 				break;
-			case 'TECH' : 
+			case 2 : 
 				$status= 'Technicien';
 				break;
 		}

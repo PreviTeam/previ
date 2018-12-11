@@ -262,38 +262,6 @@ span{
 
 }
 
-.info{
-  width: 85%;
-  padding: 5px 15px;
-  margin: 5px auto;
-  background-color: #F5F5DC;
-  border-radius: 3px;
-}
-
-.info button{
-  margin-left: 20em;
-}
-
-.marge{
-  margin-left: 10em;
-}
-
-.perso{
-  display: inline;
-  font-size: 35px;
-  margin-left: 20px;
-}
-
-.inactif{
-  font-size: 35px;
-}
-
-.status{
-  position: relative;
-  top: -85px;
-  left: 170px;
-}
-
 /*  ------------ Footer ------------------ */
 
 

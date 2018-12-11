@@ -30,13 +30,13 @@
 
 		
 		switch($tableau['em_status']){
-			case 'ADMIN':
+			case 0:
 				$admin = 'selected';
 				break;
-			case 'CE':
+			case 1:
 				$ce  = 'selected';
 				break;
-			case 'TECH' :
+			case 2 :
 				$tech = 'selected';
 				break;
 		}
