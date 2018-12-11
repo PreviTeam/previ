@@ -11,7 +11,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	$entete=array("Code Visite", "Désignation", "Vesions", '', '');
+	$entete=array("Code Visite", "Désignation", "Versions", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
 			FROM fiche";
