@@ -7,6 +7,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
+
 	$code = '';
 	$design = '';
 	$id = '';
@@ -18,8 +19,7 @@
 		$sql = "SELECT * 
 				FROM modele, outil 
 				WHERE ou_mo_id = mo_id 
-				AND ou_id='$id'";
-
+				AND ou_id=$id";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 

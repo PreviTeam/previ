@@ -12,9 +12,10 @@
 	$vers='';
 	$de='';
 	$fi=array();
+	$caller = 'add';
 
-	if(isset($_POST['id']))
-	{
+	if(isset($_POST['id'])){
+		$caller = 'modify';
 		$bd = bd_connect();
 		$id2 = bd_protect($bd,$_POST['id']);
 		$sql = "SELECT *
@@ -25,13 +26,13 @@
 		while($tableau = mysqli_fetch_assoc($res))
 		{
 			$id = ' disabled value="'.entities_protect($tableau['vi_id']).'"';
-			if($tableau['fi_id'] != null && $tableau['fi_designation'] != null)
-			{
-				$fi[] = create_table_ligne(null, array(entities_protect($tableau['fi_id']), $tableau['fi_designation']));
+			if($tableau['fi_id'] != null && $tableau['fi_designation'] != null){
+				$fi[] = create_table_ligne("line-table", array(entities_protect($tableau['fi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
 			}
 			$de = 'value ="'.entities_protect($tableau['vi_designation']).'"';
 			$vers = 'value ="'.entities_protect($tableau['vi_num_vers']).'"';
 		}
+		mysqli_close($bd);
 	}
 
 echo '<div class="container-fluid">',
@@ -68,12 +69,17 @@ echo '<div class="container-fluid">',
 
 			$entete=array("NumFiche", "Designation");
 
-			create_table($entete, $fi, null, "Fiches");
+			create_table($entete, $fi,  $caller."Table", "Fiches");
 
+			echo
+			'<div class="adder">',
+				'<a class="selecteur" id="', $caller,'call" href="select_fiche.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 				
 echo		'</div>',
 
 		'</div>';
 
+	
 	ob_end_flush();
 ?>

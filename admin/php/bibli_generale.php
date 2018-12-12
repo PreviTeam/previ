@@ -189,7 +189,7 @@ function modal_start($type){
 }
 
 /**
- * Créatoin de fenêtres modales dans la page
+ * Créatoin de fenêtres modales de sélection dans la page
  * 
  * @param       String    $type      type de la fenetre modale. Constantes : MODIFIER pour une fenetre de modification NOUVEAU pour une fenetre d'ajout
  *
@@ -218,22 +218,15 @@ function modal_select(){
 
 
 
-/**
- * Créatoin de fenêtres modales dans la page
- * 
- * @param       String    $type      type de la fenetre modale. Constantes : MODIFIER pour une fenetre de modification NOUVEAU pour une fenetre d'ajout
- *
- * @return      void
- */ 
+
 function get_visites($bd, $entete){
     
     $sql = "SELECT vi_id, vi_designation, ou_designation, rv_debut, count(rf_fi_id) as totFiches
-        FROM realisation_visite, realisation_fiche, visite, outil
-        WHERE vi_id = rv_vi_id
-        AND rv_id = rf_rv_id
+        FROM visite LEFT OUTER JOIN realisation_visite ON vi_id = rv_vi_id, realisation_fiche,  outil
+        WHERE rv_id = rf_rv_id
         AND rv_ou_id = ou_id
         AND rv_etat = 0
-        AND rf_etat = 1
+        AND rf_etat = 0
         GROUP BY rv_id";
 
     $content =array();
@@ -251,7 +244,7 @@ function get_visites($bd, $entete){
       $ligne=array($tableau['vi_designation'],
              $tableau['ou_designation'], 
              $tableau['rv_debut'],
-             ($tableau['totFiches'] * 100 / $nbFicheParVisite['nbFiches']).'%');
+             (( $nbFicheParVisite['nbFiches'] - $tableau['totFiches']) * 100 / $nbFicheParVisite['nbFiches']).'%');
       $content[] = create_table_ligne(null, $ligne);
     }
 
@@ -334,7 +327,7 @@ function generic_page_start(){
 
           '<nav class="navbar header static-top">',
 
-            '<a id="logo" class="col-md-2" href="dashboarard.php">PREVI</a>',
+            '<a id="logo" class="col-md-2" href="dashboard.php">PREVI</a>',
              '<form class="d-md-inline-block form-inline col-md-8">',
                 '<div class="input-group">',
                   '<input type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">',

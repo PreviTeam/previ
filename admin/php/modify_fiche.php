@@ -11,10 +11,11 @@
 	$id = '';
 	$vers = '';
 	$de = '';
+		$caller = 'add';
 	$op = array();
 
-	if(isset($_POST['id']))
-	{
+	if(isset($_POST['id'])){
+		$caller = 'modify';
 		$bd = bd_connect();
 		$id2 = bd_protect($bd,$_POST['id']);
 		$sql = "SELECT * 
@@ -26,7 +27,7 @@
 		{
 			$id = ' disabled value="'.entities_protect($tableau['fi_id']).'"';
 			if($tableau['op_contenu'] != null && $tableau['op_id'] != null && $tableau['cf_ordre'] != null){
-				$op[] = create_table_ligne(null, array(entities_protect($tableau['op_id']), $tableau['op_contenu'], $tableau['cf_ordre']));
+				$op[] = create_table_ligne("line-table", array(entities_protect($tableau['op_id']), $tableau['op_contenu'], $tableau['cf_ordre'], '<button class="supress btn btn-link">Supprimer</button>'));
 			}
 			$de = 'value="'.entities_protect($tableau['fi_designation']).'"';
 			$vers = 'value="'.entities_protect($tableau['fi_num_vers']).'"';
@@ -66,7 +67,7 @@ echo '<div class="container-fluid">',
 
 			$entete=array("NumOperation", "Designation", "Ordre", '' , '');
 
-			create_table($entete, $op, null, "Operations");
+			create_table($entete, $op, $caller."Table", "Operations");
 
 				
 echo		'</div>',

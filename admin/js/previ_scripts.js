@@ -1,4 +1,5 @@
 
+
 // Script générant les connades à créer au cgargement de la page.
 // Les évenements sont ensuite mis en place  lors d'évènements.
 $(document).ready(function () {  
