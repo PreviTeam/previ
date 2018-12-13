@@ -11,7 +11,7 @@
 	$id = '';
 	$vers = '';
 	$de = '';
-		$caller = 'add';
+	$caller = 'add';
 	$op = array();
 
 	if(isset($_POST['id'])){
@@ -27,11 +27,16 @@
 		{
 			$id = ' disabled value="'.entities_protect($tableau['fi_id']).'"';
 			if($tableau['op_contenu'] != null && $tableau['op_id'] != null && $tableau['cf_ordre'] != null){
-				$op[] = create_table_ligne("line-table", array(entities_protect($tableau['op_id']), $tableau['op_contenu'], $tableau['cf_ordre'], '<button class="supress btn btn-link">Supprimer</button>'));
+				$op[] = create_table_ligne("line-table", array($tableau['op_contenu'], 
+											'<span class="ordre">'.$tableau['cf_ordre'].'</span>', 
+											'<button class="btn btn-link upper">up</button>',  
+											'<button class="btn btn-link downer">down</button>',
+											'<button class="supress btn btn-link">Supprimer</button>'));
 			}
 			$de = 'value="'.entities_protect($tableau['fi_designation']).'"';
 			$vers = 'value="'.entities_protect($tableau['fi_num_vers']).'"';
 		}
+		mysqli_close($bd);
 	}
 
 echo '<div class="container-fluid">',
@@ -65,9 +70,14 @@ echo '<div class="container-fluid">',
 			'</div>',
 			'<div class="tableForm">';
 
-			$entete=array("NumOperation", "Designation", "Ordre", '' , '');
+			$entete=array("Designation", "Ordre", '' , '');
 
 			create_table($entete, $op, $caller."Table", "Operations");
+
+			echo
+			'<div class="adder">',
+				'<a class="selecteur" id="', $caller,'call" href="select_operation.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 
 				
 echo		'</div>',

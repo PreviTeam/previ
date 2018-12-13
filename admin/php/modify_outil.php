@@ -12,8 +12,10 @@
 	$design = '';
 	$id = '';
 	$modele = '';
+	$caller = "add";
 
 	if(isset($_POST['id'])){
+		$caller="modify";
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
@@ -29,7 +31,7 @@
 		$id = ' disabled value="'.entities_protect($tableau['ou_id']).'"';
 		$code = "value='$cd'";
 		$design = "value='$de'";
-		$modele = "value='$mo'";
+		$modele = $mo;
 
 		mysqli_close($bd);
 	}
@@ -68,8 +70,8 @@ echo '<div>',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Modele</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $modele , ' aria-label="Default">',
-			  '<a href="#"><img class="assoc_icone" src="../img/seo.png" alt="explore"</a>',
+			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $modele ,'"  aria-label="Default">',
+			   '<a class="selecteurUnique" id="', $caller,'call" href="select_modele.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"</a>',
 			'</div>',
 		'</div>';
 	ob_end_flush();

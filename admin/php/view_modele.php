@@ -37,12 +37,13 @@
 	create_table($entete, $content, null, $designation);
 	echo '<div>',
 			'<button type="button" class="btn btn-primary ajaxphplink" href="modele.php">RETOUR</button>', 
-            ' <button type="button" id="'.$id.'" class="btn btn-modal btn-success"  data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">MODIFIER</button>',
+            ' <button type="button" id="'.$id.'" class="btn btn-modal btn-success"  data-toggle="modal" href="modify_modele.php" data-target="#ModifyModal">MODIFIER</button>',
           '</div>';
 
     // Ajout des fenêtres modales
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER);
+	modal_select();
 
 	mysqli_close($bd);
 	ob_end_flush();

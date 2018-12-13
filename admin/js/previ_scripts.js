@@ -60,6 +60,7 @@ function f() {
   var btn = document.getElementsByClassName('btn-modal');
   var add = document.getElementById('add');
   var select = document.getElementsByClassName('selecteur');
+  var select_unique = document.getElementsByClassName('selecteurUnique');
 
   add != null && add.addEventListener('click', function(e) {
     e.preventDefault();
@@ -71,6 +72,13 @@ function f() {
     select[j].addEventListener('click', function(e) {
       e.preventDefault();
       post_load_modal_select(this.getAttribute('href'), this.getAttribute('id'));
+    });
+   }
+
+   for(k = 0; k < select_unique.length; k++){
+    select_unique[k].addEventListener('click', function(e) {
+      e.preventDefault();
+      post_load_modal_select_unique(this.getAttribute('href'), this.getAttribute('id'));
     });
    }
 
@@ -110,6 +118,7 @@ async function post_load_modal_add(fname){
   $('#Addmodal-body').html(await str.text());
   f();
   supressor();
+  moveRow("#addTable");
 }
 
 /**
@@ -127,7 +136,8 @@ async function post_load_modal(fname, id, $content){
   
   $($content).html(await str.text());
   f();
-  supressor();
+  supressor("#modifyTable");
+  moveRow("#modifyTable");
   external_links();
 }
 
@@ -148,9 +158,12 @@ async function post_load_modal_select(fname, $caller){
   else
     table_name = '#modifyTable';
 
+  var nbLines = 0;
+
   // --- Récupération de toutes les lignes déjà présentes dans le tableau 
   var identifiants = $(table_name+' .line-table');
     for(i = 0 ; i < identifiants.length; ++i){
+      nbLines++;
       var cont = identifiants[i].firstChild.firstChild.nodeValue;
      $('.return:contains("'+cont+'")').css('display','none');
     }
@@ -165,10 +178,20 @@ async function post_load_modal_select(fname, $caller){
   var ret = document.getElementsByClassName('return');
   for(i = 0; i < ret.length; i++){
     ret[i].addEventListener('click', function(e) {
-      e.preventDefault();
+    e.preventDefault();
+
+    var lastordre = '';
+    if($("#modifycall").attr("href") === "select_operation.php"){
+      lastordre = '<td><span class="ordre">'+(nbLines+1)+'</span></td>';
+    }
       
-      var content_line = '<tr class="line-table" ><td class="cell">'+this.firstChild.nodeValue+'</td>'+
-                                  '<td><button class="supress btn btn-link" >Supprimer</button></td></tr>';
+      
+      var content_line = '<tr class="line-table" ><td class="cell">'+
+                        this.firstChild.nodeValue+'</td>'+ 
+                        lastordre + 
+                        '<td><button class="btn btn-link upper">up</button></td>' +  
+                        '<td><button class="btn btn-link downer">down</button></td>'+
+                        '<td><button class="supress btn btn-link" >Supprimer</button></td></tr>';
 
       // --- Réaffichage De la modale appelante  ----                            
       if($caller === 'addcall'){
@@ -176,18 +199,19 @@ async function post_load_modal_select(fname, $caller){
         $('#AddModal').modal('toggle');
       }
       else if($caller === 'modifycall'){
-        $('#modifyTable').prepend(content_line);
+        $('#modifyTable').append(content_line);
         $('#ModifyModal').modal('toggle');
       }
 
       // Application des liens de supression
-      supressor();
+      supressor(table_name);
+      moveRow(table_name);
     });
   }
 }
 
 
-function supressor(){
+function supressor($table_name){
    var supress= document.getElementsByClassName('supress');
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
@@ -196,6 +220,75 @@ function supressor(){
       supress[i].addEventListener('click', function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
+        reOrder($table_name);
+    });
+  }
+}
+
+function reOrder($table_name){
+  var nbLignes = 0;
+
+  // --- Récupération de toutes les lignes déjà présentes dans le tableau 
+  var identifiants = $($table_name+' .line-table .ordre');
+    for(i = 0 ; i < identifiants.length; ++i){
+      nbLignes++;
+      identifiants[i].firstChild.nodeValue = nbLignes;
+    }
+}
+
+function moveRow($table_name){
+
+  var upper = $('.upper');
+  for(i = 0 ; i < upper.length; ++i){
+    upper[i].addEventListener('click', function(e){
+      var temp = $(this).parent().parent().prev('tr');
+      if(temp){
+        $(this).parent().parent().after(temp);
+      }
+      reOrder($table_name);
+    });
+  }
+
+  var downer = $('.downer');
+  for(i = 0 ; i < downer.length; ++i){
+    downer[i].addEventListener('click', function(e){
+      var temp = $(this).parent().parent().next('tr');
+      if(temp){
+        $(this).parent().parent().before(temp);
+      }
+      reOrder($table_name);
+    });
+  }
+}
+
+
+async function post_load_modal_select_unique(fname, $caller){
+
+  var str = await fetch(fname);
+  $('#Selectmodal-body').html(await str.text());
+
+  // --- L'ouverture de l'écran de sélection masque les modales précédentes
+  $('#AddModal').modal('hide');
+  $('#ModifyModal').modal('hide');
+
+
+  // --- Au clique sur un équipement, celui ci est ajouté au tableau du modal appelant
+  var ret = document.getElementsByClassName('return');
+  for(i = 0; i < ret.length; i++){
+    ret[i].addEventListener('click', function(e) {
+      e.preventDefault();
+         
+      var value = this.firstChild.nodeValue;
+
+      // --- Réaffichage De la modale appelante  ----                            
+      if($caller === 'addcall'){
+        $('#addUniqueSelector').attr("value", value);
+        $('#AddModal').modal('toggle');
+      }
+      else if($caller === 'modifycall'){
+        $('#modifyUniqueSelector').attr("value", value);
+        $('#ModifyModal').modal('toggle');
+      }
     });
   }
 }

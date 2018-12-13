@@ -25,10 +25,10 @@
 
 		$demande = null;
 		switch($tableau['op_type']){
-			case 0:
+			case 1:
 				$demande = 'Oui / Non';
 				break;
-			case 1:
+			case 2:
 				$demande= 'Texte';
 				break;
 		}

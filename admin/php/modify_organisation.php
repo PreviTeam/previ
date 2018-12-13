@@ -13,9 +13,8 @@
 
 	if(isset($_POST['id'])){
 		$bd = bd_connect();
-		$id=bd_protect($bd, $_POST['id']);
-		$sql = "SELECT * FROM organisation WHERE or_id='$id'";
-
+		$id2=bd_protect($bd, $_POST['id']);
+		$sql = "SELECT * FROM organisation WHERE or_id='".$id2."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 

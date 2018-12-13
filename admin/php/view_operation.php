@@ -20,10 +20,13 @@
 		$id=entities_protect($tableau['op_id']);
 		$designation = entities_protect($tableau['op_contenu']);
 
-		if((int)$tableau['op_type'] === 0){
+		if((int)$tableau['op_type'] === 1){
 			$type = "Oui / Non";
-		}else if((int)$tableau['op_type'] === 1){
+		}else if((int)$tableau['op_type'] === 2){
 			$type = "Texte";
+		}
+		else{
+			$type = "Type non reconnu";
 		}
 
 		if($tableau['epi_designation'] != null){
@@ -47,6 +50,7 @@
     // Ajout des fenêtres modales
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER);
+	modal_select();
 
 	mysqli_close($bd);
 	ob_end_flush();
