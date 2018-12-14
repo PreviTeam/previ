@@ -2,15 +2,16 @@
 
 	ob_start('ob_gzhandler');
 	session_start();
-
 	require_once 'bibli_generale.php';
-	error_reporting(E_ALL); 
+	verify_loged(isset($_SESSION['em_id']));
+	$_GET && redirection("./deconnexion.php");
 
 
 	/*###################################################################
-							Contenu de la page Dashboard
+							Contenu de la page arboresence
 	###################################################################*/
 
+	echo '<div class="scroller">';						
 	$bd = bd_connect();
 	$sql = "SELECT *
 			FROM organisation, modele, outil
@@ -51,7 +52,7 @@
 	$org[] = array($last_org, $models);
 
 	create_treeview("Arborescence Equipement", $org);
-	
+    echo '</div>';
 	mysqli_close($bd);
 	ob_end_flush();
 ?>

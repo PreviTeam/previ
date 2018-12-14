@@ -217,8 +217,6 @@ function modal_select(){
 }
 
 
-
-
 function get_visites($bd, $entete){
     
     $sql = "SELECT vi_id, vi_designation, ou_designation, rv_debut, count(rf_fi_id) as totFiches
@@ -298,7 +296,7 @@ function get_visites($bd, $entete){
  * Fonction d'affichage de la page générique Dashboard jusqu'à son bloc contenu. Doit être suivi de la 
  * fonction generic_page_ending pour cloturer la page correctement.
  */ 
-function generic_page_start(){
+function generic_page_start($status){
   echo  '<!DOCTYPE html>',
     '<html lang="fr">',
 
@@ -330,9 +328,9 @@ function generic_page_start(){
             '<a id="logo" class="col-md-2" href="dashboard.php">PREVI</a>',
              '<form class="d-md-inline-block form-inline col-md-8">',
                 '<div class="input-group">',
-                  '<input type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">',
+                  '<input id="searchBar" type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">',
                   '<div class="input-group-append">',
-                    '<button class="btn btn-primary" type="button">Recherche',
+                    '<button id="searchBtn" href="recherche.php" class="btn btn-primary" type="button">Recherche',
                     '</button>',
                   '</div>',
                 '</div>',
@@ -356,37 +354,41 @@ function generic_page_start(){
                   '<ul class=" sidebar navbar-nav components">',
                       '<li class="nav-item"><a class="nav-link phplink" href="dashboard_content.php">',
                       '<img class="nav-icon" src="../img/icones/SVG/autre/briefcase.svg" alt="logout"/>', 
-                      'Dashboard</a></li>',
+                      'Dashboard</a></li>';
 
+                  if($status === 'ADMIN'){
+                    echo 
                       '<li class="nav-item">',
-                          '<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">',
-                          '<img class="nav-icon" src="../img/icones/SVG/autre/shield.svg" alt="a"/>', 
-                          'Administration</a>',
-                          '<ul class="collapse" id="homeSubmenu">',
-                              '<li class="nav-item">',
-                                 '<a class="nav-link sub-item phplink" href="user.php">',
-                                 '<img class="nav-icon" src="../img/icones/SVG/autre/avatar-1.svg" alt="a"/>',
-                                 '<span>Users</span></a>',
-                              '</li>',
-                              '<li class="nav-item">',
-                                 '<a class="nav-link sub-item phplink" href="visite.php">',
-                                 '<img class="nav-icon" src="../img/icones/SVG/autre/map.svg" alt="a"/>',
-                                 '<span>Visites</span></a>',
-                              '</li>',
-                              '<li class="nav-item">',
-                                  '<a class="nav-link sub-item phplink" href="fiche.php">',
-                                  '<img class="nav-icon" src="../img/icones/SVG/autre/copy.svg" alt="a"/>',
-                                  '<span>Fiches</span></a>',
-                             '</li>',
-                            ' <li class="nav-item">',
-                                  '<a class="nav-link sub-item phplink" href="operation.php">',
-                                  '<img class="nav-icon" src="../img/icones/SVG/autre/file.svg" alt="a"/>',
-                                  '<span>Opération</span></a>',
-                             '</li>',
-                          '</ul>',
-                     ' </li>',
+                            '<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">',
+                            '<img class="nav-icon" src="../img/icones/SVG/autre/shield.svg" alt="a"/>', 
+                            'Administration</a>',
+                            '<ul class="collapse" id="homeSubmenu">',
+                                '<li class="nav-item">',
+                                   '<a class="nav-link sub-item phplink" href="user.php">',
+                                   '<img class="nav-icon" src="../img/icones/SVG/autre/avatar-1.svg" alt="a"/>',
+                                   '<span>Users</span></a>',
+                                '</li>',
+                                '<li class="nav-item">',
+                                   '<a class="nav-link sub-item phplink" href="visite.php">',
+                                   '<img class="nav-icon" src="../img/icones/SVG/autre/map.svg" alt="a"/>',
+                                   '<span>Visites</span></a>',
+                                '</li>',
+                                '<li class="nav-item">',
+                                    '<a class="nav-link sub-item phplink" href="fiche.php">',
+                                    '<img class="nav-icon" src="../img/icones/SVG/autre/copy.svg" alt="a"/>',
+                                    '<span>Fiches</span></a>',
+                               '</li>',
+                              ' <li class="nav-item">',
+                                    '<a class="nav-link sub-item phplink" href="operation.php">',
+                                    '<img class="nav-icon" src="../img/icones/SVG/autre/file.svg" alt="a"/>',
+                                    '<span>Opération</span></a>',
+                               '</li>',
+                            '</ul>',
+                       ' </li>';
+                  }
+                      
 
-                      '<li class="nav-item">',
+                  echo  '<li class="nav-item">',
                           '<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">',
                           '<img class="nav-icon" src="../img/icones/SVG/autre/book.svg" alt="a"/>',
                           'Passations</a>',
@@ -402,8 +404,10 @@ function generic_page_start(){
                                   '<span>Historisées</span></a>',
                              ' </li>',
                           '</ul>',
-                      '</li>',
+                      '</li>';
 
+                    if($status != 'TECH'){
+                      echo 
                        '<li class="nav-item">',
                           '<a href="#pageSubequip" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">',
                           '<img class="nav-icon" src="../img/icones/SVG/autre/rocket-launch.svg" alt="a"/>',
@@ -425,9 +429,11 @@ function generic_page_start(){
                                   '<span>Outils</span></a>',
                               '</li>',
                           '</ul>',
-                      '</li>',
+                      '</li>';
+                    }
+                      
 
-                       '<li class="nav-item">',
+                  echo '<li class="nav-item">',
                           '<a href="#pageSubarbo" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">',
                           '<img class="nav-icon" src="../img/icones/SVG/autre/family-tree.svg" alt="a"/>',
                           'Arborescence</a>',
@@ -450,6 +456,7 @@ function generic_page_start(){
                 '<div id="middle">',
 
                   '<div id="content-data" class="scrollbar">';
+
 }
 
 
@@ -473,6 +480,7 @@ function generic_page_ending($bd){
   $couleurFiche     =   $ecartFichesMois  >= 0  ? 'class="positif"' : 'class="negatif"';
 
         echo    
+
                     ' </div>',
 
                     '<div id="right_sider">',
@@ -556,7 +564,7 @@ function verify_loged($id){
  * @return  void 
  */
 function verify_unloged($id){
-    $id && redirection("../index.php");
+    $id && redirection("../deconnexion.php");
 }
 
 

@@ -6,6 +6,8 @@
 	require_once 'bibli_generale.php';
 	error_reporting(E_ALL); 
 
+	verify_loged(isset($_SESSION['em_id']));
+	$_GET && redirection("./deconnexion.php");
 
 	/*###################################################################
 							Contenu de la page Dashboard
@@ -33,9 +35,9 @@
 	create_table($entete, $content, null, "Fiches");
 
 	echo '</div>',
-			'<div class="adder">',
-				'<a id="add" href="modify_fiche.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
-			'</div>';
+		'<div class="adder">',
+			'<a id="add" href="modify_fiche.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+		'</div>';
 	
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER);

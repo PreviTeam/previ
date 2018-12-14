@@ -1,9 +1,12 @@
   <?php
 
+	session_start();
 	require_once 'bibli_generale.php';
+	verify_loged(isset($_SESSION['em_id']));
+	$_GET && redirection("./deconnexion.php");
 
 	/*###################################################################
-							Contenu de la page Dashboard
+							Contenu de la page Select_model
 	###################################################################*/
 	$bd = bd_connect();
 
@@ -17,6 +20,5 @@
   	}
   	echo '</div>';
     mysqli_close($bd);
-
 
   ?>

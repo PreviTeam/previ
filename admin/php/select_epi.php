@@ -1,6 +1,8 @@
   <?php
-
 	require_once 'bibli_generale.php';
+	session_start();
+	verify_loged(isset($_SESSION['em_id']));
+	$_GET && redirection("./deconnexion.php");
 
 	/*###################################################################
 							Contenu de la page Dashboard

@@ -74,7 +74,7 @@
                 $code = bd_protect($bd,$_POST['inputEmail']);
                 $pass = bd_protect($bd,md5($_POST['inputPassword']));
 
-                $sql = "SELECT em_id FROM EMPLOYE WHERE em_code='$code' AND em_mdp='$pass'";
+                $sql = "SELECT em_id, em_status FROM EMPLOYE WHERE em_code='$code' AND em_mdp='$pass'";
 
                 $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -88,8 +88,10 @@
                 {
                   $t = mysqli_fetch_assoc($res);
                   $id = $t['em_id'];
+                  $status = $t['em_status'];
 
                   $_SESSION['em_id'] = $id;
+                  $_SESSION['em_status'] = $status;
 
                   mysqli_free_result($res);
                   mysqli_close($bd);

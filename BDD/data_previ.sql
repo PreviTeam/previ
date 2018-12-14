@@ -109,7 +109,7 @@ INSERT INTO FICHE (fi_designation, fi_num_vers, fi_inactif ) VALUES
 ( "Fiche Mines Bus", "MG45-565", false);
 
 #id, contenu, , type
-# Type : 0 = Oui/Non    1 = Texte
+# Type : 1 = Oui/Non    2 = Texte
 INSERT INTO OPERATION (op_contenu, op_type) VALUES
 ( "Contrôler les filtres", 1),
 ("Relever le niveau d'huile", 2),

@@ -1,15 +1,19 @@
 <?php
-
 	ob_start('ob_gzhandler');
 	session_start();
 	require_once 'bibli_generale.php';
 	verify_loged(isset($_SESSION['em_id']));
-	$_GET && redirection("./deconnexion.php"); 
+	$_GET && redirection("./deconnexion.php");
+
+	/*###################################################################
+							Contenu de la page view_user
+	###################################################################*/
 
 	echo '<img src="../img/icones/PNG/avatar/man.png" style="height:150px">';
 	
 	$bd = bd_connect();
-	$sql = "SELECT * FROM EMPLOYE WHERE em_id={$_SESSION['em_id']}";
+	$id = $_POST['id'];
+	$sql = "SELECT * FROM EMPLOYE WHERE em_id=".$id;
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	$t = mysqli_fetch_assoc($res);
 
@@ -36,10 +40,14 @@
 			'<button type="button" id="modifier" class="btn btn-modal btn-link" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</button>',
 		'</div>';
 
+	echo '<div>',
+		'<button type="button" class="btn btn-primary ajaxphplink" href="user.php">RETOUR</button>', 
+        ' <button type="button" id="'.$id.'" class="btn btn-modal btn-success"  data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">MODIFIER</button>',
+      '</div>';
+
 	echo '<form method="post" action="../test.php">';
 		modal_start(MODIFIER);
 	echo '</form>';
-
 
 	mysqli_close($bd);
 	ob_end_flush();

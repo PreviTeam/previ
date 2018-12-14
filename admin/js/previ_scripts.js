@@ -14,9 +14,15 @@ $(document).ready(function () {
   for(i = 0; i < links.length; i++){
       links[i].addEventListener('click', function(e) {
       e.preventDefault();
-      loadpage('#content-data', this.getAttribute('href'));
+      loadpage('#content-data', this.getAttribute('href'), null);
     });
   }
+
+  var search = document.getElementById("searchBtn");
+  search.addEventListener('click', function(e) {
+      e.preventDefault();
+      loadpage('#content-data', this.getAttribute('href'), $("#searchBar").val());
+    });
 
   // Fermeture des menu déroulant au click sur un nouvel item
   $('.dropdown-toggle').click(function () { $(".collapse").collapse("hide") });
@@ -29,7 +35,7 @@ $(document).ready(function () {
   * Les pages sont appelées depuis le sider statique
   * @param fname : url de la page à charger
   */
-  async function loadpage(name, fname){
+  async function loadpage(name, fname, search){
 
       //Animation de chargement pendant le loading de la page
       var loading = '<div id="floatingCirclesG">'+
@@ -45,8 +51,19 @@ $(document).ready(function () {
       $(name).html(loading);
 
       // Récuperation et affichage du contenu
-      var str = await fetch(fname);
-      $(name).html(await str.text());
+      if(search != null){
+        var temp = "id="+search;
+        var str = await fetch(fname, {  
+            method: "POST",  
+            body: temp,
+            headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
+          });
+        $(name).html(await str.text());
+      }
+      else{
+        var str = await fetch(fname);
+        $(name).html(await str.text());
+      }
       name == '#content-data' && f();
       external_links();
 }
@@ -125,7 +142,7 @@ async function post_load_modal_add(fname){
 * Chargement de la fenêtre modale de modification
 *
 */
-async function post_load_modal(fname, id, $content){
+async function post_load_modal(fname, id, content){
 
   var i='id='+id;
   var str = await fetch(fname, {  
@@ -134,7 +151,7 @@ async function post_load_modal(fname, id, $content){
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
   
-  $($content).html(await str.text());
+  $(content).html(await str.text());
   f();
   supressor("#modifyTable");
   moveRow("#modifyTable");
@@ -147,13 +164,13 @@ async function post_load_modal(fname, id, $content){
 * Chargement de la fenêtre modale de recherche générique
 * Le contenu chargé est le contenu du lien Href du bouton appelant 
 */
-async function post_load_modal_select(fname, $caller){
+async function post_load_modal_select(fname, caller){
   var str = await fetch(fname);
   $('#Selectmodal-body').html(await str.text());
 
   // ---- Récupération de la modal appelante (Modify ou Add)
   var table_name = 'none'
-  if($caller == 'addcall')
+  if(caller == 'addcall')
     table_name = '#addTable'; 
   else
     table_name = '#modifyTable';
@@ -194,11 +211,11 @@ async function post_load_modal_select(fname, $caller){
                         '<td><button class="supress btn btn-link" >Supprimer</button></td></tr>';
 
       // --- Réaffichage De la modale appelante  ----                            
-      if($caller === 'addcall'){
+      if(caller === 'addcall'){
         $('#addTable').prepend(content_line);
         $('#AddModal').modal('toggle');
       }
-      else if($caller === 'modifycall'){
+      else if(caller === 'modifycall'){
         $('#modifyTable').append(content_line);
         $('#ModifyModal').modal('toggle');
       }

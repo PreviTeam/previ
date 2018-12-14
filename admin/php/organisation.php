@@ -2,13 +2,13 @@
 
 	ob_start('ob_gzhandler');
 	session_start();
-
 	require_once 'bibli_generale.php';
-	error_reporting(E_ALL); 
+	verify_loged(isset($_SESSION['em_id']));
+	$_GET && redirection("./deconnexion.php");
 
 
 	/*###################################################################
-							Contenu de la page Dashboard
+							Contenu de la page Organisation
 	###################################################################*/
 	echo '<div class="scroller">';						
 	$entete=array("ID", "Code", "Designation", '');
@@ -33,9 +33,9 @@
 	create_table($entete, $content, null, "Organisations");
 
 	echo '</div>',
-			'<div class="adder">',
-				'<a id="add" href="modify_organisation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
-			'</div>';
+		'<div class="adder">',
+			'<a id="add" href="modify_organisation.php" data-toggle="modal" data-target="#AddModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+		'</div>';
 	
 
 	// Ajout des fenêtres modales
