@@ -12,26 +12,34 @@
 	$id = '';
 	$organisation = '';
 	$caller = "add";
+	$visite = array();
 
 	if(isset($_POST['id'])){
 		$caller="modify";
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
-				FROM modele, organisation 
+				FROM organisation, modele LEFT OUTER JOIN visite_attachement ON va_mo_id = mo_id 
+										  LEFT OUTER JOIN visite ON va_vi_id = vi_id
 				WHERE mo_or_id = or_id 
 				AND mo_id='$id'";
 
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-		$tableau = mysqli_fetch_assoc($res);
+		while($tableau = mysqli_fetch_assoc($res)){
 
-		$cd=entities_protect($tableau['mo_code']);
-		$de=entities_protect($tableau['mo_designation']);
-		$org=entities_protect($tableau['or_designation']);
-		$id = ' disabled value="'.entities_protect($tableau['or_id']).'"';
-		$code = "value='$cd'";
-		$design = "value='$de'";
-		$organisation = $org;
+			if($tableau['vi_designation'] != null){
+				$visite[] = create_table_ligne("line-table", array(entities_protect($tableau['vi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
+			}
+			$cd=entities_protect($tableau['mo_code']);
+			$de=entities_protect($tableau['mo_designation']);
+			$org=entities_protect($tableau['or_designation']);
+			$id = ' disabled value="'.entities_protect($tableau['or_id']).'"';
+			$code = "value='$cd'";
+			$design = "value='$de'";
+			$organisation = $org;
+		}
+
+		
 
 		mysqli_close($bd);
 	}
@@ -73,7 +81,19 @@ echo '<div>',
 			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $organisation ,'" aria-label="Default">',
 			  '<a class="selecteurUnique" id="', $caller,'call" href="select_organisation.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"</a>',
 			'</div>',
-		'</div>';
+		'</div>',
+
+		'<div class="tableForm">';
+
+		$entete=array("Visites", "Supprimer");
+
+		create_table($entete, $visite, $caller."Table", "Visites");
+
+				
+		echo
+			'<div class="adder">',
+				'<a class="selecteur" id="', $caller,'call" href="select_visite.php" data-toggle="modal" data-target="#SelectModal"><img class="adder-img" src="../img/icones/SVG/autre/plus.svg"/></a>',
+			'</div>';
 
 	ob_end_flush();
 ?>
