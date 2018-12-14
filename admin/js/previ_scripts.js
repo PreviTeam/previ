@@ -182,15 +182,15 @@ async function post_load_modal_select(fname, $caller){
 
     var lastordre = '';
     if($("#modifycall").attr("href") === "select_operation.php"){
-      lastordre = '<td><span class="ordre">'+(nbLines+1)+'</span></td>';
+      lastordre = '<td><span class="ordre">'+(nbLines+1)+'</span></td>' +
+                  '<td><button class="btn btn-link upper">up</button></td>' +  
+                  '<td><button class="btn btn-link downer">down</button></td>';
     }
       
       
       var content_line = '<tr class="line-table" ><td class="cell">'+
                         this.firstChild.nodeValue+'</td>'+ 
                         lastordre + 
-                        '<td><button class="btn btn-link upper">up</button></td>' +  
-                        '<td><button class="btn btn-link downer">down</button></td>'+
                         '<td><button class="supress btn btn-link" >Supprimer</button></td></tr>';
 
       // --- Réaffichage De la modale appelante  ----                            
