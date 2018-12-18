@@ -75,6 +75,13 @@
 			  '<input type="text" class="form-control" ', $prenomAct, ' aria-label="Default">',
 			'</div>',
 
+			'<div class="input-group mb-3">',
+			  '<div class="input-group-prepend">',
+			    '<span class="input-group-text" id="inputGroup-sizing-default">Password</span>',
+			  '</div>',
+			  '<input type="password" class="form-control" aria-label="Default">',
+			'</div>',
+
 			'<select class="custom-select">',
 				' <option value="admin" ', $admin, '>Administrateur</option>',
 				 '<option value="CE" ', $ce, '>Chef d\'équipe</option>',

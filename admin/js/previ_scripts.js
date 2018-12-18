@@ -205,18 +205,18 @@ async function post_load_modal_select(fname, caller){
     }
       
       
-      var content_line = '<tr class="line-table" ><td class="cell">'+
-                        this.firstChild.nodeValue+'</td>'+ 
+      var content_line = '<tr class="line-table" >'+
+                        '<td class="cell">' + this.firstChild.nodeValue+'</td>'+ 
                         lastordre + 
                         '<td><button class="supress btn btn-link" >Supprimer</button></td></tr>';
 
       // --- Réaffichage De la modale appelante  ----                            
       if(caller === 'addcall'){
-        $('#addTable').prepend(content_line);
+        $('#addTable .tableBody').prepend(content_line);
         $('#AddModal').modal('toggle');
       }
       else if(caller === 'modifycall'){
-        $('#modifyTable').append(content_line);
+        $('#modifyTable .tableBody').append(content_line);
         $('#ModifyModal').modal('toggle');
       }
 
@@ -274,6 +274,7 @@ function moveRow($table_name){
         $(this).parent().parent().before(temp);
       }
       reOrder($table_name);
+      console.log()
     });
   }
 }

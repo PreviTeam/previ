@@ -75,7 +75,7 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
  */ 
 function create_table($tableau_entete, $tableau_ligne, $class, $titre){
    $classe = $class != null ? $class : '';
-   echo '<h1 class="title_table">', $titre,'</h1><table class="table" id="', $classe, '""><thead>';
+   echo '<h1 class="title_table">', $titre,'</h1><table class="table" id="', $classe, '"><thead>';
    $colones_entete = sizeof($tableau_entete);
    $colones_ligne = sizeof($tableau_ligne);
 
@@ -83,12 +83,13 @@ function create_table($tableau_entete, $tableau_ligne, $class, $titre){
   for($i=0; $i < $colones_entete; $i++){
     echo '<th scope="col">', $tableau_entete[$i], '</th>';
   }
-  echo '</thead>';
+  echo '</thead>',
+      '<tbody class="tableBody">';
 
   for($i=0; $i < $colones_ligne; $i++){
     echo $tableau_ligne[$i];
   }
-  echo'</table>';
+  echo'</tbody></table>';
 }
 
 /**
