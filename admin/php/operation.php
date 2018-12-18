@@ -10,7 +10,10 @@
 	/*###################################################################
 							Contenu de la page Operation
 	###################################################################*/
-	echo '<div class="scroller">';						
+
+	
+	echo '<div class="scroller">';	
+	generic_top_title("../img/Admin.png", "Administration");					
 	$entete=array("Code Opération", "Contenu", "Demande", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *

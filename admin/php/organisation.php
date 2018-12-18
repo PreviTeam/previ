@@ -10,7 +10,10 @@
 	/*###################################################################
 							Contenu de la page Organisation
 	###################################################################*/
-	echo '<div class="scroller">';						
+
+						
+	echo '<div class="scroller">';		
+	generic_top_title("../img/equipement.jpg", "Equipements");					
 	$entete=array("ID", "Code", "Designation", '');
 
 	$bd = bd_connect();

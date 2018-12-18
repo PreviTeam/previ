@@ -10,8 +10,10 @@
 	/*###################################################################
 							Contenu de la page visite
 	###################################################################*/
-	
-	echo '<div class="scroller">';						
+
+
+	echo '<div class="scroller">';	
+	generic_top_title("../img/Admin.png", "Administration");					
 	$entete=array("Code Visite", "Désignation", "Version", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *

@@ -176,7 +176,7 @@ span{
 }
 
 .scroller{
-  height:95%;
+  height: 95%;
   width:95%;
   overflow: auto;
 }
@@ -302,6 +302,24 @@ span{
   position: relative;
   top: -85px;
   left: 170px;
+}
+
+
+#topper{
+  margin-bottom: 1em;
+  max-width: 350px;
+  height: 110px;
+  border-radius: 20px;
+  display: flex;
+  opacity: 0.80;
+  box-shadow: 5px 5px 2px 1px rgba(0, 0, 0, .2);
+}
+
+.topper-text{
+  color: #fff;
+  font-weight: bold;
+  font-size: 30px;
+  margin: auto;
 }
 
 /*  ------------ Footer ------------------ */

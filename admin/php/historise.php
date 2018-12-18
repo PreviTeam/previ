@@ -12,7 +12,10 @@
 	/*###################################################################
 							Contenu de la page Historise
 	###################################################################*/
-	echo '<div class="scroller">';						
+
+
+	echo '<div class="scroller">';			
+	generic_top_title("../img/passations.jpg", 'Passations');			
 	$entete=array("Visite", "Equipement", "Début", "Fin");
 	$content= array();
 

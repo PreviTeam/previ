@@ -8,8 +8,11 @@
 
 
 //__________________________________________   CONTENU    ______________________________________________ //
-
+	
+	echo '<div class="scroller">';
+	generic_top_title("../img/search.png", '');
 	echo '<div> Equipement, visites et fiches correspondant à votre recherche : ' , $_POST['id'], '</div>';
+    
 
 	$entete=array("Id", "Désignation",);
 	$bd = bd_connect();
@@ -96,6 +99,8 @@
 	create_table($entete, $contentOrganisation, null, "Organisation");
 	create_table($entete, $contentModele, null, "Modele");
 	create_table($entete, $contentOutil, null, "Outil");
+
+	echo '</div>';
 
 mysqli_close($bd);
 ob_end_flush();

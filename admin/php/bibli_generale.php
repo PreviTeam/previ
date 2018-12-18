@@ -23,18 +23,21 @@ define("SELECTEUR", "Select");
  */            
 function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteMoisDernier, &$nbFicheMoisDernier, $bd){
 
+  $m = date('m');
+  $lastM = $m-1;
+
   //Modifier pour limiter la sélection au deux mois voulus
   $sql='SELECT *
             FROM realisation_visite, realisation_fiche
             WHERE rf_rv_id = rv_id 
             AND rf_etat="1"
-            AND rv_fin LIKE "%-11-%"
+            AND rv_fin LIKE "%-'. $m . '-%"
         UNION 
         SELECT *
             FROM realisation_visite, realisation_fiche
             WHERE rf_rv_id = rv_id 
             AND rf_etat="1"
-            AND rv_fin LIKE "%-10-%"';
+            AND rv_fin LIKE "%-'. $lastM. '-%"';
 
   $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
   $dateEnCours= date('Y-m');
@@ -45,7 +48,7 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
 
   while($tableau = mysqli_fetch_assoc($res)){
 
-    if(intval(explode('-',$tableau['rv_fin'])[1]) === 11){
+    if(intval(explode('-',$tableau['rv_fin'])[1]) === $m){
        if($lastVisite === -1 || $lastVisite != $tableau['rv_vi_id'])
         $nbVisiteMoisEnCours++;
       if(intval($tableau['rf_etat']) === 1)
@@ -60,6 +63,7 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
      
     $lastVisite =  $tableau['rv_vi_id'];
    } 
+
 }
 
 
@@ -292,6 +296,11 @@ function get_visites($bd, $entete){
 									Génération de la page générique (dashboard)
 ################################################################################################*/
 
+function generic_top_title($img, $title){
+  echo '<div id="topper" style="background-image: url(', $img,');">',
+          '<p class="topper-text">', $title, '</p>',
+        '</div>';
+}
 
 /**
  * Fonction d'affichage de la page générique Dashboard jusqu'à son bloc contenu. Doit être suivi de la 
@@ -473,14 +482,14 @@ function generic_page_ending($bd){
   $nbFichesMoisEnCours= 0;
   $nbVisiteMoisDernier= 0;
   $nbFichesMoisDernier= 0;
-  get_sider_stats($nbVisiteMoisEnCours, $nbFicheMoisEnCours, $nbVisiteMoisDernier, $nbFicheMoisDernier, $bd);
+  get_sider_stats($nbVisiteMoisEnCours, $nbFicheMoisEnCours, $nbVisiteMoisDernier, $nbFichesMoisDernier, $bd);
   $ecartVisitesMois =   $nbVisiteMoisEnCours  -  $nbVisiteMoisDernier;
-  $ecartFichesMois  =   $nbFichesMoisEnCours   -  $nbFicheMoisDernier;
+  $ecartFichesMois  =   $nbFichesMoisEnCours   -  $nbFichesMoisDernier;
 
   $couleurVisite    =   $ecartVisitesMois >= 0  ? 'class="positif"' : 'class="negatif"';
   $couleurFiche     =   $ecartFichesMois  >= 0  ? 'class="positif"' : 'class="negatif"';
-
-        echo    
+ 
+        echo  
 
                     ' </div>',
 
@@ -508,7 +517,7 @@ function generic_page_ending($bd){
 
                             '<tr>',
                               '<th scope="row">Fiches</th>',
-                              '<td>',$nbFicheMoisDernier,'</td>',
+                              '<td>',$nbFichesMoisDernier,'</td>',
                               '<td>',$nbFichesMoisEnCours,'</td>',
                               '<td ', $couleurFiche,'>', $ecartFichesMois  , '</td>',
                             '</tr>',

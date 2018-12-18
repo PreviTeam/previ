@@ -13,7 +13,9 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
+						
 	echo '<div class="scroller">';
+	generic_top_title("../img/Admin.png", "Administration");	
 	$entete=array("Code Visite", "Désignation", "Versions", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
