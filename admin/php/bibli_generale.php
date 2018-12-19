@@ -66,6 +66,40 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
 
 }
 
+function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
+
+  //Modifier pour limiter la sélection au deux mois voulus
+  $sql='SELECT count(vi_id) as nb FROM visite
+        UNION
+        SELECT count(fi_id) FROM fiche
+        UNION
+        SELECT count(op_id) FROM operation';
+
+  $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+  $countLine = 1;
+
+  while($tableau = mysqli_fetch_assoc($res)){
+
+     switch($countLine){
+      case 1 :
+        $nbVisites = $tableau['nb'];
+      break;
+
+      case 2 : 
+        $nbFiches = $tableau['nb'];
+      break;
+
+      case 3 : 
+        $nbOp = $tableau['nb'];
+      break ;
+     }
+
+     $countLine++;
+   } 
+
+}
+
 
 /**
  * Fonction de création d'une dataGrid
@@ -209,7 +243,7 @@ function modal_select(){
         '<div class="modal-content">',
         '  <div class="modal-header">',
             '<h5 class="modal-title" id="ModalLabel">Selection</h5>',
-            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"  id="close">',
+            '<button type="button" class="close"  id="closeSelectModal">',
               '<span aria-hidden="true">&times;</span>',
            ' </button>',
           '</div>',
@@ -219,6 +253,28 @@ function modal_select(){
        ' </div>',
       '</div>',
     '</div>';
+}
+
+function modal_preferences(){
+
+  echo 
+  '<div class="modal fade" id="preferenceModal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
+    '<div class="modal-dialog" role="document">',
+      '<div class="modal-content">',
+        '<div class="modal-header">',
+          '<h5 class="modal-title" id="ModalLabel">Préférences</h5>',
+          '<button type="button" class="close" id="closeOptModal">',
+            '<span aria-hidden="true">&times;</span>',
+          '</button>',
+        '</div>',
+        '<div id="preferencemodal-body" class="modal-body">',
+        '</div>',
+          '<div class="modal-footer">',
+          ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-success">Modifier</button>',
+          '</div>',
+      '</div>',
+    '</div>',
+  '</div>';
 }
 
 
@@ -349,7 +405,7 @@ function generic_page_start($status){
                '<a  class="nav_icone" href="deconnexion.php">',
                   '<img src="../img/icones/SVG/autre/padlock.svg" alt="logout" height="30">',
                '</a>',
-                '<a  class="nav_icone" href="#">',
+                '<a  class="nav_icone btn-modal" data-toggle="modal" data-target="#preferenceModal" href="#">',
                   '<img src="../img/icones/SVG/autre/settings.svg" alt="options" height="30">',
                 '</a>',
                 '<a class="nav_icone phplink" href="account.php">',
@@ -485,9 +541,14 @@ function generic_page_ending($bd){
   get_sider_stats($nbVisiteMoisEnCours, $nbFicheMoisEnCours, $nbVisiteMoisDernier, $nbFichesMoisDernier, $bd);
   $ecartVisitesMois =   $nbVisiteMoisEnCours  -  $nbVisiteMoisDernier;
   $ecartFichesMois  =   $nbFichesMoisEnCours   -  $nbFichesMoisDernier;
-
   $couleurVisite    =   $ecartVisitesMois >= 0  ? 'class="positif"' : 'class="negatif"';
   $couleurFiche     =   $ecartFichesMois  >= 0  ? 'class="positif"' : 'class="negatif"';
+
+
+  $nbFiches = 0;
+  $nbVisites = 0;
+  $nbOp = 0;
+  get_sider_admin($nbVisites, $nbFiches, $nbOp, $bd);
  
         echo  
 
@@ -495,7 +556,12 @@ function generic_page_ending($bd){
 
                     '<div id="right_sider">',
 
-                      '<div id="notifications">',
+                      '<div id="notifications">',          
+                       '<img class="sider_icone" src="../img/icones/PNG/sider_droit/notification-flat.png" alt="b"/>',
+                       '<h4>Plans de Maintenance</h4>',
+                       '<p>Nombre de Visites Crées : ', $nbVisites , '</p>',
+                       '<p>Nombre de Fiches Crées : ', $nbFiches, '</p>',
+                       '<p>Nombre de d\'opérations Crées : ', $nbOp, '</p>',
                       '</div>',
 
                       '<div id="statistiques">',
@@ -541,8 +607,9 @@ function generic_page_ending($bd){
                   '</footer>',
 
               '</div>',
-            '</div>',
-
+            '</div>';
+            $_SESSION['em_status'] === 'ADMIN' && modal_preferences();
+  echo
           '</div>',
         '</body>',
   '</html>';

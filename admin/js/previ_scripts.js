@@ -26,6 +26,9 @@ $(document).ready(function () {
 
   // Fermeture des menu déroulant au click sur un nouvel item
   $('.dropdown-toggle').click(function () { $(".collapse").collapse("hide") });
+
+  //Fermeture de la modale des poréférence
+  $('#closeOptModal').click(function() { $("#preferenceModal").modal('hide')});
 });
 
 
@@ -165,8 +168,29 @@ async function post_load_modal(fname, id, content){
 * Le contenu chargé est le contenu du lien Href du bouton appelant 
 */
 async function post_load_modal_select(fname, caller){
+
+  $('#closeSelectModal').unbind();
+  $('#closeSelectModal').click(function() { 
+    $("#SelectModal").modal('hide');
+    console.log(caller);
+
+    // --- Réaffichage De la modale appelante  ----                            
+      if(caller === 'addcall'){
+        $('#AddModal').modal('toggle');
+      }
+      else if(caller === 'modifycall'){
+        $('#ModifyModal').modal('toggle');
+      }
+
+      // Application des liens de supression
+      supressor(table_name);
+      moveRow(table_name);
+  });
+
+
   var str = await fetch(fname);
   $('#Selectmodal-body').html(await str.text());
+
 
   // ---- Récupération de la modal appelante (Modify ou Add)
   var table_name = 'none'
