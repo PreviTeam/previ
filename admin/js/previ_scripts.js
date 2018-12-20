@@ -25,7 +25,6 @@ $(document).ready(function () {
 });
 
 
-
  /**
   * Fonction de chargement d'une page de manière assynchrone avec Fetch.
   * Les pages sont appelées depuis le sider statique
@@ -65,60 +64,45 @@ $(document).ready(function () {
 }
 
 /**
-* Fonction d'application du chargement des fenêtres modales
+* Fonction d'application du chargement des fenêtres modales dans les pages chargées
 *
 */
 function f() {  
   
-  var btn = document.getElementsByClassName('btn-modal');
-  var add = document.getElementById('add');
-  var select = document.getElementsByClassName('selecteur');
-  var select_unique = document.getElementsByClassName('selecteurUnique');
-
-  add != null && add.addEventListener('click', function(e) {
+  $('#add').click(function(e) {
     e.preventDefault();
     post_load_modal_add(this.getAttribute('href'));
     });
 
-  
-  for(j = 0; j < select.length; j++){
-    select[j].addEventListener('click', function(e) {
-      e.preventDefault();
-      post_load_modal_select(this.getAttribute('href'), this.getAttribute('id'));
-    });
-   }
+  $('.selecteur').click(function(e) {
+    e.preventDefault();
+    post_load_modal_select(this.getAttribute('href'), this.getAttribute('id'));
+  });
 
-   for(k = 0; k < select_unique.length; k++){
-    select_unique[k].addEventListener('click', function(e) {
-      e.preventDefault();
-      post_load_modal_select_unique(this.getAttribute('href'), this.getAttribute('id'));
-    });
-   }
+  $('.selecteurUnique').click(function(e) {
+    e.preventDefault();
+    post_load_modal_select_unique(this.getAttribute('href'), this.getAttribute('id'));
+  });
 
-  for(i = 0; i < btn.length; i++){
-     btn[i].addEventListener('click', function(e) {
-        e.preventDefault();
-        post_load_modal(this.getAttribute('href'), this.getAttribute('id'), '#Modifymodal-body');
-      });
-  }
+  $('.btn-modal').click(function(e) {
+    e.preventDefault();
+    post_load_modal(this.getAttribute('href'), this.getAttribute('id'), '#Modifymodal-body');
+  });
 }
 
 
 /**
-*Fonction de gestion du chargement Fetch du contenu des pages appelées depuis un autre contenu de page
+*Fonction de gestion du chargement via Fetch du contenu des pages appelées depuis un autre contenu de page
 *
 */
 function external_links(){
-  var links= document.getElementsByClassName('ajaxphplink');
 
-  // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
+  // Application, sur l'évènement Click, sur tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
-  for(i = 0; i < links.length; i++){
-      links[i].addEventListener('click', function(e) {
+      $('.ajaxphplink').click(function(e) {
       e.preventDefault();
       post_load_modal(this.getAttribute('href'), this.getAttribute('id'), "#content-data");
     });
-  }
 }
 
 
@@ -208,9 +192,7 @@ async function post_load_modal_select(fname, caller){
 
 
   // --- Au clique sur un équipement, celui ci est ajouté au tableau du modal appelant
-  var ret = document.getElementsByClassName('return');
-  for(i = 0; i < ret.length; i++){
-    ret[i].addEventListener('click', function(e) {
+    $('.return').click( function(e) {
     e.preventDefault();
 
     var lastordre = '';
@@ -240,22 +222,19 @@ async function post_load_modal_select(fname, caller){
       supressor(table_name);
       moveRow(table_name);
     });
-  }
 }
 
 
+
 function supressor($table_name){
-   var supress = document.getElementsByClassName('supress');
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
-  for(i = 0; i < supress.length; i++){
-      supress[i].addEventListener('click', function(e) {
+      $('.supress').click(function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
         reOrder($table_name);
     });
-  }
 }
 
 function reOrder($table_name){
@@ -283,7 +262,6 @@ function moveRow(table_name){
 
   $(table_name +  ' .downer').unbind("click");
   $(table_name +  ' .downer').bind('click', function(e){
-  console.log("down");
   var temp = $(this).parent().parent().next('tr');
   if(temp){
     $(this).parent().parent().before(temp);
@@ -318,22 +296,18 @@ async function post_load_modal_select_unique(fname, caller){
 
 
   // --- Au clique sur un équipement, celui ci est ajouté au tableau du modal appelant
-  var ret = document.getElementsByClassName('return');
-  for(i = 0; i < ret.length; i++){
-    ret[i].addEventListener('click', function(e) {
-      e.preventDefault();
-         
+    $('.return').click(function(e) {
+      e.preventDefault();      
       var value = this.firstChild.nodeValue;
 
       // --- Réaffichage De la modale appelante  ----                            
-      if($caller === 'addcall'){
+      if(caller === 'addcall'){
         $('#addUniqueSelector').attr("value", value);
         $('#AddModal').modal('toggle');
       }
-      else if($caller === 'modifycall'){
+      else if(caller === 'modifycall'){
         $('#modifyUniqueSelector').attr("value", value);
         $('#ModifyModal').modal('toggle');
       }
     });
-  }
 }
