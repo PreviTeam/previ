@@ -79,7 +79,7 @@ echo '<div>',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Organisation</span>',
 			  '</div>',
 			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $organisation ,'" aria-label="Default">',
-			  '<a class="selecteurUnique" id="', $caller,'call" href="select_organisation.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"</a>',
+			  '<a class="selecteurUnique" id="', $caller,'call" href="select_organisation.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"></a>',
 			'</div>',
 		'</div>',
 

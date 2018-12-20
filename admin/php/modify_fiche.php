@@ -72,7 +72,7 @@ echo '<div class="container-fluid">',
 			'</div>',
 			'<div class="tableForm">';
 
-			$entete=array("Designation", "Ordre", '' , '');
+			$entete=array("Designation", "Ordre", '' , '', '');
 
 			create_table($entete, $op, $caller."Table", "Operations");
 

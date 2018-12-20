@@ -63,7 +63,6 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
      
     $lastVisite =  $tableau['rv_vi_id'];
    } 
-
 }
 
 function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
@@ -97,7 +96,6 @@ function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
 
      $countLine++;
    } 
-
 }
 
 
@@ -113,7 +111,7 @@ function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
  */ 
 function create_table($tableau_entete, $tableau_ligne, $class, $titre){
    $classe = $class != null ? $class : '';
-   echo '<h1 class="title_table">', $titre,'</h1><table class="table" id="', $classe, '"><thead>';
+   echo '<h1>', $titre,'</h1><table class="table-fill" id="', $classe, '"><thead><tr>';
    $colones_entete = sizeof($tableau_entete);
    $colones_ligne = sizeof($tableau_ligne);
 
@@ -121,13 +119,13 @@ function create_table($tableau_entete, $tableau_ligne, $class, $titre){
   for($i=0; $i < $colones_entete; $i++){
     echo '<th scope="col">', $tableau_entete[$i], '</th>';
   }
-  echo '</thead>',
+  echo '</tr></thead>',
       '<tbody class="tableBody">';
 
   for($i=0; $i < $colones_ligne; $i++){
     echo $tableau_ligne[$i];
   }
-  echo'</tbody></table>';
+  echo'</tbody class="table-hover"></table>';
 }
 
 /**
