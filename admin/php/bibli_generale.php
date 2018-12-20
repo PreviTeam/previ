@@ -255,7 +255,27 @@ function modal_select(){
     '</div>';
 }
 
-function modal_preferences(){
+function modal_preferences($bd){
+
+  $sql = "SELECT * FROM admin_parameters";
+
+  $ps1 = '';
+  $ps2 = '';
+  $ps3 = '';
+  $eq1 = '';
+  $eq2 = '';
+  $eq3 = '';
+
+  $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+  $tableau = mysqli_fetch_assoc($res);
+
+  $ps1 = $tableau['ap_pslvl1'];
+  $ps2 = $tableau['ap_pslvl2'];
+  $ps3 = $tableau['ap_pslvl3'];
+  $eq1 = $tableau['ap_eqlvl1'];
+  $eq2 = $tableau['ap_eqlvl2'];
+  $eq3 = $tableau['ap_eqlvl3'];
+
 
   echo 
   '<div class="modal fade" id="preferenceModal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
@@ -263,12 +283,60 @@ function modal_preferences(){
       '<div class="modal-content">',
         '<div class="modal-header">',
           '<h5 class="modal-title" id="ModalLabel">Préférences</h5>',
-          '<button type="button" class="close" id="closeOptModal">',
+          '<button class="close" data-dismiss="modal" aria-label="Close"  id="close">',
             '<span aria-hidden="true">&times;</span>',
           '</button>',
         '</div>',
-        '<div id="preferencemodal-body" class="modal-body">',
-        '</div>',
+        '<div id="preferencemodal-body" class="modal-body">';
+
+      echo '<div class="container-fluid">',
+            '<h3>Passations</h3>',
+            '<div class="input-group mb-3">',
+              '<div class="input-group-prepend">',
+                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
+              '</div>',
+              '<input type="text" class="form-control" value="', $ps1 ,'" aria-label="Default">',
+            '</div>',
+
+            '<div class="input-group mb-3">',
+              '<div class="input-group-prepend">',
+                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
+              '</div>',
+              '<input type="text" class="form-control" value="', $ps2 ,'" aria-label="Default">',
+            '</div>',
+
+            '<div class="input-group mb-3">',
+              '<div class="input-group-prepend">',
+                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
+              '</div>',
+              '<input type="text" class="form-control" value="', $ps3 ,'" aria-label="Default">',
+            '</div>',
+
+          '<h3>Equipements</h3>',
+            '<div class="input-group mb-3">',
+              '<div class="input-group-prepend">',
+                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
+              '</div>',
+              '<input type="text" class="form-control" value="', $eq1 ,'" aria-label="Default">',
+            '</div>',
+
+            '<div class="input-group mb-3">',
+              '<div class="input-group-prepend">',
+                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
+              '</div>',
+              '<input type="text" class="form-control" value="', $eq2 ,'" aria-label="Default">',
+            '</div>',
+
+            '<div class="input-group mb-3">',
+              '<div class="input-group-prepend">',
+                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
+              '</div>',
+              '<input type="text" class="form-control" value="', $eq3 ,'" aria-label="Default">',
+            '</div>',
+
+          '</div>';
+
+  echo  '</div>',
           '<div class="modal-footer">',
           ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-success">Modifier</button>',
           '</div>',
@@ -608,7 +676,7 @@ function generic_page_ending($bd){
 
               '</div>',
             '</div>';
-            $_SESSION['em_status'] === 'ADMIN' && modal_preferences();
+            $_SESSION['em_status'] === 'ADMIN' && modal_preferences($bd);
   echo
           '</div>',
         '</body>',

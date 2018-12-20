@@ -41,8 +41,6 @@
 			$organisation = $org;
 		}
 
-		
-
 		mysqli_close($bd);
 	}
 

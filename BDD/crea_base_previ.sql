@@ -162,6 +162,22 @@ create table HISTO_REALISATION_OPERATION(
 	ro_res VARCHAR(10)
 );
 
+
+##########################################################
+#					ADMIN PARAM
+##########################################################
+
+create table admin_parameters(
+	ap_KEY INT NOT NULL DEFAULT 1,
+	ap_pslvl1 VARCHAR(15) NOT NULL DEFAULT 'Visites',
+	ap_pslvl2 VARCHAR(15) NOT NULL DEFAULT 'Fiches',
+	ap_pslvl3 VARCHAR(15) NOT NULL DEFAULT 'Operations',
+	ap_eqlvl1 VARCHAR(15) NOT NULL DEFAULT 'Organisaions',
+	ap_eqlvl2 VARCHAR(15) NOT NULL DEFAULT 'Modeles',
+	ap_eqlvl3 VARCHAR(15) NOT NULL DEFAULT 'Equipements',
+	constraint pk_params_admin PRIMARY KEY (ap_KEY, ap_pslvl1, ap_pslvl2, ap_pslvl3, ap_eqlvl1, ap_eqlvl2, ap_eqlvl3)
+);
+
 ##########################################################
 #					FOREIGN KEY
 ##########################################################

@@ -1,7 +1,4 @@
-
-
-// Script générant les connades à créer au cgargement de la page.
-// Les évenements sont ensuite mis en place  lors d'évènements.
+// A la premiere execution de la page dashboard
 $(document).ready(function () {  
 
   loadpage('#content-data', 'dashboard_content.php');
@@ -11,15 +8,13 @@ $(document).ready(function () {
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
-  for(i = 0; i < links.length; i++){
-      links[i].addEventListener('click', function(e) {
+    $('.phplink').click( function(e) {
       e.preventDefault();
       loadpage('#content-data', this.getAttribute('href'), null);
     });
-  }
 
-  var search = document.getElementById("searchBtn");
-  search.addEventListener('click', function(e) {
+  // Chargement de la page de recherche
+  $('#searchBtn').click(function(e) {
       e.preventDefault();
       loadpage('#content-data', this.getAttribute('href'), $("#searchBar").val());
     });
@@ -27,8 +22,6 @@ $(document).ready(function () {
   // Fermeture des menu déroulant au click sur un nouvel item
   $('.dropdown-toggle').click(function () { $(".collapse").collapse("hide") });
 
-  //Fermeture de la modale des poréférence
-  $('#closeOptModal').click(function() { $("#preferenceModal").modal('hide')});
 });
 
 
@@ -171,8 +164,7 @@ async function post_load_modal_select(fname, caller){
 
   $('#closeSelectModal').unbind();
   $('#closeSelectModal').click(function() { 
-    $("#SelectModal").modal('hide');
-    console.log(caller);
+  $("#SelectModal").modal('hide');
 
     // --- Réaffichage De la modale appelante  ----                            
       if(caller === 'addcall'){
@@ -253,7 +245,7 @@ async function post_load_modal_select(fname, caller){
 
 
 function supressor($table_name){
-   var supress= document.getElementsByClassName('supress');
+   var supress = document.getElementsByClassName('supress');
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
@@ -277,34 +269,45 @@ function reOrder($table_name){
     }
 }
 
-function moveRow($table_name){
+function moveRow(table_name){
 
-  var upper = $('.upper');
-  for(i = 0 ; i < upper.length; ++i){
-    upper[i].addEventListener('click', function(e){
-      var temp = $(this).parent().parent().prev('tr');
-      if(temp){
-        $(this).parent().parent().after(temp);
-      }
-      reOrder($table_name);
-    });
-  }
+  $(table_name + ' .upper').unbind();
+  $(table_name + ' .upper').bind('click', function(e){
+    var temp = $(this).parent().parent().prev('tr');
+    if(temp){
+      $(this).parent().parent().after(temp);
+    }
+    reOrder(table_name);
+  });
 
-  var downer = $('.downer');
-  for(i = 0 ; i < downer.length; ++i){
-    downer[i].addEventListener('click', function(e){
-      var temp = $(this).parent().parent().next('tr');
-      if(temp){
-        $(this).parent().parent().before(temp);
-      }
-      reOrder($table_name);
-      console.log()
-    });
+
+  $(table_name +  ' .downer').unbind("click");
+  $(table_name +  ' .downer').bind('click', function(e){
+  console.log("down");
+  var temp = $(this).parent().parent().next('tr');
+  if(temp){
+    $(this).parent().parent().before(temp);
   }
+  reOrder(table_name);
+});
+
 }
 
 
-async function post_load_modal_select_unique(fname, $caller){
+async function post_load_modal_select_unique(fname, caller){
+
+  $('#closeSelectModal').unbind();
+  $('#closeSelectModal').click(function() { 
+  $("#SelectModal").modal('hide');
+
+    // --- Réaffichage De la modale appelante  ----                            
+      if(caller === 'addcall'){
+        $('#AddModal').modal('toggle');
+      }
+      else if(caller === 'modifycall'){
+        $('#ModifyModal').modal('toggle');
+      }
+  });
 
   var str = await fetch(fname);
   $('#Selectmodal-body').html(await str.text());
