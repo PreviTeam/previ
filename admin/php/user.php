@@ -58,8 +58,8 @@
 		'</div>';
 
 	// Ajout des fenêtres modales
-	modal_start(MODIFIER);
-	modal_start(NOUVEAU);
+	modal_start(MODIFIER, 'user');
+	modal_start(NOUVEAU, 'user');
 
 	mysqli_close($bd);
 	ob_end_flush();

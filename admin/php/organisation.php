@@ -43,8 +43,8 @@
 
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
-	modal_start(MODIFIER);
-	modal_start(NOUVEAU);
+	modal_start(MODIFIER, 'organisation');
+	modal_start(NOUVEAU, 'organisation');
 
 	mysqli_close($bd);
 	ob_end_flush();

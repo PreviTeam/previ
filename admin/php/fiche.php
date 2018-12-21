@@ -42,8 +42,8 @@
 		'</div>';
 	
 	// Ajout des fenêtres modales
-	modal_start(MODIFIER);
-	modal_start(NOUVEAU);
+	modal_start(MODIFIER, 'fiche');
+	modal_start(NOUVEAU, 'fiche');
 	modal_select();
 
 

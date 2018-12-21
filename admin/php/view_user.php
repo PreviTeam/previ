@@ -40,11 +40,11 @@
 		'</div>';
 
 	echo '<div>',
-		'<button type="button" class="btn btn-primary ajaxphplink" href="user.php">RETOUR</button>', 
-        ' <button type="button" id="'.$id.'" class="btn btn-modal btn-success"  data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">MODIFIER</button>',
-      '</div>';
+		   '<button type="button" class="btn btn-primary ajaxphplink" href="user.php">RETOUR</button>', 
+           '<button type="button" id="'.$t['em_code'].'" class="btn btn-modal btn-success"  data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">MODIFIER</button>',
+        '</div>';
 
-	echo '<form method="post" action="../test.php">';
+	echo '<form method="post" action="./test.php">';
 		modal_start(MODIFIER);
 	echo '</form>';
 

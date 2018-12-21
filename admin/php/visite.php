@@ -41,8 +41,8 @@
 	
 	// Ajout des fenêtres modales
 	// Ajout des fenêtres modales
-	modal_start(MODIFIER);
-	modal_start(NOUVEAU);
+	modal_start(MODIFIER, 'visite');
+	modal_start(NOUVEAU, 'visite');
 	modal_select();
 
 	mysqli_close($bd);

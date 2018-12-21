@@ -11,10 +11,9 @@ $_GET && redirection("./deconnexion.php");
 
 //__________________________________________   CONTENU    ______________________________________________ //
 
-generic_page_start($_SESSION['em_status']);
-
-
 $bd = bd_connect();
+
+generic_page_start($_SESSION['em_status'], $bd);
 
 generic_page_ending($bd);
 

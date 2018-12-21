@@ -201,28 +201,29 @@ function create_treeview($title, $niveaux){
  *
  * @return      void
  */ 
-function modal_start($type){
+function modal_start($type, $currentPage){
   $titre = ($type === 'Modify') ? 'Modifier' : 'Nouveau';
-  $btns = ($type === 'Modify') ? '<button type="button" class="btn btn-danger">Supprimer</button> <button type="button" class="btn btn-success">Sauvegarder les modifications</button>' :
-                                ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-primary">Créer</button>';
+  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Sauvegarder les modifications</button>' :
+                                ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" data-bddAction="create" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</button>';
   echo 
   '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
     '<div class="modal-dialog" role="document">',
       '<div class="modal-content">',
-      '  <div class="modal-header">',
+        '<div class="modal-header">',
           '<h5 class="modal-title" id="ModalLabel">', $titre, '</h5>',
           '<button type="button" class="close" data-dismiss="modal" aria-label="Close"  id="close">',
             '<span aria-hidden="true">&times;</span>',
          ' </button>',
         '</div>',
-       ' <div id="', $type, 'modal-body" class="modal-body">',
-       '</div>',
+        '<div id="', $type, 'modal-body" class="modal-body">',
+          // Contenu de la modale insérée dynamiquement via JS 
+        '</div>',
           '<div class="modal-footer">',
           $btns,
           '</div>',
-        '</div>',
-     ' </div>',
-    '</div>';
+      '</div>',
+    '</div>',
+  '</div>';
 }
 
 /**
@@ -428,7 +429,29 @@ function generic_top_title($img, $title){
  * Fonction d'affichage de la page générique Dashboard jusqu'à son bloc contenu. Doit être suivi de la 
  * fonction generic_page_ending pour cloturer la page correctement.
  */ 
-function generic_page_start($status){
+function generic_page_start($status, $bd){
+
+
+  $sql = "SELECT * FROM admin_parameters";
+
+  $ps1 = '';
+  $ps2 = '';
+  $ps3 = '';
+  $eq1 = '';
+  $eq2 = '';
+  $eq3 = '';
+
+  $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+  $tableau = mysqli_fetch_assoc($res);
+
+  $ps1 = $tableau['ap_pslvl1'];
+  $ps2 = $tableau['ap_pslvl2'];
+  $ps3 = $tableau['ap_pslvl3'];
+  $eq1 = $tableau['ap_eqlvl1'];
+  $eq2 = $tableau['ap_eqlvl2'];
+  $eq3 = $tableau['ap_eqlvl3'];
+
+
   echo  '<!DOCTYPE html>',
     '<html lang="fr">',
 
@@ -503,17 +526,17 @@ function generic_page_start($status){
                                 '<li class="nav-item">',
                                    '<a class="nav-link sub-item phplink" href="visite.php">',
                                    '<img class="nav-icon" src="../img/icones/SVG/autre/map.svg" alt="a"/>',
-                                   '<span>Visites</span></a>',
+                                   '<span>',$ps1,'</span></a>',
                                 '</li>',
                                 '<li class="nav-item">',
                                     '<a class="nav-link sub-item phplink" href="fiche.php">',
                                     '<img class="nav-icon" src="../img/icones/SVG/autre/copy.svg" alt="a"/>',
-                                    '<span>Fiches</span></a>',
+                                    '<span>',$ps2,'</span></a>',
                                '</li>',
                               ' <li class="nav-item">',
                                     '<a class="nav-link sub-item phplink" href="operation.php">',
                                     '<img class="nav-icon" src="../img/icones/SVG/autre/file.svg" alt="a"/>',
-                                    '<span>Opération</span></a>',
+                                    '<span>',$ps3,'</span></a>',
                                '</li>',
                             '</ul>',
                        ' </li>';
@@ -548,17 +571,17 @@ function generic_page_start($status){
                              '<li class="nav-item">',
                                   '<a class="nav-link sub-item phplink" href="organisation.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/settings-1.svg" alt="a"/>',
-                                  '<span>Organisations</span></a>',
+                                  '<span>',$eq1,'</span></a>',
                               '</li>',
                              '<li class="nav-item ">',
                                   '<a class="nav-link sub-item phplink" href="modele.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/copy.svg" alt="a"/>',
-                                  '<span>Modèles</span></a>',
+                                  '<span>',$eq2,'</span></a>',
                               '</li>',
                               '<li class="nav-item ">',
                                   '<a class="nav-link sub-item phplink" href="outil.php">',
                                   '<img class="nav-icon" src="../img/icones/SVG/autre/puzzle.svg" alt="a"/>',
-                                  '<span>Outils</span></a>',
+                                  '<span>',$eq3,'</span></a>',
                               '</li>',
                           '</ul>',
                       '</li>';
