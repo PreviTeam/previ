@@ -8,8 +8,6 @@
 	/*###################################################################
 							Contenu de la page view_user
 	###################################################################*/
-
-	echo '<img src="../img/icones/PNG/avatar/man.png" style="height:150px">';
 	
 	$bd = bd_connect();
 	$id = $_POST['id'];
@@ -32,20 +30,24 @@
 			break;
 	}
 
-	echo 
-		'<div class="perso">',
-			$t['em_nom'],' ',$t['em_prenom'],' ',($t['em_inactif'])? '<span class="marge inactif" style="color:red">Inactif ' : '<span class="marge inactif" style="color:green">Actif ','</span><br><span class="status">',$status,'</span>',
-		'</div><div class="info">Mon Code Acteur<span class="marge">',$t['em_code'],'</span></div>',
-		'<div class="info">Mot de Passe<span class="marge">****************</span>',
+	$inactif = ($t['em_inactif'] === '1') ? '<span class="marge inactif" style="color:red">Inactif </span>' : '<span class="marge inactif" style="color:green">Actif </span>';
+
+	echo '<div class="perso">',
+			'<div class="inside-class"><img alt="imgProfil" src="../img/icones/PNG/avatar/man.png" style="height:100px; width:100px;"><span class="collum-dir"><h3>',
+			$t['em_nom'],' ',$t['em_prenom'],' </h3>',$status,'</span></div>', 
+			$inactif,
+		'</div><div class="info">Mon Code Acteur<span class="span-space">',$t['em_code'],'</span></div>',
+		'<div class="info">Mot de Passe<span class="span-space">****************</span>',
+			'<button type="button" id="modifier" class="btn btn-modal btn-link marge" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</button>',
 		'</div>';
 
-	echo '<div>',
+	echo '<div class="bloc-btn">',
 		   '<button type="button" class="btn btn-primary ajaxphplink" href="user.php">RETOUR</button>', 
            '<button type="button" id="'.$t['em_code'].'" class="btn btn-modal btn-success"  data-toggle="modal" href="user_modify.php" data-target="#ModifyModal">MODIFIER</button>',
         '</div>';
 
 	echo '<form method="post" action="./test.php">';
-		modal_start(MODIFIER);
+		modal_start(MODIFIER, 'user');
 	echo '</form>';
 
 	mysqli_close($bd);
