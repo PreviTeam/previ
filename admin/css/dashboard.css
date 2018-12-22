@@ -759,13 +759,77 @@ td:last-child {
 @media screen and (max-width: 650px) {
   .sidebar{
     display: none;
-  }
+ 
 }
 
 
 @media screen and (max-width: 450px) {
+
   #logo{
     display: none;
+  }
+
+   .title_table{
+    font-size:15px;
+  }
+
+  th {
+    color:#D5DDE5;;
+    background:#3b434f;
+    border-right: 1px solid #343a45;
+    font-size:10px;
+    padding: 10px 17px;
+    text-align:left;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    vertical-align:middle;
+  }
+
+  tr {
+    border-top: 1px solid #C1C3D1;
+    border-bottom-: 1px solid #C1C3D1;
+    color:#666B85;
+    font-size:10px;
+    font-weight:normal;
+    text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  }
+
+  td {
+    background:#FFFFFF;
+    padding: 3px 10px;
+    text-align:left;
+    vertical-align:middle;
+    font-weight:300;
+    font-size:10px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #C1C3D1;
+  }
+
+  td .btn{
+    padding:0;
+    font-size:10px;
+  }
+
+
+  #middle{
+    max-height: none;
+  }
+
+  .scroller{
+    overflow: visible; 
+  }
+
+  .sticky-footer{
+    font-size: 10px;
+    padding: 2em 0;
+    bottom: 0;
+  }
+
+  #content-data.scrollbar{
+    margin:1em 0;
+  }
+
+  .table-fill{
+    margin: 0.2em;
   }
 }
 
