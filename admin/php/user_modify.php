@@ -16,8 +16,6 @@
 	$nomAct = '';
 	$prenomAct = '';
 
-	echo($_POST['id']);
-
 	if(isset($_POST['id'])){
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);

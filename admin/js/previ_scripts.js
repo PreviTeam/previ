@@ -325,7 +325,8 @@ async function bdd_modifier(fname, action){
 
   var post_params = '';
 
-  if(action === 'delete'){
+
+  if(action === 'delete'){ // ------------------------------------  Préparation pour la suppression de l'élément
     post_params = 'id_delete='+ $('#ModifyModal .id').val() +'';
   }
   else if(action === 'modify'){
@@ -339,17 +340,17 @@ async function bdd_modifier(fname, action){
     }
 
     //Envoie des données des tables
-    var tableLines = $('#ModifyModal tr');
+    var tableLines = $('#ModifyModal tr');  // --------------------  Préparation pour la modification de l'élément
     for(i = 1; i < tableLines.length ; ++i){
       post_params += 't'+i +'='+ $(tableLines[i].firstChild).text();
       if(i < tableLines.length)
         post_params += '&';
     }
   }
-  else if(action === 'create'){
-    var inputs = $('#AddModal input');
+  else if(action === 'create'){  // -------------------------------  Préparation pour l'ajout d'un élément
 
     //Envoie des traitements des inputs
+    var inputs = $('#AddModal input');
     for(i = 0; i < inputs.length ; ++i){
       post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
       if(i < inputs.length)
@@ -364,6 +365,17 @@ async function bdd_modifier(fname, action){
         post_params += '&';
     }
   }
+  else if(action === 'updatePrefs'){ // ------------------------  Préparation pour la modification des préférences
+
+    //Envoie des traitements des inputs
+    var inputs = $('#preferenceModal input');
+    for(i = 0; i < inputs.length ; ++i){
+      post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
+      if(i < inputs.length)
+        post_params += '&';
+    }
+
+  }
 
   var str = await fetch(fname, {  
     method: "POST",  
@@ -371,5 +383,8 @@ async function bdd_modifier(fname, action){
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
   console.log(await str.text());
+
+  if(action === 'updatePrefs')
+    window.location.reload(true);
   
 }

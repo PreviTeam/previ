@@ -233,12 +233,13 @@ span{
 .adder{
   width: 100%;
   max-height : 50px;
+  margin-bottom: 0.5em ;
   text-align: right;
+   padding: 10px;
 }
 
 .adder-img{
-  max-width: 30px;
-  margin: 2em;
+  height: 30px;
 
 }
 
@@ -837,11 +838,13 @@ td:last-child {
 /* ---------   Width Responsive   --------------- */
 
 @media screen and (max-height: 550px) {
-  #right_sider{
+
+   #right_sider{
     display: none;
   }
 
   #topper{
     display: none;
   }
+  
 }

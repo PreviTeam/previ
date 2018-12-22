@@ -277,7 +277,7 @@ function modal_preferences($bd){
 
 
   echo 
-  '<div class="modal fade" id="preferenceModal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
+  '<div class="modal fade" id="preferenceModal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">',
     '<div class="modal-dialog" role="document">',
       '<div class="modal-content">',
         '<div class="modal-header">',
@@ -289,26 +289,27 @@ function modal_preferences($bd){
         '<div id="preferencemodal-body" class="modal-body">';
 
       echo '<div class="container-fluid">',
+
             '<h3>Passations</h3>',
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
               '</div>',
-              '<input type="text" class="form-control" value="', $ps1 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="ps1" value="', $ps1 ,'" aria-label="Default">',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
               '</div>',
-              '<input type="text" class="form-control" value="', $ps2 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="ps2" value="', $ps2 ,'" aria-label="Default">',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
               '</div>',
-              '<input type="text" class="form-control" value="', $ps3 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="ps3" value="', $ps3 ,'" aria-label="Default">',
             '</div>',
 
           '<h3>Equipements</h3>',
@@ -316,28 +317,28 @@ function modal_preferences($bd){
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
               '</div>',
-              '<input type="text" class="form-control" value="', $eq1 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="eq1" value="', $eq1 ,'" aria-label="Default">',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
               '</div>',
-              '<input type="text" class="form-control" value="', $eq2 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="eq2" value="', $eq2 ,'" aria-label="Default">',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
               '</div>',
-              '<input type="text" class="form-control" value="', $eq3 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="eq3" value="', $eq3 ,'" aria-label="Default">',
             '</div>',
-
+            '<p class="text-danger">La modification va réinitialiser les préférences de l\'application et forcer son redémarage</p>',
           '</div>';
 
   echo  '</div>',
           '<div class="modal-footer">',
-          ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-success">Modifier</button>',
+          ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-success bdd_request" data-bddAction="updatePrefs" href="bdd_preferences.php" >Modifier</button>',
           '</div>',
       '</div>',
     '</div>',
