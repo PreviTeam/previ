@@ -111,7 +111,7 @@ function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
  */ 
 function create_table($tableau_entete, $tableau_ligne, $class, $titre){
    $classe = $class != null ? $class : '';
-   echo '<h1>', $titre,'</h1><table class="table-fill" id="', $classe, '"><thead><tr>';
+   echo '<h2 class="title_table">', $titre,'</h1><table class="table-fill" id="', $classe, '"><thead><tr>';
    $colones_entete = sizeof($tableau_entete);
    $colones_ligne = sizeof($tableau_ligne);
 
@@ -376,44 +376,44 @@ function get_visites($bd, $entete){
 
     if(empty($content))
       $content[] = create_table_ligne(null, array("Rien a afficher"));
-    create_table($entete, $content, null, "Visites");
+    create_table($entete, $content, null, "Visites en Cours");
   }
 
-  function get_fiches($bd, $entete){
+function get_fiches($bd, $entete){
     
-    $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, count(ro_id) as totOp
-        FROM realisation_fiche, realisation_visite, outil, fiche, realisation_operation
-        WHERE rf_fi_id = fi_id
-        AND ro_rf_id = rf_id
-        AND rf_rv_id = rv_id
-        AND rv_ou_id = ou_id
-        AND rf_etat = 0
-        GROUP BY rf_id";
+  $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, count(ro_id) as totOp
+      FROM realisation_fiche, realisation_visite, outil, fiche, realisation_operation
+      WHERE rf_fi_id = fi_id
+      AND ro_rf_id = rf_id
+      AND rf_rv_id = rv_id
+      AND rv_ou_id = ou_id
+      AND rf_etat = 0
+      GROUP BY rf_id";
 
-    $content =array();
-    $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+  $content =array();
+  $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-    while($tableau = mysqli_fetch_assoc($res)){
-      $sql2 = "SELECT count(op_id) as nbOp
-           FROM fiche, compo_fiche, operation
-           WHERE fi_id = cf_fi_id
-           AND op_id = cf_op_id
-           AND fi_id = '".$tableau['fi_id']."'";
-      $res2 = mysqli_query($bd, $sql2) or bd_erreur($bd, $sql);
-      $nbOperationParFiche =  mysqli_fetch_assoc($res2);
+  while($tableau = mysqli_fetch_assoc($res)){
+    $sql2 = "SELECT count(op_id) as nbOp
+         FROM fiche, compo_fiche, operation
+         WHERE fi_id = cf_fi_id
+         AND op_id = cf_op_id
+         AND fi_id = '".$tableau['fi_id']."'";
+    $res2 = mysqli_query($bd, $sql2) or bd_erreur($bd, $sql);
+    $nbOperationParFiche =  mysqli_fetch_assoc($res2);
 
-      $ligne=array($tableau['fi_designation'],
-             $tableau['ou_designation'], 
-             $tableau['rf_debut'],
-             ($tableau['totOp'] *100 / $nbOperationParFiche['nbOp'])."%");
-      $content[] = create_table_ligne(null, $ligne);
-    }
-
-    if(empty($content))
-      $content[] = create_table_ligne(null, array("Rien a afficher"));
-
-    create_table($entete, $content, null, "Fiches");
+    $ligne=array($tableau['fi_designation'],
+           $tableau['ou_designation'], 
+           $tableau['rf_debut'],
+           ($tableau['totOp'] *100 / $nbOperationParFiche['nbOp'])."%");
+    $content[] = create_table_ligne(null, $ligne);
   }
+
+  if(empty($content))
+    $content[] = create_table_ligne(null, array("Rien a afficher"));
+
+  create_table($entete, $content, null, "Fiches en Cours");
+}
 
 /*################################################################################################
 									Génération de la page générique (dashboard)
@@ -462,7 +462,7 @@ function generic_page_start($status, $bd){
        '<title>Previ</title>',
 
         '<link href="../css/bootstrap.min.css" rel="stylesheet">',
-        '<link href="../css/login.css" rel="stylesheet">',
+        '<link href="../css/dashboard.css" rel="stylesheet">',
         '<meta name="viewport" content="width-device-width, initial-scale=1.0">',
 
 
@@ -480,8 +480,8 @@ function generic_page_start($status, $bd){
 
           '<nav class="navbar header static-top">',
 
-            '<a id="logo" class="col-md-2" href="dashboard.php">PREVI</a>',
-             '<form class="d-md-inline-block form-inline col-md-8">',
+            '<a id="logo" href="dashboard.php">PREVI</a>',
+             '<form class="d-md-inline-block form-inline">',
                 '<div class="input-group">',
                   '<input id="searchBar" type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">',
                   '<div class="input-group-append">',
@@ -490,7 +490,7 @@ function generic_page_start($status, $bd){
                   '</div>',
                 '</div>',
               '</form>',
-             ' <div class="inline-icon col-md-2">',
+             ' <div class="inline-icon">',
                '<a  class="nav_icone" href="deconnexion.php">',
                   '<img src="../img/icones/SVG/autre/padlock.svg" alt="logout" height="30">',
                '</a>',
@@ -689,7 +689,7 @@ function generic_page_ending($bd){
                         '<a href="#">Contacter le support</a>',
                         '<a href="#">Licence</a>',
                       '</div>',
-                      '<div class="media col-md-1">',
+                      '<div class="media">',
                         '<a href="https://github.com/PreviTeam/previ" class="github"><img class="nav-icon" src="../img/icones/SVG/social/github-logo.svg" alt="a"/></a>',
                         '<a href="#" class="facebook"><img class="nav-icon" src="../img/icones/SVG/social/facebook.svg" alt="a"/></a>',
                       '</div>',
