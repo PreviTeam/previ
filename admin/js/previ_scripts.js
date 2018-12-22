@@ -334,7 +334,11 @@ async function bdd_modifier(fname, action){
 
     //Envoie des traitements des inputs
     for(i = 0; i < inputs.length ; ++i){
-      post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
+      if($(inputs[i]).attr('type') === 'checkbox')
+        post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).is(':checked');
+      else
+        post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
+      
       if(i < inputs.length)
         post_params += '&';
     }
@@ -347,12 +351,18 @@ async function bdd_modifier(fname, action){
         post_params += '&';
     }
   }
-  else if(action === 'create'){  // -------------------------------  Préparation pour l'ajout d'un élément
+  else if(action === 'create'){
+    var inputs = $('#AddModal input');
+    console.log(inputs);
 
     //Envoie des traitements des inputs
     var inputs = $('#AddModal input');
     for(i = 0; i < inputs.length ; ++i){
-      post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
+      if($(inputs[i]).attr('type') === 'checkbox')
+        post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).is(':checked');
+      else
+        post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
+      
       if(i < inputs.length)
         post_params += '&';
     }
