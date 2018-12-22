@@ -9,7 +9,7 @@
 					Contenu de la page view_visite
 	###################################################################*/
 
-	$entete=array("Code Visite", "Désignation", "Fiches", "Vesions", "Modeles", '', '');
+	$entete=array("Code Visite", "Désignation", "Fiches", "Versions", "Modeles", '', '');
 	$bd = bd_connect();
 
 	$sql = "SELECT DISTINCT fi_id, vi_id, mo_designation, fi_designation, vi_designation, vi_num_vers 

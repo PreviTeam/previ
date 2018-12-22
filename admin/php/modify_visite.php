@@ -13,6 +13,7 @@
 	$id = '';
 	$vers='';
 	$de='';
+	$inactif = '';
 	$fi=array();
 	$caller = 'add';
 
@@ -33,6 +34,7 @@
 			}
 			$de = 'value ="'.entities_protect($tableau['vi_designation']).'"';
 			$vers = 'value ="'.entities_protect($tableau['vi_num_vers']).'"';
+			$inactif = ($tableau['vi_inactif'])? 'checked' : '';
 		}
 		mysqli_close($bd);
 	}
@@ -41,7 +43,7 @@ echo '<div class="container-fluid">',
 			'<div class="inputs">',
 				'<div class="form-check-inline">',
 				  '<label class="form-check-label">',
-				   ' <input  type="checkbox" data-input="inactif" class="form-check-input" value="">Inactif',
+				   ' <input  type="checkbox" data-input="inactif" class="form-check-input" ',$inactif,' value="">Inactif',
 				  '</label>',
 				'</div>',
 
@@ -49,7 +51,7 @@ echo '<div class="container-fluid">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Code Visite</span>',
 				  '</div>',
-				  '<input type="text" data-input="id_modify" class="id form-control"',$id,' aria-label="Default">',
+				  '<input type="text" data-input="id_',$caller,'" class="id form-control"',$id,' aria-label="Default">',
 				'</div>',
 
 				'<div class="input-group mb-3">',

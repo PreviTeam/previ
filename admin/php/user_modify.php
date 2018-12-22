@@ -16,9 +16,9 @@
 	$nomAct = '';
 	$prenomAct = '';
 
-	echo($_POST['id']);
-
 	if(isset($_POST['id'])){
+		echo($_POST['id']);
+
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * FROM employe WHERE em_code='$id'";
@@ -47,7 +47,6 @@
 
 		mysqli_close($bd);
 	}
-
 
 	echo '<div>',
 			'<div class="form-check-inline">',
