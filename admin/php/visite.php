@@ -32,6 +32,10 @@
 					'<button type="button" id="'. $tableau['vi_id'] .'" class="btn btn-modal btn-link" data-toggle="modal" href="modify_visite.php" data-target="#ModifyModal">Modifier</button>');
 		$content[] = create_table_ligne(null, $ligne);
 	}
+
+	echo '<div class="alert alert-success alert-dismissible fade show" role="alert">',
+  			'Modifications réalisées avec Succès !',
+			'</div>';
 	create_table($entete, $content, null, "Visites");
 
 	echo '</div>',

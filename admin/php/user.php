@@ -10,8 +10,7 @@
 	/*###################################################################
 							Contenu de la page Utilisateurs
 	###################################################################*/
-							
-	
+
 	echo '<div class="scroller">';			
 	generic_top_title("../img/Admin.png", "Administration");							
 	$entete=array("Code Utilisateur", "Nom", "Prénom", "Status", '' ,'');
@@ -51,6 +50,9 @@
 		$i++;
 	}
 
+	echo '<div class="alert alert-success alert-dismissible fade show" role="alert">',
+  			'Modifications réalisées avec Succès !',
+			'</div>';
 	create_table($entete, $content, null, "Utilisateurs");
 	echo '</div>',
 		'<div class="adder">',
@@ -60,6 +62,7 @@
 	// Ajout des fenêtres modales
 	modal_start(MODIFIER, 'user');
 	modal_start(NOUVEAU, 'user');
+
 
 	mysqli_close($bd);
 	ob_end_flush();

@@ -203,8 +203,8 @@ function create_treeview($title, $niveaux){
  */ 
 function modal_start($type, $currentPage){
   $titre = ($type === 'Modify') ? 'Modifier' : 'Nouveau';
-  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Sauvegarder les modifications</button>' :
-                                ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" data-bddAction="create" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</button>';
+  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" data-refresh="'.$currentPage.'"  href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Sauvegarder les modifications</button>' :
+                                ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" data-bddAction="create" data-refresh="'.$currentPage.'" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</button>';
   echo 
   '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
     '<div class="modal-dialog" role="document">',

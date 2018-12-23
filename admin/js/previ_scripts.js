@@ -68,6 +68,8 @@ $(document).ready(function () {
 *
 */
 function f() {  
+
+  $('.alert').hide();
   
   $('#add').click(function(e) {
     e.preventDefault();
@@ -404,13 +406,15 @@ async function bdd_modifier(fname, action, refresh){
   else{
 
     // Fermeture des fenêtres modales et rechargement du contenu de la page
-  $('#AddModal').modal('hide');
-  $('#ModifyModal').modal('hide');
-  $(".modal-backdrop").remove();
-  var str = await fetch(refresh+'.php');
-  $('#content-data').html(await str.text());
-  f();
-  external_links();
+    $('#AddModal').modal('hide');
+    $('#ModifyModal').modal('hide');
+    $(".modal-backdrop").remove();
+    var str = await fetch(refresh+'.php');
+    $('#content-data').html(await str.text());
+    f();
+    $('.alert').show();
+    external_links();
+    setTimeout( function() {$('.alert').hide()}, 5000); 
   }
 }
 
