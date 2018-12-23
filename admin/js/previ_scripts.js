@@ -1,19 +1,21 @@
-// A la premiere execution de la page dashboard
+
+/* ###############################################################################################
+                            Execution Au début de la Page
+##################################################################################################*/
+
 $(document).ready(function () {  
 
+  // Chargement de la page de démarage
   loadpage('#content-data', 'dashboard_content.php');
 
-  //Capture des liens affichant une page et du bloc contenu qui affichera le contenu des pages chargées
-  var links= document.getElementsByClassName('phplink');
-
-  // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
-  // Récupération de la page cible via l'attribut href
+  // Application des écouteurs de click sur les liens du menu chargant dynamiquement les pages contenues via Fetch
     $('.phplink').click( function(e) {
       e.preventDefault();
       loadpage('#content-data', this.getAttribute('href'), null);
     });
 
-  // Chargement de la page de recherche
+
+  // Application de l'écouteur pour le chargement de la page de recherche
   $('#searchBtn').click(function(e) {
       e.preventDefault();
       loadpage('#content-data', this.getAttribute('href'), $("#searchBar").val());
@@ -25,10 +27,20 @@ $(document).ready(function () {
 });
 
 
+
+
+/* ###############################################################################################
+                    Fonctions de  Chargement Via Fetch des pages contenues
+##################################################################################################*/
+
+
  /**
   * Fonction de chargement d'une page de manière assynchrone avec Fetch.
   * Les pages sont appelées depuis le sider statique
-  * @param fname : url de la page à charger
+  *
+  * @param name   : Identifiant de la balise HTML dans laquelle charger la page
+  * @param fname  : chemin de la page à charger
+  * @param search : String à transmettre via Post à la page appelé. Utilisé pour la page de recherche
   */
   async function loadpage(name, fname, search){
 
@@ -45,7 +57,7 @@ $(document).ready(function () {
                       '</div>';
       $(name).html(loading);
 
-      // Récuperation et affichage du contenu
+      // Récuperation et affichage du contenu avec application de la méthode POST avec le contenu de search
       if(search != null){
         var temp = "id="+search;
         var str = await fetch(fname, {  
@@ -63,51 +75,57 @@ $(document).ready(function () {
       external_links();
 }
 
+
 /**
-* Fonction d'application du chargement des fenêtres modales dans les pages chargées
-*
-*/
+ * Fonction appelée au chargement d'une page contenue, activant tous les handlers dans celle ci
+ * Contenus Modaux, et modification BDD depuis les pages modales
+ */
 function f() {  
 
+  // Masque les aletres de la page
   $('.alert').hide();
   
+
+  // Chargement des  handler d'ouverture des fenetres modales d' Ajout
   $('#add').click(function(e) {
     e.preventDefault();
     post_load_modal_add(this.getAttribute('href'));
     });
 
+  // Chargement des  handler d'ouverture des fenetres modales de séletion
   $('.selecteur').click(function(e) {
     e.preventDefault();
     post_load_modal_select(this.getAttribute('href'), this.getAttribute('id'));
   });
 
+  // Chargement des  handler d'ouverture des fenetres modales de sélection unique
   $('.selecteurUnique').click(function(e) {
     e.preventDefault();
     post_load_modal_select_unique(this.getAttribute('href'), this.getAttribute('id'));
   });
 
+  // Chargement des handler d'ouverture des fenetres modales de modification
   $('.btn-modal').click(function(e) {
     e.preventDefault();
     post_load_modal(this.getAttribute('href'), this.getAttribute('id'), '#Modifymodal-body');
   });
 
-  // A déplacer ! 
+  // Réinitialisation des boutons de modification Ajout Suppression de la BDD et affectation du nouveau Handler
   $('.bdd_request').unbind();
   $('.bdd_request').click(function(e){
     e.preventDefault();
     bdd_modifier(this.getAttribute('href'), this.getAttribute('data-bddAction'), $(this).attr('data-refresh'));
   });
-
 }
 
 
+
 /**
-*Fonction de gestion du chargement via Fetch du contenu des pages appelées depuis un autre contenu de page
-*
-*/
+ * Fonction de gestion du chargement via Fetch d'une page contenu depuis une autre page contenu
+ */
 function external_links(){
 
-  // Application, sur l'évènement Click, sur tous les items modifiant le contenu de la page
+  // Application, sur l'évènement Click à tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
       $('.ajaxphplink').click(function(e) {
       e.preventDefault();
@@ -117,9 +135,10 @@ function external_links(){
 
 
 /**
-* Chargement de la fenêtre modale d'ajout
-*
-*/
+ * Chargement de la fenêtre modale d'ajout (add) et du contenu en fonction de la page appelante
+ *
+ * @param  fname  : page à charger dans la fenêtre modale
+ */
 async function post_load_modal_add(fname){
   var str = await fetch(fname);
   $('#Addmodal-body').html(await str.text());
@@ -129,9 +148,12 @@ async function post_load_modal_add(fname){
 }
 
 /**
-* Chargement de la fenêtre modale de modification
-*
-*/
+ * Chargement de la fenêtre modale de modification (modify) et du contenu en fonction de la page appelante
+ *
+ * @param  fname  : page à charger dans la fenêtre modale
+ * @param  id     : id de l'élément à modifier, qui sera transmit via la méthode post
+ * @param  content: Balise HTML dans lequel insérer le résultat de la page appelée
+ */
 async function post_load_modal(fname, id, content){
 
   var i='id='+id;
@@ -151,11 +173,14 @@ async function post_load_modal(fname, id, content){
 
 
 /**
-* Chargement de la fenêtre modale de recherche générique
-* Le contenu chargé est le contenu du lien Href du bouton appelant 
-*/
+ * Chargement de la fenêtre modale de sélection et du contenu en fonction de la page appelante
+ *
+ * @param  fname  : page à charger dans la fenêtre modale
+ * @param  caller : Fenêtre modale appelante à recharger à la fermeture de la modale sélect (add ou modify)
+ */
 async function post_load_modal_select(fname, caller){
-
+  
+  // Réinitialisation de la fermeture de la fenêtre et application de l'action suivant la fermeture de cette modale
   $('#closeSelectModal').unbind();
   $('#closeSelectModal').click(function() { 
   $("#SelectModal").modal('hide');
@@ -174,6 +199,7 @@ async function post_load_modal_select(fname, caller){
   });
 
 
+  // Chargement de la page voulu dans le contenu de la modale de sélection
   var str = await fetch(fname);
   $('#Selectmodal-body').html(await str.text());
 
@@ -185,9 +211,9 @@ async function post_load_modal_select(fname, caller){
   else
     table_name = '#modifyTable';
 
-  var nbLines = 0;
 
-  // --- Récupération de toutes les lignes déjà présentes dans le tableau 
+  var nbLines = 0;
+  // --- Récupération de toutes les lignes déjà présentes dans le tableau permettant d'afficher des doublons
   var identifiants = $(table_name+' .line-table');
     for(i = 0 ; i < identifiants.length; ++i){
       nbLines++;
@@ -235,18 +261,29 @@ async function post_load_modal_select(fname, caller){
 }
 
 
-
-function supressor($table_name){
+/**
+ * Fonction d'application des écouteurs pour la supression d'une ligne dans un tableau
+ *
+ * @param table_name : id de la table cible
+ */
+function supressor(table_name){
 
   // Application, sur l'évènement Click, de la fonction précédente, sur tous les items modifiant le contenu de la page
   // Récupération de la page cible via l'attribut href
       $('.supress').click(function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
-        reOrder($table_name);
+        reOrder(table_name);
     });
 }
 
+
+/**
+ * Fonction de réorganisation des lignes d'un tableau et attribution d'un ordre aux lignes
+ * utilisé pour l'odre des opérations dans une fiche
+ *
+ * @param table_name : id de la table cible
+ */
 function reOrder($table_name){
   var nbLignes = 0;
 
@@ -258,6 +295,11 @@ function reOrder($table_name){
     }
 }
 
+/**
+ * Fonction d'application des écouteurs pour le délacement des lignes d'une table (up and down)
+ *
+ * @param table_name : id de la table cible
+ */
 function moveRow(table_name){
 
   $(table_name + ' .upper').unbind();
@@ -282,6 +324,12 @@ function moveRow(table_name){
 }
 
 
+/**
+ * Chargement de la fenêtre modale de sélection unique et du contenu en fonction de la page appelante
+ *
+ * @param  fname  : page à charger dans la fenêtre modale
+ * @param  caller : Fenêtre modale appelante à recharger à la fermeture de la modale sélect (add ou modify)
+ */
 async function post_load_modal_select_unique(fname, caller){
 
   $('#closeSelectModal').unbind();
@@ -323,6 +371,14 @@ async function post_load_modal_select_unique(fname, caller){
 }
 
 
+/**
+ * Fonction de récupération des données d'une fenêtre modale, construction des données dans POST et envoie à la page
+ * cible pour une modification en BDD
+ *
+ * @param  fname  : page cible en charge de la modification en BDD
+ * @param  action : action à appliquer (delete, modify, create, updatePrefs)
+ * @param  refresh: préfixe de la page contenue à refresh après la mise a jour de la BDD
+ */
 async function bdd_modifier(fname, action, refresh){
 
   var post_params = '';
