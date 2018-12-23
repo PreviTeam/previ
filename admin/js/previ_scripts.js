@@ -93,7 +93,7 @@ function f() {
   $('.bdd_request').unbind();
   $('.bdd_request').click(function(e){
     e.preventDefault();
-    bdd_modifier(this.getAttribute('href'), this.getAttribute('data-bddAction'));
+    bdd_modifier(this.getAttribute('href'), this.getAttribute('data-bddAction'), $(this).attr('data-refresh'));
   });
 
 }
@@ -321,7 +321,7 @@ async function post_load_modal_select_unique(fname, caller){
 }
 
 
-async function bdd_modifier(fname, action){
+async function bdd_modifier(fname, action, refresh){
 
   var post_params = '';
 
@@ -379,6 +379,10 @@ async function bdd_modifier(fname, action){
     //Envoie des traitements des inputs
     var inputs = $('#preferenceModal input');
     for(i = 0; i < inputs.length ; ++i){
+      if($(inputs[i]).val() === ''){
+        alert("Les champs ne peuvent êtres vides ! ");
+        return;
+      }
       post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).val();
       if(i < inputs.length)
         post_params += '&';
@@ -386,14 +390,27 @@ async function bdd_modifier(fname, action){
 
   }
 
+
+  // Rechargement de la page complète ou du data-content
   var str = await fetch(fname, {  
     method: "POST",  
     body: post_params,
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
-  console.log(await str.text());
+  //console.log(await str.text());
 
   if(action === 'updatePrefs')
     window.location.reload(true);
-  
+  else{
+
+    // Fermeture des fenêtres modales et rechargement du contenu de la page
+  $('#AddModal').modal('hide');
+  $('#ModifyModal').modal('hide');
+  $(".modal-backdrop").remove();
+  var str = await fetch(refresh+'.php');
+  $('#content-data').html(await str.text());
+  f();
+  external_links();
+  }
 }
+

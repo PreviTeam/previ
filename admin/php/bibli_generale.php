@@ -203,7 +203,7 @@ function create_treeview($title, $niveaux){
  */ 
 function modal_start($type, $currentPage){
   $titre = ($type === 'Modify') ? 'Modifier' : 'Nouveau';
-  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Sauvegarder les modifications</button>' :
+  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Sauvegarder les modifications</button>' :
                                 ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" data-bddAction="create" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</button>';
   echo 
   '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
@@ -295,21 +295,21 @@ function modal_preferences($bd){
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
               '</div>',
-              '<input type="text" class="form-control input" data-input="ps1" value="', $ps1 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="ps1" value="', $ps1 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
               '</div>',
-              '<input type="text" class="form-control input" data-input="ps2" value="', $ps2 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="ps2" value="', $ps2 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
               '</div>',
-              '<input type="text" class="form-control input" data-input="ps3" value="', $ps3 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="ps3" value="', $ps3 ,'" aria-label="Default" required>',
             '</div>',
 
           '<h3>Equipements</h3>',
@@ -317,21 +317,21 @@ function modal_preferences($bd){
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
               '</div>',
-              '<input type="text" class="form-control input" data-input="eq1" value="', $eq1 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="eq1" value="', $eq1 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
               '</div>',
-              '<input type="text" class="form-control input" data-input="eq2" value="', $eq2 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="eq2" value="', $eq2 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
                 '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
               '</div>',
-              '<input type="text" class="form-control input" data-input="eq3" value="', $eq3 ,'" aria-label="Default">',
+              '<input type="text" class="form-control input" data-input="eq3" value="', $eq3 ,'" aria-label="Default" required>',
             '</div>',
             '<p class="text-danger">La modification va réinitialiser les préférences de l\'application et forcer son redémarage</p>',
           '</div>';
