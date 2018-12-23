@@ -69,7 +69,8 @@ create table FICHE(
 create table OPERATION(
 	op_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	op_contenu VARCHAR(600),
-	op_type INT
+	op_type INT,
+	op_inactif BOOLEAN
 );
 
 ##########################################################

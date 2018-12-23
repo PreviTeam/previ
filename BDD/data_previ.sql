@@ -108,17 +108,17 @@ INSERT INTO FICHE (fi_designation, fi_num_vers, fi_inactif ) VALUES
 ( "Fiche prépa Mines Bus", "MG45-565", false),
 ( "Fiche Mines Bus", "MG45-565", false);
 
-#id, contenu, , type
+#id, contenu, type, inactif
 # Type : 1 = Oui/Non    2 = Texte
-INSERT INTO OPERATION (op_contenu, op_type) VALUES
-( "Contrôler les filtres", 1),
-("Relever le niveau d'huile", 2),
-("Contrôler le serrage Roues",  1),
-( "Verifier la charge batterie", 1),
-( "Mesure Roue AVG", 2),
-( "Mesure Roue AVD", 2),
-( "Mesure Roue ARG", 2),
-( "Mesure Roue ARD", 2);
+INSERT INTO OPERATION (op_contenu, op_type, op_inactif) VALUES
+( "Contrôler les filtres", 1, 0),
+("Relever le niveau d'huile", 2, 0),
+("Contrôler le serrage Roues",  1, 0),
+( "Verifier la charge batterie", 1, 0),
+( "Mesure Roue AVG", 2, 0),
+( "Mesure Roue AVD", 2, 0),
+( "Mesure Roue ARG", 2, 0),
+( "Mesure Roue ARD", 2, 0);
 
 
 ##########################################################

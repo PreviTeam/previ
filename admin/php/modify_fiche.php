@@ -15,6 +15,7 @@
 	$de = '';
 	$caller = 'add';
 	$op = array();
+	$inactif = '';
 
 	if(isset($_POST['id'])){
 		$caller = 'modify';
@@ -37,6 +38,7 @@
 			}
 			$de = 'value="'.entities_protect($tableau['fi_designation']).'"';
 			$vers = 'value="'.entities_protect($tableau['fi_num_vers']).'"';
+			$inactif = ($tableau['fi_inactif'])? 'checked' : '';
 		}
 		mysqli_close($bd);
 	}
@@ -45,7 +47,7 @@ echo '<div class="container-fluid">',
 				'<div class="inputs">',
 				'<div class="form-check-inline">',
 				  '<label class="form-check-label">',
-				   ' <input type="checkbox" class="form-check-input" value="">Inactif',
+				   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'"',$inactif,' value="">Inactif',
 				  '</label>',
 				'</div>',
 
@@ -53,21 +55,21 @@ echo '<div class="container-fluid">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Code Fiche</span>',
 				  '</div>',
-				  '<input type="text" class="form-control"',$id,' aria-label="Default">',
+				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'"',$id,' aria-label="Default">',
 				'</div>',
 
 				'<div class="input-group mb-3">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Num. Version</span>',
 				  '</div>',
-				  '<input type="text" class="form-control"',$vers,' aria-label="Default">',
+				  '<input type="text" data-input="version" class="form-control form_',$caller,'"',$vers,' aria-label="Default">',
 				'</div>',
 
 				'<div class="input-group mb-3">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Designation</span>',
 				  '</div>',
-				  '<input type="text" class="form-control"',$de,' aria-label="Default">',
+				  '<input type="text" data-input="designation" class="form-control form_',$caller,'"',$de,' aria-label="Default">',
 				'</div>',
 			'</div>',
 			'<div class="tableForm">';

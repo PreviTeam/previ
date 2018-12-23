@@ -330,7 +330,7 @@ async function bdd_modifier(fname, action){
     post_params = 'id_delete='+ $('#ModifyModal .id').val() +'';
   }
   else if(action === 'modify'){
-    var inputs = $('#ModifyModal input');
+    var inputs = $('.form_modify');
 
     //Envoie des traitements des inputs
     for(i = 0; i < inputs.length ; ++i){
@@ -352,8 +352,7 @@ async function bdd_modifier(fname, action){
     }
   }
   else if(action === 'create'){
-    var inputs = $('#AddModal input');
-    console.log(inputs);
+    var inputs = $('.form_add');
 
     //Envoie des traitements des inputs
     var inputs = $('#AddModal input');

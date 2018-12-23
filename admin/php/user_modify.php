@@ -9,15 +9,17 @@
 							Contenu de la page user_modify
 	###################################################################*/
 
-	$adin='';
+	$admin='';
 	$ce='';
 	$tech = '';
 	$codeAct = '';
 	$nomAct = '';
 	$prenomAct = '';
+	$caller = 'add';
+	$inactif = '';
 
 	if(isset($_POST['id'])){
-		echo($_POST['id']);
+		$caller = 'modify';
 
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
@@ -31,6 +33,7 @@
 		$codeAct = ' disabled value="'.entities_protect($tableau['em_code']).'"';
 		$nomAct = "value='$nom'";
 		$prenomAct = "value='$prenom'";
+		$inactif = ($tableau['em_inactif'])? 'checked' : '';
 
 		
 		switch($tableau['em_status']){
@@ -51,7 +54,7 @@
 	echo '<div>',
 			'<div class="form-check-inline">',
 			  '<label class="form-check-label">',
-			   ' <input type="checkbox" class="form-check-input">Inactif',
+			   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'" ',$inactif ,'>Inactif',
 			  '</label>',
 			'</div>',
 
@@ -59,31 +62,31 @@
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Code acteur</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $codeAct, ' aria-label="Default">',
+			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $codeAct, ' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Nom</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $nomAct ,' aria-label="Default">',
+			  '<input type="text" data-input="nom" class="form-control form_',$caller,'" ', $nomAct ,' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Prénom</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $prenomAct, ' aria-label="Default">',
+			  '<input type="text" data-input="prenom" class="form-control form_',$caller,'" ', $prenomAct, ' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Password</span>',
 			  '</div>',
-			  '<input type="password" class="form-control" aria-label="Default">',
+			  '<input type="password" data-input="pass" class="form-control form_',$caller,'" aria-label="Default">',
 			'</div>',
 
-			'<select class="custom-select">',
+			'<select data-input="select" class="custom-select form_',$caller,'">',
 				' <option value="admin" ', $admin, '>Administrateur</option>',
 				 '<option value="CE" ', $ce, '>Chef d\'équipe</option>',
 				 '<option value="tech" ', $tech,'>Technicien</option>',

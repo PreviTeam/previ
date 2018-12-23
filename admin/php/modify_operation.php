@@ -18,6 +18,7 @@
 	$o_n = '';
 	$epi = array();
 	$caller = 'add';
+	$inactif = '';
 
 	if(isset($_POST['id'])){
 		$caller = 'modify';
@@ -35,12 +36,13 @@
 				$epi[] = create_table_ligne("line-table", array(entities_protect($tableau['epi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
 			$de=entities_protect($tableau['op_type']);
 			$content = entities_protect($tableau['op_contenu']);
+			$inactif = ($tableau['op_inactif'])? 'checked' : '';
 
 			switch($tableau['op_type']){
-			case 0:
+			case 1:
 				$o_n = 'selected';			
 				break;
-			case 1:
+			case 2:
 				$text = 'selected';
 				break;
 			}
@@ -53,7 +55,7 @@ echo '<div class="container-fluid">',
 			'<div class="inputs">',
 				'<div class="form-check-inline">',
 				  '<label class="form-check-label">',
-				   ' <input type="checkbox" class="form-check-input" value="">Inactif',
+				   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'"',$inactif,' value="">Inactif',
 				  '</label>',
 				'</div>',
 
@@ -61,17 +63,17 @@ echo '<div class="container-fluid">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Id</span>',
 				  '</div>',
-				  '<input type="text" class="form-control" ', $id ,' aria-label="Default">',
+				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id ,' aria-label="Default">',
 				'</div>',
 
 				'<div class="input-group mb-3">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Contenu</span>',
 				  '</div>',
-				  '<textarea class="form-control"> ', entities_protect($content) ,'</textarea>',
+				  '<textarea data-input="contenu" class="form-control form_',$caller,'"> ', entities_protect($content) ,'</textarea>',
 				'</div>',
 
-				'<select class="custom-select">',
+				'<select data-input="select" class="custom-select form_',$caller,'">',
 					'<option value="oui_non" ', $o_n, '>Oui - Non</option>',
 				 	'<option value="texte" ', $text,'>Texte</option>',
 				'</select>',
