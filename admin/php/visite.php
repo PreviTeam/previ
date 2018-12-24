@@ -14,7 +14,7 @@
 
 	echo '<div class="scroller">';	
 	generic_top_title("../img/Admin.png", "Administration");					
-	$entete=array("Code Visite", "Désignation", "Version", '', '');
+	$entete=array("Code", "Désignation", "Version", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
 			FROM visite";
@@ -36,7 +36,7 @@
 	echo '<div class="alert alert-success alert-dismissible fade show" role="alert">',
   			'Modifications réalisées avec Succès !',
 			'</div>';
-	create_table($entete, $content, null, "Visites");
+	create_table($entete, $content, null,  $_SESSION['ps1']);
 
 	echo '</div>',
 		'<div class="adder">',

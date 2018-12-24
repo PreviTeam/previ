@@ -11,7 +11,7 @@
 	
 	echo '<div class="scroller">';
 	generic_top_title("../img/search.png", '');
-	echo '<div> Equipement, visites et fiches correspondant à votre recherche : ' , $_POST['id'], '</div>';
+	echo '<div> Correspondances avec : ' , $_POST['id'], '</div>';
     
 
 	$entete=array("Id", "Désignation",);
@@ -93,12 +93,12 @@
 			$contentVisite[] = create_table_ligne(null, $ligneVisite);
 		}
 	}
-	create_table($entete, $contentVisite, null, "Visite");
-	create_table($entete, $contentFiche, null, "Fiche");
-	create_table($entete, $contentOperation, null, "Operation");
-	create_table($entete, $contentOrganisation, null, "Organisation");
-	create_table($entete, $contentModele, null, "Modele");
-	create_table($entete, $contentOutil, null, "Outil");
+	create_table($entete, $contentVisite, null, $_SESSION['ps1']);
+	create_table($entete, $contentFiche, null, $_SESSION['ps2']);
+	create_table($entete, $contentOperation, null, $_SESSION['ps3']);
+	create_table($entete, $contentOrganisation, null, $_SESSION['eq1']);
+	create_table($entete, $contentModele, null, $_SESSION['eq2']);
+	create_table($entete, $contentOutil, null, $_SESSION['eq3']);
 
 	echo '</div>';
 

@@ -9,7 +9,7 @@
 							Contenu de la page view_modele
 	###################################################################*/
 
-	$entete=array("Id", "Code", "Designation", "Organisation", "Visites",);
+	$entete=array("Id", "Code", "Designation", $_SESSION['eq1'], $_SESSION['ps1'],);
 	$bd = bd_connect();
 	
 

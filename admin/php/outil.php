@@ -37,7 +37,7 @@
 	echo '<div class="alert alert-success alert-dismissible fade show" role="alert">',
   			'Modifications réalisées avec Succès !',
 			'</div>';
-	create_table($entete, $content, null, "Outils");
+	create_table($entete, $content, null,  $_SESSION['eq3']);
 
 	echo '</div>',
 		'<div class="adder">',

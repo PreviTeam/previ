@@ -71,7 +71,7 @@ echo '<div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
-			    '<span class="input-group-text" id="inputGroup-sizing-default">Modele</span>',
+			    '<span class="input-group-text" id="inputGroup-sizing-default">',$_SESSION['eq2'],'</span>',
 			  '</div>',
 			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $modele ,'"  aria-label="Default">',
 			   '<a class="selecteurUnique" id="', $caller,'call" href="select_modele.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"</a>',

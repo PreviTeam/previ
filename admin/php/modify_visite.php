@@ -49,7 +49,7 @@ echo '<div class="container-fluid">',
 
 				 '<div class="input-group mb-3">',
 				  '<div class="input-group-prepend">',
-				    '<span class="input-group-text" id="inputGroup-sizing-default">Code Visite</span>',
+				    '<span class="input-group-text" id="inputGroup-sizing-default">Code</span>',
 				  '</div>',
 				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'"',$id,' aria-label="Default">',
 				'</div>',
@@ -71,9 +71,9 @@ echo '<div class="container-fluid">',
 			'</div>',
 			'<div class="tableForm">';
 
-			$entete=array("NumFiche", "Designation");
+			$entete=array("Num".$_SESSION['ps2'], "Designation");
 
-			create_table($entete, $fi,  $caller."Table", "Fiches");
+			create_table($entete, $fi,  $caller."Table", $_SESSION['ps2']);
 
 			echo
 			'<div class="adder">',

@@ -16,7 +16,7 @@
 
 	echo '<div class="scroller">';			
 	generic_top_title("../img/passations.jpg", 'Passations');			
-	$entete=array("Visite", "Equipement", "Début", "Fin");
+	$entete=array($_SESSION['ps1'], "Equipement", "Début", "Fin");
 	$content= array();
 
 	if(empty($content))

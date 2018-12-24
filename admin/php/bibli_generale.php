@@ -268,12 +268,14 @@ function modal_preferences($bd){
   $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
   $tableau = mysqli_fetch_assoc($res);
 
-  $ps1 = $tableau['ap_pslvl1'];
+  $ps1 = $tableau['ap_pslvl1']; 
   $ps2 = $tableau['ap_pslvl2'];
   $ps3 = $tableau['ap_pslvl3'];
-  $eq1 = $tableau['ap_eqlvl1'];
+   
+  $eq1 = $tableau['ap_eqlvl1']; 
   $eq2 = $tableau['ap_eqlvl2'];
   $eq3 = $tableau['ap_eqlvl3'];
+  
 
 
   echo 
@@ -377,7 +379,7 @@ function get_visites($bd, $entete){
 
     if(empty($content))
       $content[] = create_table_ligne(null, array("Rien a afficher"));
-    create_table($entete, $content, null, "Visites en Cours");
+    create_table($entete, $content, null, $_SESSION['ps1'] . " en Cours");
   }
 
 function get_fiches($bd, $entete){
@@ -413,7 +415,7 @@ function get_fiches($bd, $entete){
   if(empty($content))
     $content[] = create_table_ligne(null, array("Rien a afficher"));
 
-  create_table($entete, $content, null, "Fiches en Cours");
+  create_table($entete, $content, null, $_SESSION['ps2'] ." en Cours");
 }
 
 /*################################################################################################
@@ -451,6 +453,13 @@ function generic_page_start($status, $bd){
   $eq1 = $tableau['ap_eqlvl1'];
   $eq2 = $tableau['ap_eqlvl2'];
   $eq3 = $tableau['ap_eqlvl3'];
+
+  $_SESSION['ps1'] = $tableau['ap_pslvl1'];
+  $_SESSION['ps2'] = $tableau['ap_pslvl2'];
+  $_SESSION['ps3'] = $tableau['ap_pslvl3'];
+  $_SESSION['eq1'] = $tableau['ap_eqlvl1'];
+  $_SESSION['eq2'] = $tableau['ap_eqlvl2'];
+  $_SESSION['eq3'] = $tableau['ap_eqlvl3'];
 
 
   echo  '<!DOCTYPE html>',
@@ -649,9 +658,9 @@ function generic_page_ending($bd){
                       '<div id="notifications">',          
                        '<img class="sider_icone" src="../img/icones/PNG/sider_droit/notification-flat.png" alt="b"/>',
                        '<h4>Plans de Maintenance</h4>',
-                       '<p>Nombre de Visites Crées : ', $nbVisites , '</p>',
-                       '<p>Nombre de Fiches Crées : ', $nbFiches, '</p>',
-                       '<p>Nombre de d\'opérations Crées : ', $nbOp, '</p>',
+                       '<p>Nombre de ',$_SESSION['ps1'],' Crées : ', $nbVisites , '</p>',
+                       '<p>Nombre de ',$_SESSION['ps2'],' Crées : ', $nbFiches, '</p>',
+                       '<p>Nombre de ',$_SESSION['ps3'],' Crées : ', $nbOp, '</p>',
                       '</div>',
 
                       '<div id="statistiques">',
@@ -665,14 +674,14 @@ function generic_page_ending($bd){
                             '</thead>',
 
                             '<tr>',
-                              '<th scope="row">Visites</th>',
+                              '<th scope="row">',$_SESSION['ps1'],'</th>',
                               '<td>',$nbVisiteMoisDernier,'</td>',
                               '<td>', $nbVisiteMoisEnCours, '</td>',
                               '<td ', $couleurVisite,'>', $ecartVisitesMois ,'</td>',
                             '</tr>',
 
                             '<tr>',
-                              '<th scope="row">Fiches</th>',
+                              '<th scope="row">',$_SESSION['ps2'],'</th>',
                               '<td>',$nbFichesMoisDernier,'</td>',
                               '<td>',$nbFichesMoisEnCours,'</td>',
                               '<td ', $couleurFiche,'>', $ecartFichesMois  , '</td>',

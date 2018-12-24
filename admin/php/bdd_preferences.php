@@ -22,6 +22,13 @@
 				ap_eqlvl3 ='".$_POST['eq3']."'
 				WHERE ap_KEY = 1";  
 
+		$_SESSION['ps1'] = $_POST['ps1'];
+		$_SESSION['ps2'] = $_POST['ps2'];
+		$_SESSION['ps3'] = $_POST['ps3'];
+		$_SESSION['eq1'] = $_POST['eq1'];
+		$_SESSION['eq2'] = $_POST['eq2'];
+		$_SESSION['eq3'] = $_POST['eq3'];
+
 		mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		echo "Ok";
 	}

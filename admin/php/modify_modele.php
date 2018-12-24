@@ -76,7 +76,7 @@ echo '<div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
-			    '<span class="input-group-text" id="inputGroup-sizing-default">Organisation</span>',
+			    '<span class="input-group-text" id="inputGroup-sizing-default">',$_SESSION['eq1'],'</span>',
 			  '</div>',
 			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $organisation ,'" aria-label="Default">',
 			  '<a class="selecteurUnique" id="', $caller,'call" href="select_organisation.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"></a>',
@@ -85,9 +85,9 @@ echo '<div>',
 
 		'<div class="tableForm">';
 
-		$entete=array("Visites", "Supprimer");
+		$entete=array($_SESSION['ps1'], "Supprimer");
 
-		create_table($entete, $visite, $caller."Table", "Visites");
+		create_table($entete, $visite, $caller."Table", $_SESSION['ps1']);
 
 				
 		echo

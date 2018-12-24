@@ -9,7 +9,7 @@
 							Contenu de la page Dashboard
 	###################################################################*/
 
-	$entete=array("Ordre Operation", "Operation", "Demande",);
+	$entete=array("Ordre ".$_SESSION['ps3'], $_SESSION['ps3'], "Demande",);
 	$bd = bd_connect();
 	$sql = "SELECT *
 			FROM fiche LEFT OUTER JOIN compo_fiche ON cf_fi_id = fi_id LEFT OUTER JOIN operation ON cf_op_id = op_id
