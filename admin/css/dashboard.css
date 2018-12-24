@@ -149,41 +149,45 @@ span{
 
   display: flex;
   flex-direction: column;
+
 }
 
 .scroller{
   height: 100%;
   flex : 1;
   width:100%;
-  overflow: auto;
+ overflow-y: auto;
 }
 
 /* customize scrollbar css */
-#content-data::-webkit-scrollbar{
+/*.scroller::-webkit-scrollbar{
   width:10px;
   background-color:#cccccc;
   border-radius:10px;
 }
-#content-data::-webkit-scrollbar:horizontal{
-  height:12px;
 
+.scroller::-webkit-scrollbar:horizontal{
+  height:12px;
 }
-#content-data::-webkit-scrollbar-track{
+
+.scroller::-webkit-scrollbar-track{
   border-radius:10px;
   -webkit-box-shadow:0 0 6px #c8c8c8 inset;
 }
-#content-data::-webkit-scrollbar-thumb{
+
+.scroller::-webkit-scrollbar-thumb{
   background-color: #7BDC88;
   border-radius:16px;
 }
-#content-data::-webkit-scrollbar-thumb:hover{
-  background-color: #7BDC88;
 
-}
-#content-data::-webkit-scrollbar-thumb:active{
+.scroller::-webkit-scrollbar-thumb:hover{
   background-color: #7BDC88;
 }
 
+.scroller::-webkit-scrollbar-thumb:active{
+  background-color: #7BDC88;
+}
+*/
 /* ------------------- Sider ---------------------------*/
 
 #right_sider{

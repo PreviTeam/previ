@@ -14,7 +14,7 @@
 	###################################################################*/
 
 						
-	echo '<div class="scroller">';
+	echo '<div class="scroller scrollbar" >';
 	generic_top_title("../img/Admin.png", "Administration");	
 	$entete=array("Code Visite", "Désignation", "Versions", '', '');
 	$bd = bd_connect();

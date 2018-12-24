@@ -65,6 +65,16 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFicheMoisEnCours,&$nbVisiteM
    } 
 }
 
+/**
+ * Création du code HTM du sider statistiques, affichant le nombre total de visites, fiches et opéraitons
+ * 
+ * @param       $nbVisites   Nombre de visites crées
+ * @param       $nbFiches    Nombre de fiches crées
+ * @param       $nbOp        Nombre d'opération crées'
+ * @param       $bd          connexion à la base de donnée
+ *
+ * @return  void 
+ */   
 function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
 
   //Modifier pour limiter la sélection au deux mois voulus
@@ -254,6 +264,14 @@ function modal_select(){
     '</div>';
 }
 
+
+/**
+ * création de la fenêtres modales des préférences utilisateur, définissant la terminologie pour la base
+ * 
+ * @param       $bd                     connexion à la base de donnée
+ *
+ * @return  void 
+ */  
 function modal_preferences($bd){
 
   $sql = "SELECT * FROM admin_parameters";
@@ -348,6 +366,14 @@ function modal_preferences($bd){
 }
 
 
+/**
+ * Affichage des visites en cours dans une table
+ * 
+ * @param       $entete   entête de la table
+ * @param       $bd       connexion à la base de donnée
+ *
+ * @return  void 
+ */  
 function get_visites($bd, $entete){
     
     $sql = "SELECT vi_id, vi_designation, ou_designation, rv_debut, count(rf_fi_id) as totFiches
@@ -382,6 +408,14 @@ function get_visites($bd, $entete){
     create_table($entete, $content, null, $_SESSION['ps1'] . " en Cours");
   }
 
+/**
+ * Affichage des fiches en cours dans une table
+ * 
+ * @param       $entete   entête de la table
+ * @param       $bd       connexion à la base de donnée
+ *
+ * @return  void 
+ */  
 function get_fiches($bd, $entete){
     
   $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, count(ro_id) as totOp
@@ -418,19 +452,34 @@ function get_fiches($bd, $entete){
   create_table($entete, $content, null, $_SESSION['ps2'] ." en Cours");
 }
 
+
+
 /*################################################################################################
 									Génération de la page générique (dashboard)
 ################################################################################################*/
 
+
+/**
+ * Génération de l'image d'entête des pages
+ * 
+ * @param       $img   image a afficher
+ * @param       $title titre à afficher
+ *
+ * @return  void 
+ */  
 function generic_top_title($img, $title){
   echo '<div id="topper" style="background-image: url(', $img,');">',
           '<p class="topper-text">', $title, '</p>',
         '</div>';
 }
 
+
 /**
  * Fonction d'affichage de la page générique Dashboard jusqu'à son bloc contenu. Doit être suivi de la 
  * fonction generic_page_ending pour cloturer la page correctement.
+ * 
+ * @param       $status  Status de l'utilisateur
+ * @param       $bd      Connexion à la base de donnée
  */ 
 function generic_page_start($status, $bd){
 
@@ -521,6 +570,7 @@ function generic_page_start($status, $bd){
                       '<img class="nav-icon" src="../img/icones/SVG/autre/briefcase.svg" alt="logout"/>', 
                       'Dashboard</a></li>';
 
+                  // Affiche les éléments vu seulement par l'administrateur
                   if($status === 'ADMIN'){
                     echo 
                       '<li class="nav-item">',
@@ -571,6 +621,7 @@ function generic_page_start($status, $bd){
                           '</ul>',
                       '</li>';
 
+                    // Accès restreint au technicien
                     if($status != 'TECH'){
                       echo 
                        '<li class="nav-item">',
@@ -623,6 +674,7 @@ function generic_page_start($status, $bd){
                   '<div id="content-data" class="scrollbar">';
 
 }
+
 
 
 /**
@@ -713,6 +765,7 @@ function generic_page_ending($bd){
         '</body>',
   '</html>';
 }
+
 
 /*################################################################################
                   Fonctions relative à l'espace Utilisateur
