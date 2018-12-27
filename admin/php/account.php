@@ -39,10 +39,7 @@
 			'<button type="button" id="modifier" class="btn btn-modal btn-link marge" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</button>',
 		'</div>';
 
-	echo '<form method="post" action="../test.php">';
-		modal_start(MODIFIER, 'account');
-	echo '</form>';
-
+	modal_start(MODIFIER, 'account');
 
 	mysqli_close($bd);
 	ob_end_flush();

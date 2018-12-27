@@ -413,7 +413,6 @@ async function bdd_modifier(fname, action, refresh){
     var inputs = $('.form_add');
 
     //Envoie des traitements des inputs
-    var inputs = $('#AddModal input');
     for(i = 0; i < inputs.length ; ++i){
       if($(inputs[i]).attr('type') === 'checkbox')
         post_params += $(inputs[i]).attr('data-input') +'='+ $(inputs[i]).is(':checked');
@@ -447,7 +446,6 @@ async function bdd_modifier(fname, action, refresh){
     }
 
   }
-
 
   // Rechargement de la page complète ou du data-content
   var str = await fetch(fname, {  
