@@ -33,7 +33,7 @@
 	$inactif = ($t['em_inactif'] === '1') ? '<span class="marge inactif" style="color:red">Inactif </span>' : '<span class="marge inactif" style="color:green">Actif </span>';
 
 	echo '<div class="perso">',
-			'<div class="inside-class"><img alt="imgProfil" src="../img/icones/PNG/avatar/man.png" style="height:100px; width:100px;"><span class="collum-dir"><h3>',
+			'<div class="inside-class"><img class="profil_img" alt="imgProfil" src="../img/icones/PNG/avatar/man.png" ><span class="collum-dir"><h3>',
 			$t['em_nom'],' ',$t['em_prenom'],' </h3>',$status,'</span></div>', 
 			$inactif,
 		'</div><div class="info">Mon Code Acteur<span class="span-space">',$t['em_code'],'</span></div>',

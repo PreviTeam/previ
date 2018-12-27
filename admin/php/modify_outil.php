@@ -31,7 +31,7 @@
 		$cd=entities_protect($tableau['ou_code']);
 		$de=entities_protect($tableau['ou_designation']);
 		$mo=entities_protect($tableau['mo_designation']);
-		$id = ' disabled value="'.entities_protect($tableau['ou_id']).'"';
+		$id = ' value="'.entities_protect($tableau['ou_id']).'"';
 		$code = "value='$cd'";
 		$design = "value='$de'";
 		$modele = $mo;
@@ -52,7 +52,7 @@ echo '<div>',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Code Perso</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $id , ' aria-label="Default">',
+			  '<input type="text" class="form-control" ', $id , ' aria-label="Default" disabled>',
 			'</div>',
 
 			 '<div class="input-group mb-3">',

@@ -28,7 +28,7 @@
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		while($tableau = mysqli_fetch_assoc($res))
 		{
-			$id = ' disabled value="'.entities_protect($tableau['fi_id']).'"';
+			$id = ' value="'.entities_protect($tableau['fi_id']).'"';
 			if($tableau['op_contenu'] != null && $tableau['op_id'] != null && $tableau['cf_ordre'] != null){
 				$op[] = create_table_ligne("line-table", array($tableau['op_contenu'], 
 											'<span class="ordre">'.$tableau['cf_ordre'].'</span>', 
@@ -43,6 +43,7 @@
 		mysqli_close($bd);
 	}
 
+
 echo '<div class="container-fluid">',
 				'<div class="inputs">',
 				'<div class="form-check-inline">',
@@ -55,7 +56,7 @@ echo '<div class="container-fluid">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Code</span>',
 				  '</div>',
-				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'"',$id,' aria-label="Default">',
+				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'"',$id,' aria-label="Default"  disabled>',
 				'</div>',
 
 				'<div class="input-group mb-3">',

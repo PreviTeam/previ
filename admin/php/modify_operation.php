@@ -31,7 +31,7 @@
 
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		while($tableau = mysqli_fetch_assoc($res)){
-			$id = ' disabled value="'.entities_protect($tableau['op_id']).'"';
+			$id = ' value="'.entities_protect($tableau['op_id']).'"';
 			if($tableau['epi_designation'] != null)
 				$epi[] = create_table_ligne("line-table", array(entities_protect($tableau['epi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
 			$de=entities_protect($tableau['op_type']);
@@ -63,7 +63,7 @@ echo '<div class="container-fluid">',
 				  '<div class="input-group-prepend">',
 				    '<span class="input-group-text" id="inputGroup-sizing-default">Id</span>',
 				  '</div>',
-				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id ,' aria-label="Default">',
+				  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id ,' aria-label="Default" disabled>',
 				'</div>',
 
 				'<div class="input-group mb-3">',

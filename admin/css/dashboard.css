@@ -10,6 +10,7 @@ html, body {
 
 .navbar {
   height: 4em;
+  display: flex;
 }
 
 #menu{
@@ -55,9 +56,10 @@ text-align: right;
   margin: 0 auto;
 }
 
-.nav-link:hover{
-  color: #afc6ea;
+#menu-deroulant{
+  display: none;
 }
+
 
 
 /*##########################################
@@ -82,6 +84,23 @@ text-align: right;
   padding: 0.5em 1rem;
   text-align: center;
 } 
+
+.nav-link:hover{
+  color: #afc6ea;
+}
+
+.nav-link-mobile{
+  color: #6793db;
+}
+
+.nav-link-mobile:hover{
+  color: #a6ea;
+}
+
+.caret{
+  font-weight: bold;
+}
+
 
 
 .nav-item{
@@ -122,6 +141,11 @@ span{
   font-size: 15px;
 }
 
+
+.profil_img{
+  height: 100px;
+  width: 100px;
+}
 
 
 /*##########################################
@@ -786,6 +810,26 @@ td:last-child {
 @media screen and (max-width: 650px) {
   .sidebar{
     display: none;
+  }
+
+
+  #menu-deroulant{
+    display: inline-block;
+  }
+
+  #logo{
+    width: 30%;
+  }
+  .inline-icon {
+    flex : 1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .profil_img{
+    height: 50px;
+    width: 50px;
+  }
  
 }
 
@@ -861,7 +905,7 @@ td:last-child {
 }
 
 
-/* ---------   Width Responsive   --------------- */
+/* ---------   Height Responsive   --------------- */
 
 @media screen and (max-height: 550px) {
   .alert{

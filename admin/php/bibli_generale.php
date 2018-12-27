@@ -533,8 +533,9 @@ function generic_page_start($status, $bd){
       '</head>',
 
 
-      '<body>',
+      '<body>';
 
+echo
         '<div id="bloc_page">',
 
           '<nav class="navbar header static-top">',
@@ -549,19 +550,68 @@ function generic_page_start($status, $bd){
                   '</div>',
                 '</div>',
               '</form>',
-             ' <div class="inline-icon">',
-               '<a  class="nav_icone" href="deconnexion.php">',
-                  '<img src="../img/icones/SVG/autre/padlock.svg" alt="logout" height="30">',
-               '</a>',
-                '<a  class="nav_icone btn-modal" data-toggle="modal" data-target="#preferenceModal" href="#">',
-                  '<img src="../img/icones/SVG/autre/settings.svg" alt="options" height="30">',
-                '</a>',
-                '<a class="nav_icone phplink" href="account.php">',
-                  '<img src="../img/icones/PNG/avatar/man.png" alt="avatar" height="30">',
-              ' </a>',
+             ' <div class="inline-icon">';
+               
+               echo
+                    '<div id="menu-deroulant" class="dropdown">',
+                      '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Mennu',
+                         '<span class="caret"></span></button>',
+                          '<ul class="dropdown-menu">',
+                             '<li><a class="nav-link-mobile phplink" href="dashboard_content.php">Dashboard</span></a>';
+
+                        if($status === 'ADMIN'){
+                        echo
+                            '<li class="dropdown-submenu">',
+                              '<span class="caret">Administration</span></a>',
+                              '<ul class="">',
+                                '<li><a class="nav-link-mobile phplink" href="user.php">Users</a></li>',
+                                '<li><a class="nav-link-mobile phplink" href="visite.php">',$ps1,'</a></li>',
+                                '<li><a class="nav-link-mobile phplink" href="fiche.php">',$ps2,'</a></li>',
+                                '<li><a class="nav-link-mobile phplink" href="operation.php">',$ps3,'</a></li>',
+                              '</ul>',
+                            '</li>';
+                        }
+
+                        echo
+                            '<li class="dropdown-submenu">',
+                              '<span class="caret">Passations</span></a>',
+                              '<ul>',
+                                '<li><a class="nav-link-mobile phplink" href="encours.php">En Cours</a></li>',
+                                '<li><a class="nav-link-mobile phplink" href="historise.php">Historisées</a></li>',
+                              '</ul>',
+                            '</li>';
+
+
+                        if($status != 'TECH'){
+                          echo 
+                              '<li class="dropdown-submenu">',
+                                '<span class="caret">Equipements</span></a>',
+                                '<ul>',
+                                  '<li><a class="nav-link-mobile phplink" href="organisation.php">',$eq1,'</a></li>',
+                                  '<li><a class="nav-link-mobile phplink" href="modele.php">',$eq2,'</a></li>',
+                                  '<li><a class="nav-link-mobile phplink" href="outil.php">',$eq3,'</a></li>',
+                                '</ul>',
+                              '</li>';
+                        }
+                echo
+                          '</ul>',
+                    '</div>',
+
+                    '<a class="nav_icone phplink" href="account.php">',
+                      '<img src="../img/icones/PNG/avatar/man.png" alt="avatar" height="30">',
+                     ' </a>',
+                    
+                    '<a  class="nav_icone btn-modal" data-toggle="modal" data-target="#preferenceModal" href="#">',
+                      '<img src="../img/icones/SVG/autre/settings.svg" alt="options" height="30">',
+                    '</a>',
+
+                    '<a  class="nav_icone" href="deconnexion.php">',
+                      '<img src="../img/icones/SVG/autre/padlock.svg" alt="logout" height="30">',
+                   '</a>',
+                    
+
               '</div>',
           '</nav>',
-
 
 
           '<div id="menu" class="wrapper">',

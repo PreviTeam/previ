@@ -35,7 +35,7 @@
 			$cd=entities_protect($tableau['mo_code']);
 			$de=entities_protect($tableau['mo_designation']);
 			$org=entities_protect($tableau['or_designation']);
-			$id = ' disabled value="'.entities_protect($tableau['or_id']).'"';
+			$id = ' value="'.entities_protect($tableau['or_id']).'"';
 			$code = "value='$cd'";
 			$design = "value='$de'";
 			$organisation = $org;
@@ -56,7 +56,7 @@ echo '<div>',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Id</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $id ,' aria-label="Default">',
+			  '<input type="text" class="form-control" ', $id ,' aria-label="Default" disabled>',
 			'</div>',
 
 
