@@ -56,6 +56,8 @@
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 
+	echo 'ok';
+
 	mysqli_close($bd);
 	ob_end_flush();
 ?>

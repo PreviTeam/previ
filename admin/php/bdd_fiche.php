@@ -112,7 +112,7 @@
     	$version = bd_protect($bd,$_POST['version']);
     	$inactif = bd_protect($bd,$_POST['inactif']);
 
-    	$sql = "INSERT INTO fiche (fi_designation, fi_num_vers, fi_inactif )
+    	$sql = "INSERT INTO fiche (fi_designation, fi_num_vers, fi_inactif)
     			VALUES ('".$designation."','".$version."',".$inactif.")";
     	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	$id = mysqli_insert_id($bd);
@@ -132,6 +132,8 @@
     	}
         
 	}
+
+	echo 'ok';
 
 	mysqli_close($bd);
 	ob_end_flush();

@@ -35,6 +35,9 @@
 
 	echo '<div class="alert alert-success alert-dismissible fade show" role="alert">',
   			'Modifications réalisées avec Succès !',
+			'</div>',
+		  '<div class="alert alert-danger alert-dismissible fade show" role="alert">',
+  			'Erreur lors de la modification, vérifiez les champs saisis !',
 			'</div>';
 	create_table($entete, $content, null,  $_SESSION['ps1']);
 

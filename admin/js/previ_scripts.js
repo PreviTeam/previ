@@ -453,11 +453,23 @@ async function bdd_modifier(fname, action, refresh){
     body: post_params,
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
-  console.log(await str.text());
 
-  if(action === 'updatePrefs')
+  $ok = false;
+  if (await str.text() === 'ok'){
+    $ok = true;
+  }
+    
+ 
+
+  if(action === 'updatePrefs'){
+
+    if($ok === true)
+      alert("Modifications réalisées avec succès !");
+    else
+      alert("Erreur, la modification n'a pas pu être effectuée");
+
     window.location.reload(true);
-  else{
+  }else{
 
     // Fermeture des fenêtres modales et rechargement du contenu de la page
     $('#AddModal').modal('hide');
@@ -465,10 +477,24 @@ async function bdd_modifier(fname, action, refresh){
     $(".modal-backdrop").remove();
     var str = await fetch(refresh+'.php');
     $('#content-data').html(await str.text());
+
     f();
-    $('.alert').show();
+    
     external_links();
-    setTimeout( function() {$('.alert').hide()}, 5000); 
+
+    if($ok === true){
+      $('.alert').removeClass("alert-danger");
+      $('.alert').addClass("alert-sucess");
+      $('.alert').text("Modifications réalisées avec succès !");
+      $('.alert').show();
+    }
+    else{
+      $('.alert').removeClass("alert-sucess");
+      $('.alert').addClass("alert-danger");
+      $('.alert').text("Erreur lors de la saisie des informations !");
+      $('.alert').show();
+    }
+    setTimeout( function() {$('.alert').hide()}, 5000);
   }
 }
 

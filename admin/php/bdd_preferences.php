@@ -30,7 +30,7 @@
 		$_SESSION['eq3'] = $_POST['eq3'];
 
 		mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-		echo "Ok";
+		echo 'ok';
 	}
 
 

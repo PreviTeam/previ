@@ -117,6 +117,8 @@
      
 	}
 
+	echo 'ok';
+
 	mysqli_close($bd);
 	ob_end_flush();
 ?>

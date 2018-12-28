@@ -45,9 +45,9 @@
 			
 		}
 
-		$ope[] = $tableau['op_contenu'];
-		$last_vi=$tableau['vi_designation'];
-		$last_fi=$tableau['fi_designation'];
+		$ope[] = entities_protect($tableau['op_contenu']);
+		$last_vi= entities_protect($tableau['vi_designation']);
+		$last_fi= entities_protect($tableau['fi_designation']);
 		
 	}
 	$fiches[] = array($last_fi, $ope);

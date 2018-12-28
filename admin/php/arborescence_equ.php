@@ -43,9 +43,9 @@
 			
 		}
 
-		$outil[] = $tableau['ou_designation'];
-		$last_org=$tableau['or_designation'];
-		$last_mod=$tableau['mo_designation'];
+		$outil[] = entities_protect($tableau['ou_designation']);
+		$last_org= entities_protect($tableau['or_designation']);
+		$last_mod= entities_protect($tableau['mo_designation']);
 		
 	}
 	$models[] = array($last_mod, $outil);

@@ -108,7 +108,6 @@ function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
    } 
 }
 
-
 /**
  * Fonction de création d'une dataGrid
  * 
@@ -213,7 +212,7 @@ function create_treeview($title, $niveaux){
  */ 
 function modal_start($type, $currentPage){
   $titre = ($type === 'Modify') ? 'Modifier' : 'Nouveau';
-  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" data-refresh="'.$currentPage.'"  href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Sauvegarder les modifications</button>' :
+  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" data-refresh="'.$currentPage.'"  href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Modifier</button>' :
                                 ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" data-bddAction="create" data-refresh="'.$currentPage.'" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</button>';
   echo 
   '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
@@ -365,7 +364,6 @@ function modal_preferences($bd){
   '</div>';
 }
 
-
 /**
  * Affichage des visites en cours dans une table
  * 
@@ -473,7 +471,6 @@ function generic_top_title($img, $title){
         '</div>';
 }
 
-
 /**
  * Fonction d'affichage de la page générique Dashboard jusqu'à son bloc contenu. Doit être suivi de la 
  * fonction generic_page_ending pour cloturer la page correctement.
@@ -535,7 +532,7 @@ function generic_page_start($status, $bd){
 
       '<body>';
 
-echo
+  echo
         '<div id="bloc_page">',
 
           '<nav class="navbar header static-top">',
@@ -722,10 +719,7 @@ echo
                 '<div id="middle">',
 
                   '<div id="content-data" class="scrollbar">';
-
 }
-
-
 
 /**
  * Fonction d'affichage de la seconde partie de la page générique. Doit être précédée de la 
