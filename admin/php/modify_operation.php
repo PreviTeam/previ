@@ -35,7 +35,7 @@
 			if($tableau['epi_designation'] != null)
 				$epi[] = create_table_ligne("line-table", array(entities_protect($tableau['epi_designation']), '<button class="supress btn btn-link">Supprimer</button>'));
 			$de=entities_protect($tableau['op_type']);
-			$content = entities_protect($tableau['op_contenu']);
+			$content = $tableau['op_contenu'];
 			$inactif = ($tableau['op_inactif'])? 'checked' : '';
 
 			switch($tableau['op_type']){

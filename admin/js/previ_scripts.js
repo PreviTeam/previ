@@ -232,7 +232,7 @@ async function post_load_modal_select(fname, caller){
     e.preventDefault();
 
     var lastordre = '';
-    if($("#modifycall").attr("href") === "select_operation.php"){
+    if($("#modifycall").attr("href") === "select_operation.php" || $("#addcall").attr("href") === "select_operation.php"){
       lastordre = '<td><span class="ordre">'+(nbLines+1)+'</span></td>' +
                   '<td><button class="btn btn-link upper">up</button></td>' +  
                   '<td><button class="btn btn-link downer">down</button></td>';
@@ -246,7 +246,7 @@ async function post_load_modal_select(fname, caller){
 
       // --- Réaffichage De la modale appelante  ----                            
       if(caller === 'addcall'){
-        $('#addTable .tableBody').prepend(content_line);
+        $('#addTable .tableBody').append(content_line);
         $('#AddModal').modal('toggle');
       }
       else if(caller === 'modifycall'){
@@ -453,7 +453,7 @@ async function bdd_modifier(fname, action, refresh){
     body: post_params,
     headers: { 'Content-type': 'application/x-www-form-urlencoded' } 
   });
-  //console.log(await str.text());
+  console.log(await str.text());
 
   if(action === 'updatePrefs')
     window.location.reload(true);

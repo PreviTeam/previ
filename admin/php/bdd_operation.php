@@ -90,38 +90,31 @@
 
 	// Demande D'ajout D'un élément
 	if(isset($_POST['id_add'])){
-		$id=bd_protect($bd, $_POST['id_add']);
-		$sql = "SELECT * FROM operation WHERE op_id = ".$id;
 
-		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	$contenu = bd_protect($bd,$_POST['contenu']);
+    	$select = ($_POST['select'] === 'texte')? 2 : 1;
+    	$inactif = bd_protect($bd,$_POST['inactif']);
 
-		if(mysqli_num_rows($res) == 1){
-            mysqli_free_result($res);
-        }
-        else{
-        	$contenu = bd_protect($bd,$_POST['contenu']);
-        	$select = ($_POST['select'] === 'texte')? 2 : 1;
-        	$inactif = bd_protect($bd,$_POST['inactif']);
+    	$sql = "INSERT INTO operation (op_contenu, op_type)
+    			VALUES ('".$contenu."',".$select.")";
+    	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	$id = mysqli_insert_id($bd);
 
-        	$sql = "INSERT INTO operation
-        			VALUES (".$id.",'".$contenu."',".$select.",".$inactif.")";
-        	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	$size = sizeof($_POST)-4;
 
-        	$size = sizeof($_POST)-4;
+    	for($i = 1; $i < $size+1; $i++)
+    	{
+    		$epi = bd_protect($bd,$_POST['t'.$i]);
 
-        	for($i = 1; $i < $size+1; $i++)
-        	{
-        		$epi = bd_protect($bd,$_POST['t'.$i]);
+    		$sql = "SELECT epi_id FROM epi WHERE epi_designation = '".$epi."'";
+    		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    		$tableau = mysqli_fetch_assoc($res);
 
-        		$sql = "SELECT epi_id FROM epi WHERE epi_designation = '".$epi."'";
-        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-        		$tableau = mysqli_fetch_assoc($res);
-
-        		$sql = "INSERT INTO compo_operation
-        				VALUES (".$id.",".$tableau['epi_id'].")";
-        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-        	}
-        }
+    		$sql = "INSERT INTO compo_operation
+    				VALUES (".$id.",".$tableau['epi_id'].")";
+    		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	}
+        
 	}
 
 	mysqli_close($bd);

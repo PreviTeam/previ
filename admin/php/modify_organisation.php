@@ -38,7 +38,7 @@
 	echo '<div>',
 			'<div class="form-check-inline">',
 			  '<label class="form-check-label">',
-			   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'" ',$inactif,' value="">Inactif',
+			   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'" ',$inactif,' >Inactif',
 			  '</label>',
 			'</div>',
 
@@ -46,7 +46,7 @@
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Id</span>',
 			  '</div>',
-			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id ,' aria-label="Default">',
+			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id ,' aria-label="Default" disabled>',
 			'</div>',
 
 			 '<div class="input-group mb-3">',

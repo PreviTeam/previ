@@ -91,38 +91,30 @@
 
 	// Demande D'ajout D'un élément
 	if(isset($_POST['id_add'])){
-		$id=bd_protect($bd, $_POST['id_add']);
-		$sql = "SELECT * FROM visite WHERE vi_id = ".$id;
 
-		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	$designation = bd_protect($bd,$_POST['designation']);
+    	$version = bd_protect($bd,$_POST['version']);
+    	$inactif = bd_protect($bd,$_POST['inactif']);
 
-		if(mysqli_num_rows($res) == 1){
-            mysqli_free_result($res);
-        }
-        else{
-        	$designation = bd_protect($bd,$_POST['designation']);
-        	$version = bd_protect($bd,$_POST['version']);
-        	$inactif = bd_protect($bd,$_POST['inactif']);
+    	$sql = "INSERT INTO visite (vi_designation, vi_num_vers, vi_type, vi_inactif)
+    			VALUES ('".$designation."','".$version."',0,".$inactif.")";
+    	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	$id = mysqli_insert_id($bd);
+    	$size = sizeof($_POST)-4;
 
-        	$sql = "INSERT INTO visite 
-        			VALUES (".$id.",'".$designation."','".$version."',0,".$inactif.")";
-        	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	for($i = 1; $i < $size+1; $i++)
+    	{
+    		$fiche = bd_protect($bd,$_POST['t'.$i]);
 
-        	$size = sizeof($_POST)-4;
+    		$sql = "SELECT fi_id FROM fiche WHERE fi_designation = '".$fiche."'";
+    		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    		$tableau = mysqli_fetch_assoc($res);
 
-        	for($i = 1; $i < $size+1; $i++)
-        	{
-        		$fiche = bd_protect($bd,$_POST['t'.$i]);
-
-        		$sql = "SELECT fi_id FROM fiche WHERE fi_designation = '".$fiche."'";
-        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-        		$tableau = mysqli_fetch_assoc($res);
-
-        		$sql = "INSERT INTO compo_visite 
-        				VALUES (".$id.",".$tableau['fi_id'].")";
-        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-        	}
-        }
+    		$sql = "INSERT INTO compo_visite 
+    				VALUES (".$id.",".$tableau['fi_id'].")";
+    		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    	}
+     
 	}
 
 	mysqli_close($bd);

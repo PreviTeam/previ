@@ -36,13 +36,13 @@
 
 	// Demande D'ajout D'un élément
 	if(isset($_POST['id_add'])){
-		$id = bd_protect($bd,$_POST['id_add']);
+
 		$designation = bd_protect($bd,$_POST['designation']);
 		$code = bd_protect($bd,$_POST['code']);
 		$inactif = bd_protect($bd,$_POST['inactif']);
 
-		$sql = "INSERT INTO organisation
-        			VALUES (".$id.",'".$code."','".$designation."',".$inactif.")";
+		$sql = "INSERT INTO organisation (or_code, or_designation, or_inactif)
+        			VALUES ('".$code."','".$designation."',".$inactif.")";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 
