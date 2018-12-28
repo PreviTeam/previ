@@ -15,6 +15,8 @@
 	$organisation = '';
 	$caller = "add";
 	$visite = array();
+	$inactif = '';
+	$id_value = '';
 
 	if(isset($_POST['id'])){
 		$caller="modify";
@@ -35,10 +37,11 @@
 			$cd=entities_protect($tableau['mo_code']);
 			$de=entities_protect($tableau['mo_designation']);
 			$org=entities_protect($tableau['or_designation']);
-			$id = ' value="'.entities_protect($tableau['or_id']).'"';
+			$id_value = ' disabled value="'.entities_protect($id).'"';
 			$code = "value='$cd'";
 			$design = "value='$de'";
 			$organisation = $org;
+			$inactif = ($tableau['mo_inactif'])? 'checked' : '';
 		}
 
 		mysqli_close($bd);
@@ -48,7 +51,7 @@
 echo '<div>',
 			'<div class="form-check-inline">',
 			  '<label class="form-check-label">',
-			   ' <input type="checkbox" class="form-check-input" value="">Inactif',
+			   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'" ',$inactif,' value="">Inactif',
 			  '</label>',
 			'</div>',
 
@@ -56,7 +59,7 @@ echo '<div>',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Id</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $id ,' aria-label="Default" disabled>',
+			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id_value ,' aria-label="Default">',
 			'</div>',
 
 
@@ -64,21 +67,21 @@ echo '<div>',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Code Perso</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $code ,' aria-label="Default">',
+			  '<input type="text" data-input="code" class="form-control form_',$caller,'" ', $code ,' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Designation</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $design ,' aria-label="Default">',
+			  '<input type="text" data-input="designation" class="form-control form_',$caller,'" ', $design ,' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">',$_SESSION['eq1'],'</span>',
 			  '</div>',
-			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $organisation ,'" aria-label="Default">',
+			  '<input data-input="orga"  id="', $caller,'UniqueSelector" type="text" class="form-control form_',$caller,'" value="', $organisation ,'" aria-label="Default">',
 			  '<a class="selecteurUnique" id="', $caller,'call" href="select_organisation.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"></a>',
 			'</div>',
 		'</div>',
