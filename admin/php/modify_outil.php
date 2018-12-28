@@ -16,6 +16,7 @@
 	$id = '';
 	$modele = '';
 	$caller = "add";
+	$inactif = "";
 
 	if(isset($_POST['id'])){
 		$caller="modify";
@@ -35,6 +36,7 @@
 		$code = "value='$cd'";
 		$design = "value='$de'";
 		$modele = $mo;
+		$inactif = ($tableau['ou_inactif'])? 'checked' : '';
 
 		mysqli_close($bd);
 	}
@@ -43,37 +45,37 @@
 echo '<div>',
 			'<div class="form-check-inline">',
 			  '<label class="form-check-label">',
-			   ' <input type="checkbox" class="form-check-input" value="">Inactif',
+			   ' <input type="checkbox" data-input="inactif" class="form-check-input form_',$caller,'" ',$inactif,' value="">Inactif',
 			  '</label>',
 			'</div>',
 
 
 			 '<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
-			    '<span class="input-group-text" id="inputGroup-sizing-default">Code Perso</span>',
+			    '<span class="input-group-text" id="inputGroup-sizing-default">ID</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $id , ' aria-label="Default" disabled>',
+			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id , ' aria-label="Default">',
 			'</div>',
 
 			 '<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Code Perso</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $code , ' aria-label="Default">',
+			  '<input type="text" data-input="code" class="form-control form_',$caller,'" ', $code , ' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">Designation</span>',
 			  '</div>',
-			  '<input type="text" class="form-control" ', $design , ' aria-label="Default">',
+			  '<input type="text" data-input="designation" class="form-control form_',$caller,'" ', $design , ' aria-label="Default">',
 			'</div>',
 
 			'<div class="input-group mb-3">',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">',$_SESSION['eq2'],'</span>',
 			  '</div>',
-			  '<input  id="', $caller,'UniqueSelector" type="text" class="form-control" value="', $modele ,'"  aria-label="Default">',
+			  '<input data-input="modele" id="', $caller,'UniqueSelector" type="text" class="form-control form_',$caller,'" value="', $modele ,'"  aria-label="Default">',
 			   '<a class="selecteurUnique" id="', $caller,'call" href="select_modele.php" data-toggle="modal" data-target="#SelectModal"><img class="assoc_icone" src="../img/seo.png" alt="explore"</a>',
 			'</div>',
 		'</div>';
