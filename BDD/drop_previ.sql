@@ -1,0 +1,21 @@
+drop table HISTO_REALISATION_OPERATION;
+drop table HISTO_REALISATION_FICHE;
+drop table HISTO_REALISATION_VISITE;
+drop table REALISATION_OPERATION;
+drop table REALISATION_FICHE;
+drop table REALISATION_VISITE;
+drop table VISITE_ATTACHEMENT;
+drop table COMPO_VISITE;
+drop table COMPO_FICHE;
+drop table COMPO_OPERATION;
+drop table OPERATION;
+drop table FICHE;
+drop table VISITE;
+drop table EPI;
+drop table EMPLOYE;
+drop table OUTIL;
+drop table MODELE;
+drop table ORGANISATION;
+drop table admin_parameters;
+
+drop user 'previuser'@'localhost';

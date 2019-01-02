@@ -16,13 +16,43 @@
 
 	echo '<div class="scroller">';			
 	generic_top_title("../img/passations.jpg", 'Passations');			
-	$entete=array($_SESSION['ps1'], "Equipement", "Début", "Fin");
+	$entete=array("Visite", "Equipement", "Code" ,"Début", "Fin", '');
 	$content= array();
+
+	$bd = bd_connect();
+	$sql = "select rv_id, vi_designation, mo_designation, em_code, ou_code, rv_debut, rv_fin
+			from realisation_visite, realisation_fiche, visite, modele, visite_attachement, employe, outil
+			where rv_id = rf_rv_id 
+			and vi_id = rv_vi_id 
+			and va_vi_id = vi_id
+			and mo_id = va_mo_id
+			and em_id = rf_em_id
+			and ou_id = rv_ou_id
+			and rv_etat = true
+			group by vi_id";
+
+	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+	while($tableau = mysqli_fetch_assoc($res)){
+		$content[] = create_table_ligne(null, array($tableau['vi_designation'],
+													$tableau['mo_designation']." - ".$tableau['ou_code'],
+													$tableau['em_code'],
+													date_html($tableau['rv_debut']),
+													date_html($tableau['rv_fin']),
+													'<button id="'. $tableau['rv_id'] .'" class="btn btn-link ajaxphplink" href="view_historise.php">Voir</button>',));
+	}
 
 	if(empty($content))
 			$content[] = create_table_ligne(null, array("Rien a afficher"));
 	create_table($entete, $content, null, "Historisées");
 	echo '</div>';
 
+	mysqli_close($bd);
 	ob_end_flush();
+
+	function date_html($date)
+	{
+		$tab = explode("-",$date);
+		return $tab[2]."/".$tab[1]."/".$tab[0];
+	}
 ?>

@@ -138,29 +138,29 @@ create table REALISATION_OPERATION(
 ##########################################################
 
 create table HISTO_REALISATION_VISITE(
-	rv_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	rv_vi_id INT,
-	rv_ou_id INT,
-	rv_debut DATE,
-	rv_fin DATE,
-	rv_etat BOOLEAN
+	h_rv_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	h_rv_vi_id INT,
+	h_rv_ou_id INT,
+	h_rv_debut DATE,
+	h_rv_fin DATE,
+	h_rv_etat BOOLEAN
 );
 
 create table HISTO_REALISATION_FICHE(
-	rf_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	rf_fi_id INT,
-	rf_rv_id INT,
-	rf_em_id INT,
-	rf_debut DATE,
-	rf_fin DATE,
-	rf_etat BOOLEAN
+	h_rf_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	h_rf_fi_id INT,
+	h_rf_rv_id INT,
+	h_rf_em_id INT,
+	h_rf_debut DATE,
+	h_rf_fin DATE,
+	h_rf_etat BOOLEAN
 );
 
 create table HISTO_REALISATION_OPERATION(
-	ro_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	ro_op_id INT,
-	ro_rf_id INT,
-	ro_res VARCHAR(10)
+	h_ro_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	h_ro_op_id INT,
+	h_ro_rf_id INT,
+	h_ro_res VARCHAR(10)
 );
 
 
@@ -235,10 +235,10 @@ alter table REALISATION_OPERATION
 	add constraint fk_ro_rf FOREIGN KEY (ro_rf_id) REFERENCES REALISATION_FICHE(rf_id);
 
 alter table HISTO_REALISATION_FICHE
-	add constraint fk_rf_em FOREIGN KEY (rf_em_id) REFERENCES EMPLOYE(em_id);
+	add constraint fk_h_rf_em FOREIGN KEY (h_rf_em_id) REFERENCES EMPLOYE(em_id);
 
 alter table HISTO_REALISATION_OPERATION
-	add constraint fk_ro_op FOREIGN KEY (ro_op_id) REFERENCES OPERATION(op_id);
+	add constraint fk_h_ro_op FOREIGN KEY (h_ro_op_id) REFERENCES OPERATION(op_id);
 
 alter table HISTO_REALISATION_OPERATION
-	add constraint fk_ro_rf FOREIGN KEY (ro_rf_id) REFERENCES REALISATION_FICHE(rf_id);
+	add constraint fk_h_ro_rf FOREIGN KEY (h_ro_rf_id) REFERENCES HISTO_REALISATION_FICHE(h_rf_id);

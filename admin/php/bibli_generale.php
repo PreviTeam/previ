@@ -450,6 +450,33 @@ function get_fiches($bd, $entete){
   create_table($entete, $content, null, $_SESSION['ps2'] ." en Cours");
 }
 
+function create_fiche($tab_ligne,$titre){
+    echo '<h1 class="title_table">',$titre,'</h1>';
+    echo '<table>',
+            '<tr>',
+              '<th>Operation</th>',
+              '<th>Resultat</th>',
+            '</tr>';
+
+    foreach($tab_ligne as $val)
+    {
+      echo $val;
+    }
+    echo '</table>';
+  }
+
+  function create_fiche_ligne($tab_contenu){
+    $res = '<tr>';
+
+    foreach($tab_contenu as $val)
+    {
+      $res .= '<td>'.$val.'</td>';
+    }
+
+    $res .= '</tr>';
+    return $res;
+  }
+
 
 
 /*################################################################################################
