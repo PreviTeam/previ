@@ -28,6 +28,7 @@
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 	$content = array();
+	$titre = '';
 
 	while($tableau = mysqli_fetch_assoc($res)){
 		$content[] = create_fiche_ligne(array($tableau['cf_ordre'].". ".$tableau['op_contenu'],$tableau['ro_res']));
