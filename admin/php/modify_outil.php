@@ -54,7 +54,7 @@ echo '<div>',
 			  '<div class="input-group-prepend">',
 			    '<span class="input-group-text" id="inputGroup-sizing-default">ID</span>',
 			  '</div>',
-			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id , ' aria-label="Default">',
+			  '<input type="text" data-input="id_',$caller,'" class="id form-control form_',$caller,'" ', $id , ' aria-label="Default" disabled>',
 			'</div>',
 
 			 '<div class="input-group mb-3">',
