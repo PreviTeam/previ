@@ -10,7 +10,7 @@
 	###################################################################*/
 	$bd = bd_connect();
 
-	$sql = "SELECT * FROM visite";
+	$sql = "SELECT * FROM visite WHERE vi_inactif=0";
 
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	echo'<div class="list">';

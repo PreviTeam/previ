@@ -455,7 +455,8 @@ async function bdd_modifier(fname, action, refresh){
   });
 
   $ok = false;
-  if (await str.text() === 'ok'){
+  
+  if ( await str.text() === 'ok'){
     $ok = true;
   }
     

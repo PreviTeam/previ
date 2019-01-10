@@ -9,7 +9,7 @@
 					Contenu de la page view_visite
 	###################################################################*/
 
-	$entete=array("Code ".$_SESSION['ps1'], "Désignation", $_SESSION['ps2'], "Versions", $_SESSION['eq2'], '', '');
+	$entete=array("Code ".$_SESSION['ps1'], "Désignation", $_SESSION['ps2'], "Versions", $_SESSION['eq2']);
 	$bd = bd_connect();
 
 	$sql = "SELECT DISTINCT fi_id, vi_id, mo_designation, fi_designation, vi_designation, vi_num_vers 

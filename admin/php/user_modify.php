@@ -86,7 +86,7 @@
 			  '<input type="password" data-input="pass" class="form-control form_',$caller,'" aria-label="Default">',
 			'</div>',
 
-			'<select data-input="select" class="custom-select form_',$caller,'">',
+			'<select data-input="select" class="custom-select form_',$caller,'" title="Définition des droits de l\'utilisateur">',
 				' <option value="admin" ', $admin, '>Administrateur</option>',
 				 '<option value="CE" ', $ce, '>Chef d\'équipe</option>',
 				 '<option value="tech" ', $tech,'>Technicien</option>',
