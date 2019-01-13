@@ -31,7 +31,7 @@
 		$data = array();
 
 		while($tableau = mysqli_fetch_assoc($res)){
-			$data[] = array($tableau['cf_ordre'].". ".$tableau['op_contenu'],$tableau['ro_res']);
+			$data[] = array($tableau['cf_ordre'].". ".$tableau['op_contenu'],$tableau['h_ro_res']);
 			$titre = $tableau['fi_designation']." - ".$tableau['mo_designation']." ".$tableau['ou_code']; 
 		}
 

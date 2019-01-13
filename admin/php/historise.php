@@ -20,15 +20,15 @@
 	$content= array();
 
 	$bd = bd_connect();
-	$sql = "select rv_id, vi_designation, mo_designation, em_code, ou_code, rv_debut, rv_fin
-			from realisation_visite, realisation_fiche, visite, modele, visite_attachement, employe, outil
-			where rv_id = rf_rv_id 
-			and vi_id = rv_vi_id 
+	$sql = "select h_rv_id, vi_designation, mo_designation, em_code, ou_code, h_rv_debut, h_rv_fin
+			from histo_realisation_visite, histo_realisation_fiche, visite, modele, visite_attachement, employe, outil
+			where h_rv_id = h_rf_rv_id 
+			and vi_id = h_rv_vi_id 
 			and va_vi_id = vi_id
 			and mo_id = va_mo_id
-			and em_id = rf_em_id
-			and ou_id = rv_ou_id
-			and rv_etat = true
+			and em_id = h_rf_em_id
+			and ou_id = h_rv_ou_id
+			and h_rv_etat = true
 			group by vi_id";
 
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -37,9 +37,9 @@
 		$content[] = create_table_ligne(null, array($tableau['vi_designation'],
 													$tableau['mo_designation']." - ".$tableau['ou_code'],
 													$tableau['em_code'],
-													date_html($tableau['rv_debut']),
-													date_html($tableau['rv_fin']),
-													'<button id="'. $tableau['rv_id'] .'" class="btn btn-link ajaxphplink" href="view_historise.php">Voir</button>',));
+													date_html($tableau['h_rv_debut']),
+													date_html($tableau['h_rv_fin']),
+													'<button id="'. $tableau['h_rv_id'] .'" class="btn btn-link ajaxphplink" href="view_historise.php">Voir</button>',));
 	}
 
 	if(empty($content))

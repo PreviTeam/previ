@@ -11,17 +11,17 @@
 
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM REALISATION_OPERATION, REALISATION_FICHE, OPERATION, COMPO_FICHE, FICHE, MODELE, VISITE_ATTACHEMENT, REALISATION_VISITE, OUTIL
-			WHERE rf_id = ro_rf_id
-			AND ro_op_id = op_id
+			FROM HISTO_REALISATION_OPERATION, HISTO_REALISATION_FICHE, OPERATION, COMPO_FICHE, FICHE, MODELE, VISITE_ATTACHEMENT, HISTO_REALISATION_VISITE, OUTIL
+			WHERE h_rf_id = h_ro_rf_id
+			AND h_ro_op_id = op_id
 			AND op_id = cf_op_id
-			AND rf_fi_id = cf_fi_id 
-			AND fi_id = rf_fi_id
-			AND rf_rv_id = rv_id
-			AND rv_vi_id = va_vi_id
+			AND h_rf_fi_id = cf_fi_id 
+			AND fi_id = h_rf_fi_id
+			AND h_rf_rv_id = h_rv_id
+			AND h_rv_vi_id = va_vi_id
 			AND mo_id = va_mo_id
-			AND rv_ou_id = ou_id
-			AND rf_id = ".$_POST['id']."
+			AND h_rv_ou_id = ou_id
+			AND h_rf_id = ".$_POST['id']."
 			GROUP BY cf_ordre
 			ORDER BY cf_ordre";
 
@@ -31,7 +31,7 @@
 	$titre = '';
 
 	while($tableau = mysqli_fetch_assoc($res)){
-		$content[] = create_fiche_ligne(array($tableau['cf_ordre'].". ".$tableau['op_contenu'],$tableau['ro_res']));
+		$content[] = create_fiche_ligne(array($tableau['cf_ordre'].". ".$tableau['op_contenu'],$tableau['h_ro_res']));
 
 		$titre = $tableau['fi_designation']." - ".$tableau['mo_designation']." ".$tableau['ou_code'];
 	}

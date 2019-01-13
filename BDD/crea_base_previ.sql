@@ -213,6 +213,8 @@ alter table VISITE_ATTACHEMENT
 alter table VISITE_ATTACHEMENT
 	add constraint fk_va_mo FOREIGN KEY (va_mo_id) REFERENCES MODELE(mo_id);
 
+
+
 alter table REALISATION_VISITE
 	add constraint fk_rv_vi FOREIGN KEY (rv_vi_id) REFERENCES VISITE(vi_id);
 
@@ -233,6 +235,19 @@ alter table REALISATION_OPERATION
 
 alter table REALISATION_OPERATION
 	add constraint fk_ro_rf FOREIGN KEY (ro_rf_id) REFERENCES REALISATION_FICHE(rf_id);
+
+
+alter table HISTO_REALISATION_VISITE
+	add constraint fk_h_rv_vi FOREIGN KEY (h_rv_vi_id) REFERENCES VISITE(vi_id);
+
+alter table HISTO_REALISATION_VISITE
+	add constraint fk_h_rv_ou FOREIGN KEY (h_rv_ou_id) REFERENCES OUTIL(ou_id);
+
+alter table HISTO_REALISATION_FICHE
+	add constraint fk_h_rf_fi FOREIGN KEY (h_rf_fi_id) REFERENCES FICHE(fi_id);
+
+alter table HISTO_REALISATION_FICHE
+	add constraint fk_h_rf_rv FOREIGN KEY (h_rf_rv_id) REFERENCES HISTO_REALISATION_VISITE(h_rv_id);
 
 alter table HISTO_REALISATION_FICHE
 	add constraint fk_h_rf_em FOREIGN KEY (h_rf_em_id) REFERENCES EMPLOYE(em_id);
