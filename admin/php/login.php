@@ -26,12 +26,12 @@
               require_once 'bibli_generale.php';
 
               if (isset($_SESSION['em_id'])){
-                  $page = 'index.php';
+                  $page = 'dashboard.php';
                   if (isset($_SERVER['HTTP_REFERER'])){
                       $page = $_SERVER['HTTP_REFERER'];
                       $nom_page = url_get_nom_fichier($page);
                       if ($nom_page == 'login.php'){
-                          $page = 'index.php'; 
+                          $page = 'dashboard.php'; 
                       }
                   }
                   redirige($page);
@@ -92,6 +92,15 @@
               function redirige($page) {
                 header("Location: $page");
                 exit();
+              }
+
+              function url_get_nom_fichier($url){
+                $nom = basename($url);
+                $pos = mb_strpos($nom, '?', 0, 'UTF-8');
+                if ($pos !== false){
+                    $nom = mb_substr($nom, 0, $pos, 'UTF-8');
+                }
+                return $nom;
               }
           ?>
           <div class="text-center">
