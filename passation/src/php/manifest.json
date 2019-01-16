@@ -1,0 +1,13 @@
+{
+  "name": "Previ Application Progressive Web App",
+  "short_name": "PWAPrevi",
+  "start_url": "./dashboard.php",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#2A3443",
+  "description": "Passation Previ App",
+  "theme_color": "#3F51B5",
+  "dir": "ltr",
+  "lang": "fr",
+  "orientation": "portrait-primary",
+}

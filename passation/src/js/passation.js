@@ -12,7 +12,6 @@ class PWAConfApp {
 
   async loadSpeakers() {
     this.speakers = await this.fetchJSON('./speakers.json');
-
     this.speakersDiv.innerHTML = this.speakers
       .map(this.toSpeakerBlock)
       .join('\n');

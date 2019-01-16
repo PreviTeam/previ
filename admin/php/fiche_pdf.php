@@ -29,6 +29,7 @@
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$data = array();
+		$titre = "Fiche vide";
 
 		while($tableau = mysqli_fetch_assoc($res)){
 			$data[] = array($tableau['cf_ordre'].". ".$tableau['op_contenu'],$tableau['h_ro_res']);

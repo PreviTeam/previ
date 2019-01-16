@@ -230,7 +230,7 @@ INSERT INTO REALISATION_VISITE (rv_vi_id, rv_ou_id, rv_debut, rv_fin , rv_etat) 
 #etat : false = En Cours,  True = Terminée
 INSERT INTO REALISATION_FICHE (rf_fi_id, rf_rv_id , rf_em_id, rf_debut, rf_fin, rf_etat) VALUES
 (1, 1, 1, '2018-05-01', '2018-05-01', true),
-(2, 1, 1, '2018-05-02', '2018-05-02', true);
+(2, 1, 1, '2018-05-02', '2018-05-02', false);
 
 #idReal, idOperation, IdRealFiche, resultat
 INSERT INTO REALISATION_OPERATION (ro_op_id, ro_rf_id , ro_res) VALUES
