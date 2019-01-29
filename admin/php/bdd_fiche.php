@@ -18,6 +18,9 @@
 		$sql = "DELETE FROM compo_visite WHERE cv_fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
+		$sql = "DELETE FROM histo_realisation_fiche WHERE h_rf_fi_id=".$id;
+		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
 		$sql = "DELETE FROM realisation_fiche WHERE rf_fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -42,50 +45,52 @@
 		$sql = "SELECT * FROM compo_fiche,operation WHERE cf_op_id = op_id AND cf_fi_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sizeModif = sizeof($_POST)-mysqli_num_rows($res)-4;
 		$size = sizeof($_POST)-4;
+
+		$bddRow = array();
+
+		while($tableau = mysqli_fetch_assoc($res))
+		{
+			$bddRow[] = $tableau["op_contenu"];
+		}
+
 		$row = array();
 
 		for($i = 1; $i < $size+1; $i++){
 			$row[] = $_POST['t'.$i];
 		}
 
-		if($sizeModif < 0)
+		$add = getTab($row,$bddRow);
+		$sup = getTab($bddRow,$row);
+
+		if(!empty($sup))
 		{
-			$tabSup = array();
-
-			while($tableau = mysqli_fetch_assoc($res))
+			foreach($sup as $value)
 			{
-				if(!in_array($tableau['op_contenu'], $row))
-				{
-					$tabSup[] = $tableau['op_id'];
-				}
-			}
+				$sql = "SELECT op_id FROM operation WHERE op_contenu = '".$bddRow[$value]."'";
+	        	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+	        	$tableau = mysqli_fetch_assoc($res);
 
-			for($i = 0; $i < sizeof($tabSup); $i++)
-			{
-				$sql = "DELETE FROM compo_fiche WHERE cf_fi_id=".$id." AND cf_op_id=".$tabSup[$i];
+				$sql = "DELETE FROM compo_fiche WHERE cf_fi_id = ".$id." AND cf_op_id = ".$tableau['op_id'];
 				$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 			}
 		}
-		else if($sizeModif > 0)
+
+		if(!empty($add))
 		{
-			for($i = 1; $i < $size+1; $i++)
+			foreach($add as $value)
 			{
-				if($i >= $size+1-$sizeModif)
-				{
-					$operation = bd_protect($bd,$_POST['t'.$i]);
+				$sql = "SELECT op_id FROM operation WHERE op_contenu = '".$row[$value]."'";
+	        	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+	        	$tableau = mysqli_fetch_assoc($res);
 
-					$sql = "SELECT op_id FROM operation WHERE op_contenu = '".$operation."'";
-	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-	        		$tableau = mysqli_fetch_assoc($res);
-
-	        		$sql = "INSERT INTO compo_fiche
-	        				VALUES (".$id.",".$tableau['op_id'].",".$i.")";
-	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
-				}
+				$sql = "INSERT INTO compo_fiche
+	        			VALUES (".$id.",".$tableau['op_id'].",0)";
+				$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 			}
 		}
+
+		
 
 		$sql = "SELECT * FROM compo_fiche,operation WHERE cf_op_id = op_id AND cf_fi_id = ".$id." ORDER BY cf_ordre";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -137,4 +142,18 @@
 
 	mysqli_close($bd);
 	ob_end_flush();
+
+	function getTab($tab1, $tab2)
+	{
+		$res = array();
+
+		foreach ($tab1 as $key => $value) {
+			if(!in_array($value, $tab2))
+			{
+				$res[] = $key; 
+			}
+		}
+
+		return $res;
+	}
 ?>
