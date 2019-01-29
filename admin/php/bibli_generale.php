@@ -10,6 +10,63 @@ define("SELECTEUR", "Select");
 									Bibliotheque Générale HTML
 ################################################################################################*/
 
+function get_chart($bd,$id)
+{
+  $data =  '[';
+  $label = '[';
+  $month = array("", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+
+  for($i = 5; $i >= 0; $i--)
+  {
+    $currentMonth = date('n', mktime(0, 0, 0, date('m')-$i));
+    $sql = 'SELECT COUNT(DISTINCT h_rv_vi_id) AS numVi
+            FROM histo_realisation_visite, histo_realisation_fiche
+            WHERE h_rf_rv_id = h_rv_id 
+            AND h_rf_etat="1"
+            AND h_rf_em_id = '.$id.'
+            AND h_rv_fin LIKE "'. date('Y-m', mktime(0, 0, 0, date('m')-$i)) . '-%"';
+    $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    $tab = mysqli_fetch_assoc($res);
+
+    $data .= $tab["numVi"];
+    $label .= '"'.$month[$currentMonth].'"';
+    
+    if($i > 0){
+      $label .= ',';
+      $data .= ',';
+    }
+    else{
+      $label .= ']';
+      $data .= ']';
+    }
+  }
+
+  echo  '<script>',
+          'var canvas = document.getElementById("chrt");',
+          'var chrt = new Chart(canvas,{',
+            'type: "bar",',
+            'data: {',
+              'labels: ',$label,',',
+              'datasets: [{',
+                'label: "visites",',
+                'backgroundColor: "rgb(0, 123, 255)",',
+                'data: ',$data,',',
+              '}]',
+            '},',
+
+            'options: {',
+                 ' scales: {',
+                      'yAxes: [{',
+                          'ticks: {',
+                              'beginAtZero:true',
+                         '}',
+                      '}]',
+                  '}',
+              '}',
+          '});',
+      '</script>';
+}
+
 /**
  * Fonction comptant le nombre de visites et de fiches terminées durant le mois en cours et le mois dernier
  * 
@@ -553,6 +610,7 @@ function generic_page_start($status, $bd){
         '<script src="../js/popper.min.js"></script>',
         '<script src="../js/bootstrap.min.js"></script>',
         '<script src="../js/previ_scripts.js"></script>',
+        '<script src="../js/Chart.min.js"></script>',
 
       '</head>',
 
