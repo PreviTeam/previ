@@ -1,9 +1,9 @@
 const cacheName = 'pwa-conf-v1';
 const staticAssets = [
-  './',
-  './php/login.php',
-  './js/passation.js',
-  './css/styles.css'
+/*  './',*/
+  './dashboard.php',
+  '../js/passation.js',
+  '../css/styles.css'
 ];
 
 

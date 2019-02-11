@@ -11,6 +11,8 @@ $(document).ready(function () {
   // Application des écouteurs de click sur les liens du menu chargant dynamiquement les pages contenues via Fetch
     $('.phplink').click( function(e) {
       e.preventDefault();
+      $('.nav-link').parent().css("background-color", "#363B3B");
+      $(this).parent().css("background-color", "#4b4f4f");
       loadpage('#content-data', this.getAttribute('href'), null);
     });
 
@@ -23,6 +25,7 @@ $(document).ready(function () {
 
   // Fermeture des menu déroulant au click sur un nouvel item
   $('.dropdown-toggle').click(function () { $(".collapse").collapse("hide") });
+
 
 });
 

@@ -12,7 +12,7 @@ define("SELECTEUR", "Select");
 
 function get_chart($bd,$id)
 {
-  $data =  '[';
+  $data  = '[';
   $label = '[';
   $month = array("", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
 
@@ -473,19 +473,26 @@ function get_visites($bd, $entete){
  */  
 function get_fiches($bd, $entete){
     
-  $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, count(ro_id) as totOp
-      FROM realisation_fiche, realisation_visite, outil, fiche, realisation_operation
-      WHERE rf_fi_id = fi_id
-      AND ro_rf_id = rf_id
-      AND rf_rv_id = rv_id
-      AND rv_ou_id = ou_id
-      AND rf_etat = 0
-      GROUP BY rf_id";
+  $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id
+             FROM realisation_visite, outil, fiche, realisation_fiche
+             WHERE rf_fi_id = fi_id
+             AND rf_rv_id = rv_id
+             AND rv_ou_id = ou_id
+             AND rf_etat = 0
+             GROUP BY rf_id";
 
   $content =array();
   $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
   while($tableau = mysqli_fetch_assoc($res)){
+
+    $sql3 = "SELECT * FROM realisation_operation WHERE ro_rf_id = ".$tableau['fi_id'];
+     $res3 = mysqli_query($bd, $sql3) or bd_erreur($bd, $sql3);
+     $nbOpRealisees = 0;
+     while($tableau2 = mysqli_fetch_assoc($res3)){
+      $nbOpRealisees++;
+     }
+         
     $sql2 = "SELECT count(op_id) as nbOp
          FROM fiche, compo_fiche, operation
          WHERE fi_id = cf_fi_id
@@ -497,7 +504,7 @@ function get_fiches($bd, $entete){
     $ligne=array($tableau['fi_designation'],
            $tableau['ou_designation'], 
            $tableau['rf_debut'],
-           ($tableau['totOp'] *100 / $nbOperationParFiche['nbOp'])."%");
+           ($nbOpRealisees *100 / $nbOperationParFiche['nbOp'])."%");
     $content[] = create_table_ligne(null, $ligne);
   }
 
@@ -506,6 +513,7 @@ function get_fiches($bd, $entete){
 
   create_table($entete, $content, null, $_SESSION['ps2'] ." en Cours");
 }
+
 
 function create_fiche($tab_ligne,$titre){
     echo '<h1 class="title_table">',$titre,'</h1>';
@@ -636,7 +644,7 @@ function generic_page_start($status, $bd){
                
                echo
                     '<div id="menu-deroulant" class="dropdown">',
-                      '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Mennu',
+                      '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu',
                          '<span class="caret"></span></button>',
                           '<ul class="dropdown-menu">',
                              '<li><a class="nav-link-mobile phplink" href="dashboard_content.php">Dashboard</span></a>';

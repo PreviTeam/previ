@@ -104,12 +104,12 @@ text-align: right;
 
 
 .nav-item{
-    padding: 0.5em 1rem;
+  padding: 0.5em 0 0.5em 1em;
   text-align: center;
 }
 
 .sub-item{
-    margin-left: -1em;
+    padding-left: 1em;
     color: #fff;
 }
 
