@@ -187,4 +187,222 @@ function bd_erreur($bd, $sql) {
 }
 
 
+
+
+/**
+ * Fonction de création d'une ligne de DataGrig. La ligne résultante est à ajouter dans un tableau de lignes
+ * à envoyer à la fonction create_table.
+ * Exemple d'usage : create_table_ligne(null, array(data1, data2, data3))
+ * 
+ * @param       String  $class              classe de l'élément de ligne. Si aucune classe n'est à ajouter, mettre la valeur null
+ * @param       Data[]  $tableau_contenu    tableau de valeurs Une valeur équivaut à une colone dans la table. 
+ *
+ * @return      Strin   $res                Code HTML d'un ligne de tableau 
+ */  
+function create_table_ligne($class, $tableau_contenu){
+  $classe = $class != null ? 'class="'.$class.'"' : '';
+  $res= '<tr '.$classe.'>';
+  
+  $colones = sizeof($tableau_contenu);
+  for($i=0; $i < $colones; $i++){
+    if($i == 0){
+       $res.= '<td class="cell">'.$tableau_contenu[$i].'</td>';
+    }
+    else{
+       $res.= '<td>'.$tableau_contenu[$i].'</td>';
+    }
+   
+  }
+  $res.= '</tr>';
+
+  return $res;
+}
+
+/**
+ * Fonction de création d'une dataGrid
+ * 
+ * @param       String[]  $tableau_entete     Tableau contenant le Nom des entêtes de colones
+ * @param       Lignes[]  $tableau_ligne      Tableau contenant les lignes à inserrer. A créer avec create_table_ligne
+ * @param       String    $class              Classe à attribuer au la DataGrid.Si aucune classe n'est à ajouter, mettre la valeur null
+ * @param       String    $titre              Titre de la datagid
+ *
+ * @return      void
+ */ 
+function create_table($tableau_entete, $tableau_ligne, $class, $titre){
+   $classe = $class != null ? $class : '';
+   echo '<h2 class="title_table">', $titre,'</h1><table class="table-fill" id="', $classe, '"><thead><tr>';
+   $colones_entete = sizeof($tableau_entete);
+   $colones_ligne = sizeof($tableau_ligne);
+
+   //Formation de la ligne d'entête
+  for($i=0; $i < $colones_entete; $i++){
+    echo '<th scope="col">', $tableau_entete[$i], '</th>';
+  }
+  echo '</tr></thead>',
+      '<tbody class="tableBody">';
+
+  for($i=0; $i < $colones_ligne; $i++){
+    echo $tableau_ligne[$i];
+  }
+  echo'</tbody class="table-hover"></table>';
+}
+
+
+function get_preferences($bd){
+    $sql = "SELECT * FROM admin_parameters";
+
+    $ps1 = '';
+    $ps2 = '';
+    $ps3 = '';
+    $eq1 = '';
+    $eq2 = '';
+    $eq3 = '';
+
+    $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+    $tableau = mysqli_fetch_assoc($res);
+
+    $ps1 = $tableau['ap_pslvl1']; 
+    $_SESSION['ps1'] = $ps1;
+    $ps2 = $tableau['ap_pslvl2'];
+    $_SESSION['ps2'] = $ps2;
+    $ps3 = $tableau['ap_pslvl3'];
+    $_SESSION['ps3'] = $ps3;
+     
+    $eq1 = $tableau['ap_eqlvl1']; 
+    $_SESSION['eq1'] = $eq1;
+    $eq2 = $tableau['ap_eqlvl2'];
+    $_SESSION['eq2'] = $eq2;
+    $eq3 = $tableau['ap_eqlvl3'];
+    $_SESSION['eq3'] = $eq3;
+}
+
+
+/**
+ * Créatoin de fenêtres modales de sélection dans la page
+ * 
+ * @param       String    $type      type de la fenetre modale. Constantes : MODIFIER pour une fenetre de modification NOUVEAU pour une fenetre d'ajout
+ *
+ * @return      void
+ */ 
+function modal_select(){
+
+  echo 
+  '<div class="content-modal">',
+    '<div class="modal fade" id="SelectModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Selecteur" aria-hidden="true">',
+      '<div class="modal-dialog" role="document">',
+        '<div class="modal-content">',
+        '  <div class="modal-header">',
+            '<h5 class="modal-title" id="ModalLabel">Selection</h5>',
+            '<button type="button" class="close"  id="closeSelectModal">',
+              '<span aria-hidden="true">&times;</span>',
+           ' </button>',
+          '</div>',
+         ' <div id="Selectmodal-body" class="Selectmodal-body">',
+         '</div>',
+          '</div>',
+       ' </div>',
+      '</div>',
+    '</div>';
+}
+
+
+function dashboard_content($bd){
+
+   /* ----------------------------- Affichage des Fiches En cours de l'utilisateur  ------------------------------------ */
+
+
+     $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, rf_id
+             FROM realisation_visite, outil, fiche, realisation_fiche
+             WHERE rf_fi_id = fi_id
+             AND rf_rv_id = rv_id
+             AND rv_ou_id = ou_id
+             AND rf_etat = 0
+             AND rf_em_id = ".$_SESSION['em_id']."
+             GROUP BY rf_id";
+
+      $content =array();
+      $entete=array("Fiche", "Equipement", "%", "");
+      $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+
+      while($tableau = mysqli_fetch_assoc($res)){
+
+         $sql3 = "SELECT * FROM realisation_operation WHERE ro_rf_id = ".$tableau['rf_id'];
+         $res3 = mysqli_query($bd, $sql3) or bd_erreur($bd, $sql3);
+         $nbOpRealisees = 0;
+         while($tableau2 = mysqli_fetch_assoc($res3)){
+          $nbOpRealisees++;
+         }
+
+         $sql2 = "SELECT count(op_id) as nbOp
+         FROM fiche, compo_fiche, operation
+         WHERE fi_id = cf_fi_id
+         AND op_id = cf_op_id
+         AND fi_id = '".$tableau['fi_id']."'";
+          $res2 = mysqli_query($bd, $sql2) or bd_erreur($bd, $sql2);
+          $nbOperationParFiche =  mysqli_fetch_assoc($res2);
+
+          $ligne=array($tableau['fi_designation'],
+                 $tableau['ou_designation'],
+                 ($nbOpRealisees * 100 / $nbOperationParFiche['nbOp'])."%",
+                 '<button type="button" data-id="'.$tableau['rf_id'].'" class="btn btn-link" href="passation.php">Réaliser</button>');
+          $content[] = create_table_ligne(null, $ligne);
+      }
+
+      if(empty($content))
+        $content[] = create_table_ligne(null, array("Rien a afficher"));
+
+      create_table($entete, $content, null, "Mes " .$_SESSION['ps2']." en Cours");
+
+
+      /* ----------------------------- Affichage des Fiches Non débutées ------------------------------------ */
+
+       $sql = "SELECT rf_id, fi_id, fi_designation, ou_designation
+                FROM realisation_fiche, realisation_visite, outil, fiche
+                WHERE rf_fi_id = fi_id
+                AND rf_rv_id = rv_id
+                AND rv_ou_id = ou_id
+                AND rf_em_id IS NULL
+                GROUP BY rf_id";
+
+      $content =array();
+      $entete=array("Fiche", "Equipement", '');
+      $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
+      while($tableau = mysqli_fetch_assoc($res)){
+          $ligne=array(
+                      $tableau['fi_designation'],
+                      $tableau['ou_designation'], 
+                      '<button class="btn btn-link attribute" data-id="'.$tableau['rf_id'].'" href="attribute.php">Débuter</button>');
+          $content[] = create_table_ligne(null, $ligne);
+      }
+
+      if(empty($content))
+        $content[] = create_table_ligne(null, array("Rien a afficher"));
+
+      create_table($entete, $content, null, $_SESSION['ps2'] ." en Attente");
+}
+
+
+
+function get_nb_fiches_en_cours($bd, $id_rf){
+
+  // Récupération de la réalisation visite
+    $sql2 = "SELECT *
+            FROM realisation_fiche
+            WHERE rf_id = ".$id_rf;
+    $res2 = mysqli_query($bd, $sql2) or bd_erreur($bd, $sql2);
+    $visite = mysqli_fetch_assoc($res2);
+
+    // Calcul du nombre de fiche en cours dans la visite ciblée
+    $sql3 = "SELECT count(rf_fi_id) as nbFichesEnCours
+         FROM realisation_fiche
+         WHERE rf_etat = 0
+         AND rf_rv_id = ".$visite['rf_rv_id'];
+    $res3 = mysqli_query($bd, $sql3) or bd_erreur($bd, $sql3);
+    $fiches_en_cours = mysqli_fetch_assoc($res3);
+
+    return array(intval($fiches_en_cours['nbFichesEnCours']), $visite['rf_rv_id']);
+
+}
+
+
 ?>

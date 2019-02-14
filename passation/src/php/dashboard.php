@@ -13,6 +13,8 @@ $_GET && redirection("./deconnexion.php");
 
 $bd = bd_connect();
 
+get_preferences($bd);
+
  echo  '<!DOCTYPE html>',
     '<html lang="fr">',
 
@@ -23,14 +25,13 @@ $bd = bd_connect();
 	       '<title>Passation</title>',
 
 	       '<link href="../css/bootstrap.min.css" rel="stylesheet">',
-		   '<link href="../css/styles.css" rel="stylesheet">',
-		   '<link href="../css/dashboard.css" rel="stylesheet">',
-		   '<link rel="manifest" href="./manifest.json">',
+		     '<link href="../css/dashboard.css" rel="stylesheet">',
+         '<link rel="manifest" href="./manifest.json">',
 
 		   '<script src="../js/jquery-3.3.1.slim.min.js"></script>',
-		   '<script src="../js/bootstrap.min.js"></script>',
-		   '<script src="../js/passation.js"></script>',
-		   '<script src="./sw.js"></script>',
+       '<script src="../js/bootstrap.min.js"></script>',
+		   '<script src="../js/dashboard.js"></script>',
+       '<script src="./sw.js"></script>',
 
       '</head>',
 
@@ -40,6 +41,7 @@ $bd = bd_connect();
       '<div id="conent-page">',
 
       	 '<nav class="navbar header static-top">',
+         '<a id="logo" href="dashboard.php">PREVI</a>',
       	 	 '<div id="nav-icon-line">',    
 
                     '<a  class="nav_icone" href="deconnexion.php">',
@@ -49,17 +51,24 @@ $bd = bd_connect();
               '</div>',
           '</nav>',
 
-          '<div class="Page">',
-          	'<h1>Mes Visites en Cours</h1>',
+          '<div id="Page">';
+
+dashboard_content($bd);
 
 
-          '</div>',
+echo   '</div>',
 
-/*      '<footer class="sticky-footer">',
+      '<footer id="adder" class="sticky-footer">',
+        '<button id="adder-btn" type="button" class="btn btn-success btn-adder btn-modal" data-toggle="modal" href="select_modele.php" data-target="#SelectModal">Nouvelle Visite</button>',
+      '</footer >',
 
-      '</footer>',*/
+      '</div>';
 
-      '</div>',
+
+      /* -----------------------------   Fenetre modale de sélction  ----------------------------------- */
+
+      modal_select();
+echo
     '</body>',
 '</html>';
 

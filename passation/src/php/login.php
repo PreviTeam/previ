@@ -9,12 +9,12 @@
     <title>Previ Login</title>
 
    <link href="../css/bootstrap.min.css" rel="stylesheet">
-   <link href="../css/styles.css" rel="stylesheet">
+<!--    <link href="../css/styles.css" rel="stylesheet"> -->
    <link href="../css/login.css" rel="stylesheet">
 
    <script src="../js/jquery-3.3.1.slim.min.js"></script>
    <script src="../js/bootstrap.min.js"></script>
-   <script src="../js/passation.js"></script>
+
    
 
   </head>
@@ -108,7 +108,7 @@
               }
           ?>
           <div class="text-center">
-            <p class="d-block small mt-3">Mot de passe oublié ? </p><p><a href="forgot-password.html">Contactez un administrateur</a></p>
+            <p class="d-block small mt-3">Mot de passe oublié ? </p><p><a class="link-a" href="#">Contactez un administrateur</a></p>
           </div>
         </div>
       </div>
