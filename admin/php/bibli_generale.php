@@ -460,7 +460,7 @@ function get_visites($bd, $entete){
     }
 
     if(empty($content))
-      $content[] = create_table_ligne(null, array("Rien a afficher"));
+      $content[] = create_table_ligne(null, array("Rien à afficher"));
     create_table($entete, $content, null, $_SESSION['ps1'] . " en Cours");
   }
 
@@ -648,7 +648,7 @@ function generic_page_start($status, $bd){
                       '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu',
                          '<span class="caret"></span></button>',
                           '<ul class="dropdown-menu">',
-                             '<li><a class="nav-link-mobile phplink" href="dashboard_content.php">Dashboard</span></a>';
+                             '<li><a class="nav-link-mobile phplink" href="dashboard_content.php">Tableau de bord</li></a>';
 
                         if($status === 'ADMIN'){
                         echo
@@ -709,7 +709,7 @@ function generic_page_start($status, $bd){
                   '<ul class=" sidebar navbar-nav components">',
                       '<li class="nav-item"><a class="nav-link phplink" href="dashboard_content.php">',
                       '<img class="nav-icon" src="../img/icones/SVG/autre/briefcase.svg" alt="logout"/>', 
-                      'Dashboard</a></li>';
+                      'Tableau de bord</a></li>';
 
                   // Affiche les éléments vu seulement par l'administrateur
                   if($status === 'ADMIN'){
@@ -722,7 +722,7 @@ function generic_page_start($status, $bd){
                                 '<li class="nav-item">',
                                    '<a class="nav-link sub-item phplink" href="user.php">',
                                    '<img class="nav-icon" src="../img/icones/SVG/autre/avatar-1.svg" alt="a"/>',
-                                   '<span>Users</span></a>',
+                                   '<span>Utilisateurs</span></a>',
                                 '</li>',
                                 '<li class="nav-item">',
                                    '<a class="nav-link sub-item phplink" href="visite.php">',

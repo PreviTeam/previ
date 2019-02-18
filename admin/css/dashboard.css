@@ -817,6 +817,10 @@ td:last-child {
     display: inline-block;
   }
 
+  .dropdown-menu{
+    background-color: buttonface;
+  }
+
   #logo{
     width: 30%;
   }
