@@ -523,7 +523,7 @@ span{
 }
  
 th {
-  color:#D5DDE5;;
+  color:#D5DDE5;
   background:#3b434f;
   border-right: 1px solid #343a45;
   font-size:15px;
@@ -850,7 +850,7 @@ td:last-child {
   }
 
   th {
-    color:#D5DDE5;;
+    color:#D5DDE5;
     background:#3b434f;
     border-right: 1px solid #343a45;
     font-size:10px;

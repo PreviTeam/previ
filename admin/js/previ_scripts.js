@@ -11,11 +11,18 @@ $(document).ready(function () {
   // Application des écouteurs de click sur les liens du menu chargant dynamiquement les pages contenues via Fetch
     $('.phplink').click( function(e) {
       e.preventDefault();
-      $('.nav-link').parent().css("background-color", "#363B3B");
-      $(this).parent().css("background-color", "#4b4f4f");
+      
       loadpage('#content-data', this.getAttribute('href'), null);
     });
 
+
+  // Highlight du menu en cours d'utilisation 
+    $('.highligh-menu').click( function(e) {
+      e.preventDefault();
+      $('.nav-link').parent().css("background-color", "#363B3B");
+      $(this).parent().css("background-color", "#4b4f4f");
+    });
+   
 
   // Application de l'écouteur pour le chargement de la page de recherche
   $('#searchBtn').click(function(e) {
