@@ -1,4 +1,4 @@
-
+CREATE USER 'previuser'@'localhost' IDENTIFIED BY '123';
 GRANT SELECT, UPDATE, INSERT ON previ.* TO 'previuser'@'localhost';
 
 ##########################################################
