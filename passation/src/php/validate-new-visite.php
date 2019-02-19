@@ -5,9 +5,9 @@
 	verify_loged(isset($_SESSION['em_id']));
 	$_GET && redirection("./deconnexion.php");
 
-	/*###################################################################
-							Contenu de la page Select_operation
-	###################################################################*/
+	/*############################################################################
+		Création d'une nouvelle réalisation_visite et des fiches associées
+	#############################################################################*/
 	$bd = bd_connect();
 
 
@@ -18,17 +18,20 @@
 	$idVisite = mysqli_insert_id($bd);
 
 
+	// Récupération de l'ensemble des fiches composant la visite
 	$sqlfiche = "SELECT * FROM compo_visite WHERE cv_vi_id =".$_POST['id_visite'];
 	$res = mysqli_query($bd, $sqlfiche) or bd_erreur($bd, $sqlfiche);
     $sql="";
 	
 
+    // Création des fiches
 	while($tableau = mysqli_fetch_assoc($res)){
 		$sql = "INSERT INTO realisation_fiche (rf_fi_id, rf_rv_id , rf_em_id, rf_debut, rf_fin, rf_etat) 
 				 VALUES (".$tableau['cv_fi_id'].",". $idVisite.", NULL,'".date('Y-m-d') ."', NULL, 0);";
 		$res2 = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
   	}
 
+  	// Renvoie de l'id de la réalisation_visite créée
   	echo $idVisite;
   	
     mysqli_close($bd);

@@ -7,7 +7,7 @@
 	$_GET && redirection("./deconnexion.php");
 
 /*###################################################################
-			Modification de la BDD selon la demande
+	   Attribution d'une fiche à l'utilisateur en cours
 ###################################################################*/
 	$bd = bd_connect();
 
@@ -20,6 +20,7 @@
 
 	}
 
+	// Rechargement du contenu central de la page
 	dashboard_content($bd);
 
 	mysqli_close($bd);

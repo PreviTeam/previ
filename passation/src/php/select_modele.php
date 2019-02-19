@@ -6,10 +6,13 @@
 	$_GET && redirection("./deconnexion.php");
 
 	/*###################################################################
-							Contenu de la page Select_operation
+					Contenu de la page Select_modele
 	###################################################################*/
 	$bd = bd_connect();
 
+	/* Récupération de l'ensemble des modèles et affichage à l'utilisateur
+		Les modeles sont sous forme de lien, cliquer sur un modèle le séléctiionne automatiquement
+	*/
 	$sql = "SELECT * FROM modele WHERE mo_inactif=0";
 	$count = 0;
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);

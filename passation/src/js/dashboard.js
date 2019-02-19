@@ -1,9 +1,9 @@
 $(document).ready(function () {  
-
-  // Attribution / réatribution des écouteurs du dashboard
-  init_page();
-
+  init_page(); // Attribution / réatribution des écouteurs du dashboard
 });
+
+// Définition d'une variable globale pour les opération à enregistrer lors de la perte de connexion
+var buffer = [];
 
 
 /**
@@ -26,8 +26,20 @@ async function loadAttribution(fname, id){
 }
 
 
-// -------------- Chargement et traitement des operations à passer -------------- //
 
+/* #########################################################################################################
+
+                      Chargement et traitement des operations à passer
+
+######################################################################################################### */
+
+/**
+ * Chargement assynchrone de page avec paramètre id via POST 
+ * La page charge les opérations pour le traitement EN ou HORS CONNEXION
+ *
+ * @param  fname  : page à charger dans la fenêtre modale
+ * @param  id     : id de l'élément à modifier, qui sera transmit via la méthode post
+ */
 async function loadAsyncPage(fname, id){
 
   var i='id='+id;
@@ -55,7 +67,15 @@ async function loadAsyncPage(fname, id){
 
 }
 
-var buffer = [];
+
+/**
+ * Affichage d'une opération et de son contenu
+ * Si HORS CONNEXION, les informations sont sauvegardées
+ * Si aucune opération n'est à afficher, cloture de la fiche en cours
+ *
+ * @param  arr      : tableau d'opérations contenant (tableau[nb d'op réalisés, id réalisation fiche] , tableau[id opération, ordre opération, type opération, désignation opération, tableau[epi designation]])
+ * @param  current  : élément en cours du tableau d'opération à traiter
+ */
 function printOperation(arr, current){
 
   // Si il n'y a plus d'opération à afficher, alors on termine la fiche par sa cloture
@@ -90,6 +110,7 @@ function printOperation(arr, current){
               '</div></div>';
     }
 
+    // Affichage des icones d'epi de l'opération
     str+='<div class="epi-line">';
     for(var i = 0; i < arr[current][5].length; ++i){
       str += print_epi_logo(arr[current][5][i]);  
@@ -98,9 +119,10 @@ function printOperation(arr, current){
 
     $('#Page').html(str);
 
+    // Ecouteurs d'action des boutons permettant d'avancer dans les opérations
     $('.btn-operation').click(function(e){
 
-
+      // Récupération du résultat saisis par l'utilisateur
       var res = "null";
       if($(this).attr('data-type') == "btn"){
         res = $(this).attr('data-res');
@@ -110,6 +132,7 @@ function printOperation(arr, current){
           $('#input-text-res').css("border", "solid 2px #d84a3a");
       }
 
+      // Si le résultat n'est pas vide, on sauvegarde les données en BDD, sinon, un indicateur visuel indique une mauvaise saisie
       if(res != null && res != ""){
         if (!check_network_status('.content-passation')) {
           buffer.push(new Array(arr[current][0], arr[0][1], res));
@@ -119,7 +142,7 @@ function printOperation(arr, current){
           buffer = [];
         }
 
-        // Affichage de la prochaine opération
+        // Affichage de la prochaine opération par appel récursif de la fonction
         printOperation(arr, current+1);
       }
 
@@ -128,6 +151,10 @@ function printOperation(arr, current){
 }
 
 
+/**
+ * Sauvegarde des opérations réalisées et contenu dans le Buffer au retours de la connexion
+ *
+ */
 function save_buffer_operations(){
   if(buffer.length != 0){
     buffer.forEach(function(element) {
@@ -136,6 +163,14 @@ function save_buffer_operations(){
   }
 }
 
+
+/**
+ * Vérification du status de la connexion au Network
+ * Renvoie True si la connexion est OK
+ * renvoie False et affiche un message à l'utilisateur si la connexion est KO
+ *
+ * @param  $placeholder : élément HTML sous syntaxe JQuerry sur lequel afficher le message d'erreur
+ */
 function check_network_status($placeholder){
   if (!navigator.onLine) {
     console.log('you are offline');
@@ -147,7 +182,13 @@ function check_network_status($placeholder){
 }
 
 
-
+/**
+ * Sauvegarde d'une opération de BDD
+ *
+ * @param  operation_id         : numéro d' id de l'opération
+ * @param  realisation_fiche_id : id de la réalisation_fiche en cours
+ * @param  res                  : resultat à sauvegarder
+ */
 async function save_operation(operation_id, realisation_fiche_id, res){
   var i='op_id='+operation_id+'&rf_id='+realisation_fiche_id+'&res='+res;
 
@@ -158,6 +199,13 @@ async function save_operation(operation_id, realisation_fiche_id, res){
   });
 }
 
+
+/**
+ * Cloture d'une fiche, passant de l'état 0 à 1 en BDD et modification de la date de fin avec la date du jour
+ * Si la fiche était la dernière fiche en cours d'une réalisation_visite, lancement d'une historisation de l'ensemble des informations (visite, fiches, opérations) 
+ *
+ * @param  realisation_fiche_id : id de la réalisation_fiche concernée
+ */
 async function close_fiche(realisation_fiche_id){
   var i='rf_id='+realisation_fiche_id;
   var str = await fetch('close_fiche.php', {  
@@ -177,6 +225,13 @@ async function close_fiche(realisation_fiche_id){
   });
   
 }
+
+
+/* #########################################################################################################
+
+                    Création de nouvelle visites
+
+######################################################################################################### */
 
 
 /**
@@ -250,7 +305,10 @@ async function load_select_visite(fname, id_outil, id_modele){
 /**
  * Création d'une nouvelle visite en BDD et des fiches associées
  *
- * @param  fname  : page à charger dans la fenêtre modale
+ * @param  fname      : page à charger dans la fenêtre modale
+ * @param  id_visite  : id de la visite voulue
+ * @param  id_modele  : id du modèle duquel dépends la visite
+ * @param  id_outil   : id du modèle sur lequel appliquer la visite
  */
 async function createBDD(fname, id_visite, id_modele, id_outil){
 
@@ -275,6 +333,17 @@ async function createBDD(fname, id_visite, id_modele, id_outil){
 }
 
 
+
+/* #########################################################################################################
+
+                    Fonctions Génériques et Ressources
+
+######################################################################################################### */
+
+/**
+ * Initialisation des écouteurs appliqués aux liens et boutons lors du premier chargement de la page ou des rechargement de contenus
+ *
+ */
 function init_page(){
   // Application de l'écouteur pour le chargement de la page de recherche
   $('.attribute').click(function(e) {
@@ -300,6 +369,13 @@ function init_page(){
   });
 }
 
+
+
+/**
+ * Chargement et affichage des pictogrammes relatif aux EPI a utiliser
+ *
+ * @param  epi_designation  : designation de l'epi à afficher
+ */
 function print_epi_logo(epi_designation){
 
   switch(epi_designation){ 

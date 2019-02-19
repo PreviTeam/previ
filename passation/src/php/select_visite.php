@@ -6,10 +6,13 @@
 	$_GET && redirection("./deconnexion.php");
 
 	/*###################################################################
-							Contenu de la page Select_operation
+					Contenu de la page Select_visite
 	###################################################################*/
 	$bd = bd_connect();
 
+	/* Récupération de l'ensemble des visites disponibles pour le moèle préalablement sélectionné et affichage à l'utilisateur
+		Les modeles sont sous forme de lien, cliquer sur un modèle le séléctiionne automatiquement
+	*/
 	$sql = "SELECT * FROM visite_attachement, visite WHERE va_vi_id = vi_id AND va_mo_id=".$_POST['id_modele'];
 	$count = 0;
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);

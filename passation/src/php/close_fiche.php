@@ -7,7 +7,7 @@
 	$_GET && redirection("./deconnexion.php");
 
 /*#########################################################################
-			Mofification d'une réalisation fiche comme terminée
+			Mofification d'une réalisation_fiche comme terminée
 ###########################################################################*/
 	$bd = bd_connect();
 
