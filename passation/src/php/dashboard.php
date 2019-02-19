@@ -44,7 +44,7 @@ get_preferences($bd);
          '<a id="logo" href="dashboard.php">PREVI</a>',
       	 	 '<div id="nav-icon-line">',    
 
-                    '<a  class="nav_icone" href="deconnexion.php">',
+                    '<a  class="nav_icone logout" href="deconnexion.php">',
                       '<img src="../img/icones/SVG/autre/padlock.svg" alt="logout" height="30">',
                    '</a>',
 

@@ -1,5 +1,7 @@
 $(document).ready(function () {  
   init_page(); // Attribution / réatribution des écouteurs du dashboard
+
+  $('.logout').click(function(e){ Cache.delete("pwa-conf-1");  localStorage.clear();});
 });
 
 // Définition d'une variable globale pour les opération à enregistrer lors de la perte de connexion

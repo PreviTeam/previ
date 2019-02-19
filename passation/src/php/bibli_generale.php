@@ -309,7 +309,7 @@ function modal_select(){
 function dashboard_content($bd){
 
    /* ----------------------------- Affichage des Fiches En cours de l'utilisateur  ------------------------------------ */
-
+    get_preferences($bd);
 
      $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, rf_id
              FROM realisation_visite, outil, fiche, realisation_fiche

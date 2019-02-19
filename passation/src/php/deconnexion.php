@@ -12,6 +12,7 @@ setcookie(session_name(),
      	$cookieParams['secure'],
      	$cookieParams['httponly']
 	);
+
 redirection("login.php");
 
 ?>
