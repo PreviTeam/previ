@@ -55,18 +55,23 @@ async function loadAsyncPage(fname, id){
 
 }
 
-
+var buffer = [];
 function printOperation(arr, current){
 
+  // Si il n'y a plus d'opération à afficher, alors on termine la fiche par sa cloture
   if(arr[current] == null){
     var str = '<div class="content-passation"><h3>Fiche terminée !<h3>'+
               '<button type="button" class="btn btn-success btn-menu">Sauvegarder</button></div>';
       $('#Page').html(str);
+      check_network_status('.content-passation');
+
       $('.btn-menu').click(function(e){ 
-        close_fiche(arr[0][1]);
-        
+        save_buffer_operations();
+        close_fiche(arr[0][1]);  
       });
 
+
+  // Sinon, on affiche la nouvelle opération à réaliser
   }else{
     str = '<div class="content-passation">' +
              '<h3 class="title-fiche">'+arr[current][4]+'</h3>'+
@@ -95,6 +100,7 @@ function printOperation(arr, current){
 
     $('.btn-operation').click(function(e){
 
+
       var res = "null";
       if($(this).attr('data-type') == "btn"){
         res = $(this).attr('data-res');
@@ -104,13 +110,40 @@ function printOperation(arr, current){
           $('#input-text-res').css("border", "solid 2px #d84a3a");
       }
 
-      if(res != null && res != "")
-        save_operation(arr[current][0], arr[0][1], res) && printOperation(arr, current+1);
+      if(res != null && res != ""){
+        if (!check_network_status('.content-passation')) {
+          buffer.push(new Array(arr[current][0], arr[0][1], res));
+        }else{
+          save_buffer_operations();
+          save_operation(arr[current][0], arr[0][1], res);
+          buffer = [];
+        }
+
+        // Affichage de la prochaine opération
+        printOperation(arr, current+1);
+      }
 
     });
   }
+}
 
-  
+
+function save_buffer_operations(){
+  if(buffer.length != 0){
+    buffer.forEach(function(element) {
+      save_operation(element[0], element[1], element[2]);
+    });
+  }
+}
+
+function check_network_status($placeholder){
+  if (!navigator.onLine) {
+    console.log('you are offline');
+    $($placeholder).append('Connexion réseau perdue<br>Pour enregistrer les modifications, veuillez rétablir la connexion');
+    return false;
+  }
+
+  return true;
 }
 
 
@@ -230,7 +263,6 @@ async function createBDD(fname, id_visite, id_modele, id_outil){
   });
 
   var i2 = 'rv_id='+ await visiteId.text();
-  console.log(i2);
   var str = await fetch('historiser.php', {  
     method: "POST",  
     body: i2,
