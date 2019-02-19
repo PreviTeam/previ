@@ -2,7 +2,7 @@
 
 	session_start();
 	require_once 'bibli_generale.php';
-	verify_loged(isset($_SESSION['em_id']));
+	verify_loged(isset($_SESSION['em_pass_id']));
 	$_GET && redirection("./deconnexion.php");
 
 	/*###################################################################

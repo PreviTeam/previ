@@ -317,7 +317,7 @@ function dashboard_content($bd){
              AND rf_rv_id = rv_id
              AND rv_ou_id = ou_id
              AND rf_etat = 0
-             AND rf_em_id = ".$_SESSION['em_id']."
+             AND rf_em_id = ".$_SESSION['em_pass_id']."
              GROUP BY rf_id";
 
       $content =array();

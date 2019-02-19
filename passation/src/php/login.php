@@ -9,7 +9,6 @@
     <title>Previ Login</title>
 
    <link href="../css/bootstrap.min.css" rel="stylesheet">
-<!--    <link href="../css/styles.css" rel="stylesheet"> -->
    <link href="../css/login.css" rel="stylesheet">
 
    <script src="../js/jquery-3.3.1.slim.min.js"></script>
@@ -29,7 +28,7 @@
 
               require_once 'bibli_generale.php';
 
-              if (isset($_SESSION['em_id'])){
+              if (isset($_SESSION['em_pass_id'])){
                   $page = 'dashboard.php';
                   if (isset($_SERVER['HTTP_REFERER'])){
                       $page = $_SERVER['HTTP_REFERER'];
@@ -84,7 +83,7 @@
                   $id = $t['em_id'];
                   $status = $t['em_status'];
 
-                  $_SESSION['em_id'] = $id;
+                  $_SESSION['em_pass_id'] = $id;
                   $_SESSION['em_status'] = $status;
 
                   mysqli_free_result($res);
