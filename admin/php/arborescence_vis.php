@@ -52,7 +52,7 @@
 	}
 	$fiches[] = array($last_fi, $ope);
 	$vi[] = array($last_vi, $fiches);
-	create_treeview("Arborescence Equipement", $vi);
+	create_treeview("Arborescence Visite", $vi);
 	echo '</div>';
 	mysqli_close($bd);
 	ob_end_flush();

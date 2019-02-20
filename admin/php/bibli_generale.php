@@ -178,7 +178,7 @@ function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
  */ 
 function create_table($tableau_entete, $tableau_ligne, $class, $titre){
    $classe = $class != null ? $class : '';
-   echo '<h2 class="title_table">', $titre,'</h1><table class="table-fill" id="', $classe, '"><thead><tr>';
+   echo '<h2 class="title_table">', $titre,'</h1><table class="table-fill" class="', $classe, '"><thead><tr>';
    $colones_entete = sizeof($tableau_entete);
    $colones_ligne = sizeof($tableau_ligne);
 
@@ -270,15 +270,15 @@ function create_treeview($title, $niveaux){
  */ 
 function modal_start($type, $currentPage){
   $titre = ($type === 'Modify') ? 'Modifier' : 'Nouveau';
-  $btns = ($type === 'Modify') ? '<button type="button" data-bddAction="delete" data-refresh="'.$currentPage.'"  href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</button> <button type="button" data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Modifier</button>' :
-                                ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" data-bddAction="create" data-refresh="'.$currentPage.'" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</button>';
+  $btns = ($type === 'Modify') ? '<a data-bddAction="delete" data-refresh="'.$currentPage.'"  href="bdd_'.$currentPage.'.php" class="btn btn-danger bdd_request">Supprimer</a> <a data-refresh="'.$currentPage.'" data-bddAction="modify" href="bdd_'.$currentPage.'.php" class="btn btn-success bdd_request">Modifier</a>' :
+                                ' <a class="btn btn-secondary" data-dismiss="modal">Annuler</a><a data-bddAction="create" data-refresh="'.$currentPage.'" href="bdd_'.$currentPage.'.php" class="btn btn-primary bdd_request">Créer</a>';
   echo 
-  '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >',
+  '<div class="modal fade" id="', $type, 'Modal" data-backdrop="static" tabindex="-2" role="dialog" aria-hidden="true" >',
     '<div class="modal-dialog" role="document">',
       '<div class="modal-content">',
         '<div class="modal-header">',
-          '<h5 class="modal-title" id="ModalLabel">', $titre, '</h5>',
-          '<button type="button" class="close" data-dismiss="modal" aria-label="Close"  id="close">',
+          '<h5 class="modal-title" class="ModalLabel">', $titre, '</h5>',
+          '<button type="button" class="close" data-dismiss="modal" aria-label="Close">',
             '<span aria-hidden="true">&times;</span>',
          ' </button>',
         '</div>',
@@ -308,7 +308,7 @@ function modal_select(){
       '<div class="modal-dialog" role="document">',
         '<div class="modal-content">',
         '  <div class="modal-header">',
-            '<h5 class="modal-title" id="ModalLabel">Selection</h5>',
+            '<h5 class="modal-title" class="ModalLabel">Selection</h5>',
             '<button type="button" class="close"  id="closeSelectModal">',
               '<span aria-hidden="true">&times;</span>',
            ' </button>',
@@ -354,12 +354,12 @@ function modal_preferences($bd){
 
 
   echo 
-  '<div class="modal fade" id="preferenceModal" data-backdrop="static" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">',
+  '<div class="modal fade" id="preferenceModal" data-backdrop="static" tabindex="-2" role="dialog" aria-hidden="true">',
     '<div class="modal-dialog" role="document">',
       '<div class="modal-content">',
         '<div class="modal-header">',
-          '<h5 class="modal-title" id="ModalLabel">Préférences</h5>',
-          '<button class="close" data-dismiss="modal" aria-label="Close"  id="close">',
+          '<h5 class="modal-title" class="ModalLabel">Préférences</h5>',
+          '<button class="close" data-dismiss="modal" aria-label="Close">',
             '<span aria-hidden="true">&times;</span>',
           '</button>',
         '</div>',
@@ -367,24 +367,24 @@ function modal_preferences($bd){
 
       echo '<div class="container-fluid">',
 
-            '<h3>Passations</h3>',
+            '<h3>Administration</h3>',
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
-                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
+                '<span class="input-group-text" class="inputGroup-sizing-default">Niveau 1</span>',
               '</div>',
               '<input type="text" class="form-control input" data-input="ps1" value="', $ps1 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
-                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
+                '<span class="input-group-text" class="inputGroup-sizing-default">Niveau 2</span>',
               '</div>',
               '<input type="text" class="form-control input" data-input="ps2" value="', $ps2 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
-                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
+                '<span class="input-group-text" class="inputGroup-sizing-default">Niveau 3</span>',
               '</div>',
               '<input type="text" class="form-control input" data-input="ps3" value="', $ps3 ,'" aria-label="Default" required>',
             '</div>',
@@ -392,21 +392,21 @@ function modal_preferences($bd){
           '<h3>Equipements</h3>',
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
-                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 1</span>',
+                '<span class="input-group-text" class="inputGroup-sizing-default">Niveau 1</span>',
               '</div>',
               '<input type="text" class="form-control input" data-input="eq1" value="', $eq1 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
-                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 2</span>',
+                '<span class="input-group-text" class="inputGroup-sizing-default">Niveau 2</span>',
               '</div>',
               '<input type="text" class="form-control input" data-input="eq2" value="', $eq2 ,'" aria-label="Default" required>',
             '</div>',
 
             '<div class="input-group mb-3">',
               '<div class="input-group-prepend">',
-                '<span class="input-group-text" id="inputGroup-sizing-default">Niveau 3</span>',
+                '<span class="input-group-text" class="inputGroup-sizing-default">Niveau 3</span>',
               '</div>',
               '<input type="text" class="form-control input" data-input="eq3" value="', $eq3 ,'" aria-label="Default" required>',
             '</div>',
@@ -415,7 +415,7 @@ function modal_preferences($bd){
 
   echo  '</div>',
           '<div class="modal-footer">',
-          ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><button type="button" class="btn btn-success bdd_request" data-bddAction="updatePrefs" href="bdd_preferences.php" >Modifier</button>',
+          ' <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button><a class="btn btn-success bdd_request" data-bddAction="updatePrefs" href="bdd_preferences.php" >Modifier</button>',
           '</div>',
       '</div>',
     '</div>',
@@ -634,10 +634,10 @@ function generic_page_start($status, $bd){
             '<a id="logo" href="dashboard.php">PREVI</a>',
              '<form class="d-md-inline-block form-inline">',
                 '<div class="input-group">',
-                  '<input id="searchBar" type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">',
+                  '<input id="searchBar" type="text" class="form-control form-control-sm" placeholder="Rechercher..." aria-label="Search">',
                   '<div class="input-group-append">',
-                    '<button id="searchBtn" href="recherche.php" class="btn btn-primary" type="button">Recherche',
-                    '</button>',
+                    '<a id="searchBtn" href="recherche.php" class="btn btn-primary">Recherche',
+                    '</a>',
                   '</div>',
                 '</div>',
               '</form>',

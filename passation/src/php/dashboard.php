@@ -59,7 +59,7 @@ dashboard_content($bd);
 echo   '</div>',
 
       '<footer id="adder" class="sticky-footer">',
-        '<button id="adder-btn" type="button" class="btn btn-success btn-adder btn-modal" data-toggle="modal" href="select_modele.php" data-target="#SelectModal">Nouvelle Visite</button>',
+        '<a id="adder-btn" class="btn btn-success btn-adder btn-modal" data-toggle="modal" href="select_modele.php" data-target="#SelectModal">Nouvelle Visite</a>',
       '</footer >',
 
       '</div>';

@@ -288,7 +288,7 @@ function modal_select(){
 
   echo 
   '<div class="content-modal">',
-    '<div class="modal fade" id="SelectModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Selecteur" aria-hidden="true">',
+    '<div class="modal fade" id="SelectModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">',
       '<div class="modal-dialog" role="document">',
         '<div class="modal-content">',
         '  <div class="modal-header">',
