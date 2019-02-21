@@ -31,15 +31,15 @@
 	$inactif = ($t['em_inactif'] === '1') ? '<span class="marge inactif" style="color:red">Inactif </span>' : '<span class="marge inactif" style="color:green">Actif </span>';
 
 	echo '<div class="perso">',
-			'<div class="inside-class"><img class="profil_img" alt="imgProfil" src="../img/icones/PNG/avatar/man.png" ><div class="collum-dir"><h3>',
-			$t['em_nom'],' ',$t['em_prenom'],' </h3>',$status,'</div></div>', 
-			$inactif,
-		'</div><div class="info">Mon Code Acteur<span class="span-space">',$t['em_code'],'</span></div>',
+			'<div class="inside-class"><img class="profil_img" alt="imgProfil" src="../img/icones/PNG/avatar/man.png" ><div class="collum-dir"><span>',
+			$t['em_nom'],' ',$t['em_prenom'],'</span><span>',$status,'</span></div>', $inactif, '</div>', 
+			
+		'</div><div class="identifiants"><div class="info">Mon Code Acteur<span class="span-space">',$t['em_code'],'</span></div>',
 		'<div class="info">Mot de Passe<span class="span-space">****************</span>',
-			'<a id="modifier" class="btn btn-modal btn-link marge" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</a>',
-		'</div>';
+			'<a class="btn btn-success modif_cmpt" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</a>',
+		'</div></div>';
 
-	echo '<div style="width: 85%; margin-left: auto; margin-right: auto;">',
+	echo '<div id="stats">',
 			'<h3>Mes Statistiques :</h3>',
 			'<canvas id="chrt" width="400" height="150"></canvas>',
 		'</div>';

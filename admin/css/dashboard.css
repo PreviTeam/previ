@@ -143,8 +143,8 @@ span{
 
 
 .profil_img{
-  height: 100px;
-  width: 100px;
+  height: 75px;
+  width: 75px;
 }
 
 
@@ -313,10 +313,6 @@ span{
 }
 
 
-
-
-
-
 .info{
   width: 85%;
   padding: 5px 15px;
@@ -331,16 +327,24 @@ span{
 }
 
 .perso{
-  display: flex;
   width: 85%;
   font-size: 35px;
-  margin: 0 auto;
-  align-items: center;
-  margin-bottom: 0.5em;
+  margin-left: 50px;
 }
 
 .inactif{
   font-size: 35px;
+  margin-left: 25px;
+}
+
+.modif_cmpt{
+  float : right;
+  font-size: 7px;
+}
+
+#stats{
+  width: 85%;
+  display: inline-block;
 }
 
 .bloc-btn{
@@ -368,6 +372,10 @@ span{
   display: flex;
   flex: 1;
   align-items: center;
+}
+
+.identifiants{
+  margin : 10px 0px;
 }
 
 #topper{
@@ -798,24 +806,25 @@ td:last-child {
 }
 
 @media screen and (max-width: 740px) {
+
+  .media{
+    display: none;
+  }
+
   .form-inline{
     display: none;
   }
 
-  .media{
+  #menu-deroulant{
+    display: inline-block;
+  }
+
+  .sidebar{
     display: none;
   }
 }
 
 @media screen and (max-width: 650px) {
-  .sidebar{
-    display: none;
-  }
-
-
-  #menu-deroulant{
-    display: inline-block;
-  }
 
   .dropdown-menu{
     background-color: buttonface;
@@ -824,17 +833,12 @@ td:last-child {
   #logo{
     width: 30%;
   }
+
   .inline-icon {
     flex : 1;
     display: flex;
     justify-content: space-between;
   }
-
-  .profil_img{
-    height: 50px;
-    width: 50px;
-  }
-
  
 }
 
@@ -845,8 +849,17 @@ td:last-child {
     display: none;
   }
 
-   .title_table{
+  .title_table{
     font-size:15px;
+  }
+
+  .profil_img{
+    height: 50px;
+    width: 50px;
+  }
+
+  .collum-dir{
+    font-size: 5px;
   }
 
   th {
