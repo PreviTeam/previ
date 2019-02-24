@@ -39,7 +39,7 @@
 			'<a class="btn btn-success modif_cmpt" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</a>',
 		'</div></div>';
 
-	echo '<div id="stats">',
+	echo '<div id="stats" class="scroller scrollbar">',
 			'<h3>Mes Statistiques :</h3>',
 			'<canvas id="chrt" width="400" height="150"></canvas>',
 		'</div>';
