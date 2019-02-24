@@ -1,19 +1,11 @@
-const cacheName = 'pwa-conf-v1';
+const cacheName = 'pwa-conf-test';
 const staticAssets = [
-/*  './',*/
-  './dashboard.php',
-  '../js/passation.js',
-  '../css/styles.css'
+  './login.php',
+  '../css/login.css',
+  '../js/passation.js'
 ];
 
 
-// Debug launcher
-/*self.addEventListener('install', async event =>
-  console.log('install event') );
-
-self.addEventListener('fetch', async event =>
-  console.log('fetch event') );
-*/
 
 self.addEventListener('fetch', event => {
   const req = event.request;
@@ -35,7 +27,7 @@ self.addEventListener('install', async event => {
 async function cacheFirst(req) {
   const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(req);
-  return cachedResponse || networkFirst(req);
+  return networkFirst(req) || cachedResponse ;
 }
 
 async function networkFirst(req) {
