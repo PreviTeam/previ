@@ -21,7 +21,7 @@
   <body class="back-img">
     <div class="container">
       <div class="style-container">
-        <div class="card-header text-header">ADMINISTRATION</div>
+        <div class="card-header text-header">PASSATION</div>
         <div class="card-body">
           <?php
               session_start();

@@ -33,11 +33,11 @@
 
 		if($last_vi != -1){
 
-			if($last_fi != $tableau['fi_designation']){
+			if($last_fi != entities_protect($tableau['fi_designation'])){
 				$fiches[] = array($last_fi, $ope);
 				$ope = array();
 			}
-			if($last_vi != $tableau['vi_designation']){
+			if($last_vi != entities_protect($tableau['vi_designation'])){
 				$vi[] = array($last_vi, $fiches);
 				$fiches = array();
 				$ope = array();

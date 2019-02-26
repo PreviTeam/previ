@@ -10,6 +10,7 @@ html, body {
 	flex-direction: column;
 }
 
+
 .navbar {
 	background-color: #6f8cba;
 	width: 100%;
@@ -21,7 +22,7 @@ html, body {
   flex: 1;
   color: #fff;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 #nav-icon-line{

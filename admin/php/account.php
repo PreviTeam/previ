@@ -39,7 +39,7 @@
 			'<button type="button" id="modifier" class="btn btn-modal btn-link marge" data-toggle="modal" href="account_modify.php" data-target="#ModifyModal">Modifier</button>',
 		'</div>';
 
-	echo '<div style="width: 85%; margin-left: auto; margin-right: auto;">',
+	echo '<div id="stats" class="scroller scrollbar">',
 			'<h3>Mes Statistiques :</h3>',
 			'<canvas id="chrt" width="400" height="150"></canvas>',
 		'</div>';
