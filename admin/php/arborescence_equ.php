@@ -31,11 +31,11 @@
 
 		if($last_org != -1){
 
-			if($last_mod != $tableau['mo_designation']){
+			if($last_mod != entities_protect($tableau['mo_designation'])){
 				$models[] = array($last_mod, $outil);
 				$outil = array();
 			}
-			if($last_org != $tableau['or_designation']){
+			if($last_org != entities_protect($tableau['or_designation'])){
 				$org[] = array($last_org, $models);
 				$models = array();
 				$outil = array();

@@ -1,10 +1,10 @@
-const cacheName = 'pwa-conf-test';
+const cacheName = 'pwa-previ';
 const staticAssets = [
-  './login.php',
-  '../css/login.css',
-  '../js/passation.js'
-];
 
+  './login.php',
+  '../js/passation.js'
+
+];
 
 
 self.addEventListener('fetch', event => {
