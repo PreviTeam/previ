@@ -12,7 +12,7 @@
 	$entete = array("Fiche", "Equipement", "Agent", "Debut", "Fin", "");
 	$bd = bd_connect();
 	$sql = "SELECT fi_designation, mo_designation, ou_code, em_code, h_rv_id, h_rf_debut, h_rf_fin, vi_designation, h_rf_id
-			FROM histo_realisation_fiche, modele, outil, employe, histo_realisation_visite, visite_attachement, visite, fiche
+			FROM HISTO_REALISATION_FICHE, MODELE, OUTIL, EMPLOYE, HISTO_REALISATION_VISITE, VISITE_ATTACHEMENT, VISITE, FICHE
 			WHERE h_rf_em_id = em_id
 			AND h_rf_rv_id = h_rv_id
 			AND h_rv_vi_id = vi_id

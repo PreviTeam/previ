@@ -19,7 +19,7 @@
 	$entete=array("Code Visite", "Désignation", "Versions", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM fiche";
+			FROM FICHE";
 	$content =array();
 
 

@@ -18,7 +18,7 @@
 
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM organisation";
+			FROM ORGANISATION";
 	$content =array();
 
 

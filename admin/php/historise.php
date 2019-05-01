@@ -21,7 +21,7 @@
 
 	$bd = bd_connect();
 	$sql = "select h_rv_id, vi_designation, mo_designation, em_code, ou_code, h_rv_debut, h_rv_fin
-			from histo_realisation_visite, histo_realisation_fiche, visite, modele, visite_attachement, employe, outil
+			from HISTO_REALISATION_VISITE, HISTO_REALISATION_FICHE, VISITE, MODELE, VISITE_ATTACHEMENT, EMPLOYE, OUTIL
 			where h_rv_id = h_rf_rv_id 
 			and vi_id = h_rv_vi_id 
 			and va_vi_id = vi_id

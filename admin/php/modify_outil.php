@@ -23,7 +23,7 @@
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
-				FROM modele, outil 
+				FROM MODELE, OUTIL 
 				WHERE ou_mo_id = mo_id 
 				AND ou_id=$id";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);

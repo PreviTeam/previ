@@ -15,16 +15,16 @@
 	if(isset($_POST['id_delete'])){
 		$id=bd_protect($bd, $_POST['id_delete']);
 
-		$sql = "DELETE FROM visite_attachement WHERE va_vi_id=".$id;
+		$sql = "DELETE FROM VISITE_ATTACHEMENT WHERE va_vi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM realisation_visite WHERE rv_vi_id=".$id;
+		$sql = "DELETE FROM REALISATION_VISITE WHERE rv_vi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM compo_visite WHERE cv_vi_id=".$id;
+		$sql = "DELETE FROM COMPO_VISITE WHERE cv_vi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM visite WHERE vi_id=".$id;
+		$sql = "DELETE FROM VISITE WHERE vi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		
 	}
@@ -35,12 +35,12 @@
 		$version = bd_protect($bd, $_POST['version']);
 		$inactif = bd_protect($bd, $_POST['inactif']);
 
-		$sql = "UPDATE visite
+		$sql = "UPDATE VISITE
 				SET vi_designation='".$designation."',vi_num_vers='".$version."',vi_inactif=".$inactif." 
 				WHERE vi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "SELECT * FROM compo_visite,fiche WHERE cv_fi_id = fi_id AND cv_vi_id = ".$id;
+		$sql = "SELECT * FROM COMPO_VISITE,FICHE WHERE cv_fi_id = fi_id AND cv_vi_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$sizeModif = sizeof($_POST)-mysqli_num_rows($res)-4;
@@ -65,7 +65,7 @@
 
 			for($i = 0; $i < sizeof($tabSup); $i++)
 			{
-				$sql = "DELETE FROM compo_visite WHERE cv_vi_id=".$id." AND cv_fi_id=".$tabSup[$i];
+				$sql = "DELETE FROM COMPO_VISITE WHERE cv_vi_id=".$id." AND cv_fi_id=".$tabSup[$i];
 				$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 			}
 		}
@@ -77,11 +77,11 @@
 				{
 					$fiche = bd_protect($bd,$_POST['t'.$i]);
 
-					$sql = "SELECT fi_id FROM fiche WHERE fi_designation = '".$fiche."'";
+					$sql = "SELECT fi_id FROM FICHE WHERE fi_designation = '".$fiche."'";
 	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	        		$tableau = mysqli_fetch_assoc($res);
 
-	        		$sql = "INSERT INTO compo_visite 
+	        		$sql = "INSERT INTO COMPO_VISITE 
 	        				VALUES (".$id.",".$tableau['fi_id'].")";
 	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 				}
@@ -96,7 +96,7 @@
     	$version = bd_protect($bd,$_POST['version']);
     	$inactif = bd_protect($bd,$_POST['inactif']);
 
-    	$sql = "INSERT INTO visite (vi_designation, vi_num_vers, vi_type, vi_inactif)
+    	$sql = "INSERT INTO VISITE (vi_designation, vi_num_vers, vi_type, vi_inactif)
     			VALUES ('".$designation."','".$version."',0,".$inactif.")";
     	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	$id = mysqli_insert_id($bd);
@@ -106,11 +106,11 @@
     	{
     		$fiche = bd_protect($bd,$_POST['t'.$i]);
 
-    		$sql = "SELECT fi_id FROM fiche WHERE fi_designation = '".$fiche."'";
+    		$sql = "SELECT fi_id FROM FICHE WHERE fi_designation = '".$fiche."'";
     		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     		$tableau = mysqli_fetch_assoc($res);
 
-    		$sql = "INSERT INTO compo_visite 
+    		$sql = "INSERT INTO COMPO_VISITE 
     				VALUES (".$id.",".$tableau['fi_id'].")";
     		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	}

@@ -22,8 +22,8 @@
 		$bd = bd_connect();
 		$id2 = bd_protect($bd,$_POST['id']);
 		$sql = "SELECT * 
-				FROM fiche left outer join compo_fiche on fi_id = cf_fi_id
-				left outer join operation on cf_op_id = op_id
+				FROM FICHE left outer join COMPO_FICHE on fi_id = cf_fi_id
+				left outer join OPERATION on cf_op_id = op_id
 				WHERE fi_id = ".$id2." ORDER BY cf_ordre";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		while($tableau = mysqli_fetch_assoc($res))

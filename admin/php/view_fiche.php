@@ -12,7 +12,7 @@
 	$entete=array("Ordre ".$_SESSION['ps3'], $_SESSION['ps3'], "Demande",);
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM fiche LEFT OUTER JOIN compo_fiche ON cf_fi_id = fi_id LEFT OUTER JOIN operation ON cf_op_id = op_id
+			FROM FICHE LEFT OUTER JOIN COMPO_FICHE ON cf_fi_id = fi_id LEFT OUTER JOIN OPERATION ON cf_op_id = op_id
 			WHERE fi_id=".$_POST['id'];
 	$content = array();
 

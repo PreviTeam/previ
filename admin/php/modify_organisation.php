@@ -21,7 +21,7 @@
 		$caller = 'modify';
 		$bd = bd_connect();
 		$id2=bd_protect($bd, $_POST['id']);
-		$sql = "SELECT * FROM organisation WHERE or_id='".$id2."'";
+		$sql = "SELECT * FROM ORGANISATION WHERE or_id='".$id2."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 

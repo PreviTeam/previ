@@ -17,7 +17,7 @@
 	$entete=array("Code", "Désignation", "Version", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM visite";
+			FROM VISITE";
 	$content =array();
 
 

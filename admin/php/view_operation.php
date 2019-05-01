@@ -11,7 +11,7 @@
 	$entete=array("Id", "Contenu", "Type", "EPI");
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM operation LEFT OUTER JOIN compo_operation ON co_op_id = op_id LEFT OUTER JOIN epi ON co_epi_id = epi_id
+			FROM OPERATION LEFT OUTER JOIN COMPO_OPERATION ON co_op_id = op_id LEFT OUTER JOIN EPI ON co_epi_id = epi_id
 			WHERE op_id=".$_POST['id'];
 	$content = array();
 	$epi = '';

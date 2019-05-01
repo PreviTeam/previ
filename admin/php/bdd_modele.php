@@ -15,13 +15,13 @@
 	if(isset($_POST['id_delete'])){
 		$id = bd_protect($bd,$_POST['id_delete']);
 
-		$sql = "DELETE FROM outil WHERE ou_mo_id = ".$id;
+		$sql = "DELETE FROM OUTIL WHERE ou_mo_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM visite_attachement WHERE va_mo_id = ".$id;
+		$sql = "DELETE FROM VISITE_ATTACHEMENT WHERE va_mo_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM modele WHERE mo_id = ".$id;
+		$sql = "DELETE FROM MODELE WHERE mo_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 	// Demande de Modifiction d'un élément
@@ -32,16 +32,16 @@
 		$orga = bd_protect($bd,$_POST['orga']);
 		$inactif = bd_protect($bd,$_POST['inactif']);
 
-		$sql = "SELECT or_id FROM organisation WHERE or_designation = '".$orga."'";
+		$sql = "SELECT or_id FROM ORGANISATION WHERE or_designation = '".$orga."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 
-		$sql = "UPDATE modele
+		$sql = "UPDATE MODELE
 				SET mo_designation='".$designation."',mo_code = '".$code."', mo_or_id = ".$tableau['or_id'].",mo_inactif=".$inactif." 
 				WHERE mo_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "SELECT * FROM visite_attachement,visite WHERE va_vi_id = vi_id AND va_mo_id = ".$id;
+		$sql = "SELECT * FROM VISITE_ATTACHEMENT, VISITE WHERE va_vi_id = vi_id AND va_mo_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$sizeModif = sizeof($_POST)-mysqli_num_rows($res)-5;
@@ -66,7 +66,7 @@
 
 			for($i = 0; $i < sizeof($tabSup); $i++)
 			{
-				$sql = "DELETE FROM visite_attachement WHERE va_mo_id=".$id." AND va_vi_id=".$tabSup[$i];
+				$sql = "DELETE FROM VISITE_ATTACHEMENT WHERE va_mo_id=".$id." AND va_vi_id=".$tabSup[$i];
 				$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 			}
 		}
@@ -78,11 +78,11 @@
 				{
 					$fiche = bd_protect($bd,$_POST['t'.$i]);
 
-					$sql = "SELECT vi_id FROM visite WHERE vi_designation = '".$fiche."'";
+					$sql = "SELECT vi_id FROM VISITE WHERE vi_designation = '".$fiche."'";
 	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	        		$tableau = mysqli_fetch_assoc($res);
 
-	        		$sql = "INSERT INTO visite_attachement
+	        		$sql = "INSERT INTO VISITE_ATTACHEMENT
 	        				VALUES (".$tableau['vi_id'].",".$id.")";
 	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 				}
@@ -98,11 +98,11 @@
 		$orga = bd_protect($bd,$_POST['orga']);
 		$inactif = bd_protect($bd,$_POST['inactif']);
 
-		$sql = "SELECT or_id FROM organisation WHERE or_designation = '".$orga."'";
+		$sql = "SELECT or_id FROM ORGANISATION WHERE or_designation = '".$orga."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 
-		$sql = "INSERT INTO modele
+		$sql = "INSERT INTO MODELE
 				VALUES (".$id.",'".$code."','".$designation."',".$tableau['or_id'].",".$inactif.")";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -112,11 +112,11 @@
         {
        		$visite = bd_protect($bd,$_POST['t'.$i]);
 
-        	$sql = "SELECT vi_id FROM visite WHERE vi_designation = '".$visite."'";
+        	$sql = "SELECT vi_id FROM VISITE WHERE vi_designation = '".$visite."'";
         	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
         	$tableau = mysqli_fetch_assoc($res);
 
-        	$sql = "INSERT INTO visite_attachement
+        	$sql = "INSERT INTO VISITE_ATTACHEMENT
         			VALUES (".$tableau['vi_id'].",".$id.")";
         	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
         }

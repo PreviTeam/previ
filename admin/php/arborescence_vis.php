@@ -14,7 +14,7 @@
 	echo '<div class="scroller">';						
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM visite, fiche, operation, compo_fiche, compo_visite
+			FROM VISITE, FICHE, OPERATION, COMPO_FICHE, COMPO_VISITE
 			where vi_id = cv_vi_id
 			AND fi_id = cv_fi_id
 			AND fi_id = cf_fi_id

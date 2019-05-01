@@ -23,7 +23,7 @@
 
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
-		$sql = "SELECT * FROM employe WHERE em_code='$id'";
+		$sql = "SELECT * FROM EMPLOYE WHERE em_code='$id'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$tableau = mysqli_fetch_assoc($res);

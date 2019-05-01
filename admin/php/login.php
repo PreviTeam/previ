@@ -20,6 +20,7 @@
         <div class="card-header text-header">ADMINISTRATION</div>
         <div class="card-body">
           <?php
+
               //ob_start('ob_gzhandler');
               session_start();
 

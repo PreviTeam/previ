@@ -14,7 +14,7 @@
 	echo '<div class="scroller">';						
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM organisation, modele, outil
+			FROM ORGANISATION, MODELE, OUTIL
 			where or_id = mo_or_id
 			and ou_mo_id = mo_id";
 

@@ -15,14 +15,14 @@
 	if(isset($_POST['id_delete'])){
 		$id=bd_protect($bd, $_POST['id_delete']);
 
-		$sql = "SELECT em_id FROM employe WHERE em_code = '".$id."'";
+		$sql = "SELECT em_id FROM EMPLOYE WHERE em_code = '".$id."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 
-		$sql = "DELETE FROM realisation_fiche WHERE rf_em_id=".$tableau['em_id'];
+		$sql = "DELETE FROM REALISATION_FICHE WHERE rf_em_id=".$tableau['em_id'];
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM employe WHERE em_code= '".$id."'";
+		$sql = "DELETE FROM EMPLOYE WHERE em_code= '".$id."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 	// Demande de Modifiction d'un élément
@@ -39,13 +39,13 @@
         {
         	$pass = bd_protect($bd,$_POST['pass']);
         	$pass = md5($pass);
-        	$sql = "UPDATE employe
+        	$sql = "UPDATE EMPLOYE
         			SET em_prenom = '".$prenom."', em_nom = '".$nom."', em_status = '".$status."', em_mdp = '".$pass."', em_inactif = ".$inactif."
         			WHERE em_code = '".$id."'";
         }
         else
         {
-        	$sql = "UPDATE employe
+        	$sql = "UPDATE EMPLOYE
         			SET em_prenom = '".$prenom."', em_nom = '".$nom."', em_status = '".$status."', em_inactif = ".$inactif."
         			WHERE em_code = '".$id."'";
         }
@@ -56,7 +56,7 @@
 	// Demande D'ajout D'un élément
 	if(isset($_POST['id_add'])){
 		$id=bd_protect($bd, $_POST['id_add']);
-		$sql = "SELECT * FROM employe WHERE em_id = ".$id;
+		$sql = "SELECT * FROM EMPLOYE WHERE em_id = ".$id;
 
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -71,7 +71,7 @@
         	$pass = bd_protect($bd,$_POST['pass']);
         	$pass = md5($pass);
 
-        	$sql = "INSERT INTO employe (em_code, em_prenom, em_nom, em_status, em_mdp, em_inactif)
+        	$sql = "INSERT INTO EMPLOYE (em_code, em_prenom, em_nom, em_status, em_mdp, em_inactif)
         			VALUES (".$id.",'".$prenom."','".$nom."','".$status."','".$pass."',".$inactif.")";
         	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
         }

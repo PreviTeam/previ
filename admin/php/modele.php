@@ -21,7 +21,7 @@
 
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM modele";
+			FROM MODELE";
 	$content =array();
 
 

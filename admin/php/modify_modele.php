@@ -23,8 +23,8 @@
 		$bd = bd_connect();
 		$id=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
-				FROM organisation, modele LEFT OUTER JOIN visite_attachement ON va_mo_id = mo_id 
-										  LEFT OUTER JOIN visite ON va_vi_id = vi_id
+				FROM ORGANISATION, MODELE LEFT OUTER JOIN VISITE_ATTACHEMENT ON va_mo_id = mo_id 
+										  LEFT OUTER JOIN VISITE ON va_vi_id = vi_id
 				WHERE mo_or_id = or_id 
 				AND mo_id='$id'";
 

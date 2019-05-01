@@ -15,19 +15,19 @@
 	if(isset($_POST['id_delete'])){
 		$id=bd_protect($bd, $_POST['id_delete']);
 
-		$sql = "DELETE FROM compo_visite WHERE cv_fi_id=".$id;
+		$sql = "DELETE FROM COMPO_VISITE WHERE cv_fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM histo_realisation_fiche WHERE h_rf_fi_id=".$id;
+		$sql = "DELETE FROM HISTO_REALISATION_FICHE WHERE h_rf_fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM realisation_fiche WHERE rf_fi_id=".$id;
+		$sql = "DELETE FROM REALISATION_FICHE WHERE rf_fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM compo_fiche WHERE cf_fi_id=".$id;
+		$sql = "DELETE FROM COMPO_FICHE WHERE cf_fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM fiche WHERE fi_id=".$id;
+		$sql = "DELETE FROM FICHE WHERE fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 	// Demande de Modifiction d'un élément
@@ -37,12 +37,12 @@
 		$version = bd_protect($bd, $_POST['version']);
 		$inactif = bd_protect($bd, $_POST['inactif']);
 
-		$sql = "UPDATE fiche
+		$sql = "UPDATE FICHE
 				SET fi_designation='".$designation."',fi_num_vers='".$version."',fi_inactif=".$inactif." 
 				WHERE fi_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "SELECT * FROM compo_fiche,operation WHERE cf_op_id = op_id AND cf_fi_id = ".$id;
+		$sql = "SELECT * FROM COMPO_FICHE, OPERATION WHERE cf_op_id = op_id AND cf_fi_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$size = sizeof($_POST)-4;
@@ -67,11 +67,11 @@
 		{
 			foreach($sup as $value)
 			{
-				$sql = "SELECT op_id FROM operation WHERE op_contenu = '".$bddRow[$value]."'";
+				$sql = "SELECT op_id FROM OPERATION WHERE op_contenu = '".$bddRow[$value]."'";
 	        	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	        	$tableau = mysqli_fetch_assoc($res);
 
-				$sql = "DELETE FROM compo_fiche WHERE cf_fi_id = ".$id." AND cf_op_id = ".$tableau['op_id'];
+				$sql = "DELETE FROM COMPO_FICHE WHERE cf_fi_id = ".$id." AND cf_op_id = ".$tableau['op_id'];
 				$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 			}
 		}
@@ -80,7 +80,7 @@
 		{
 			foreach($add as $value)
 			{
-				$sql = "SELECT op_id FROM operation WHERE op_contenu = '".$row[$value]."'";
+				$sql = "SELECT op_id FROM OPERATION WHERE op_contenu = '".$row[$value]."'";
 	        	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	        	$tableau = mysqli_fetch_assoc($res);
 
@@ -92,7 +92,7 @@
 
 		
 
-		$sql = "SELECT * FROM compo_fiche,operation WHERE cf_op_id = op_id AND cf_fi_id = ".$id." ORDER BY cf_ordre";
+		$sql = "SELECT * FROM COMPO_FICHE, OPERATION WHERE cf_op_id = op_id AND cf_fi_id = ".$id." ORDER BY cf_ordre";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		while($tableau = mysqli_fetch_assoc($res))
@@ -101,7 +101,7 @@
 			{
 				if($row[$i] === $tableau['op_contenu'])
 				{
-					$sql = "UPDATE compo_fiche
+					$sql = "UPDATE COMPO_FICHE
 							SET cf_ordre = ".($i+1)." 
 							WHERE cf_fi_id=".$id." AND cf_op_id=".$tableau['op_id'];
 					$res2 = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -117,7 +117,7 @@
     	$version = bd_protect($bd,$_POST['version']);
     	$inactif = bd_protect($bd,$_POST['inactif']);
 
-    	$sql = "INSERT INTO fiche (fi_designation, fi_num_vers, fi_inactif)
+    	$sql = "INSERT INTO FICHE (fi_designation, fi_num_vers, fi_inactif)
     			VALUES ('".$designation."','".$version."',".$inactif.")";
     	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	$id = mysqli_insert_id($bd);
@@ -127,11 +127,11 @@
     	{
     		$operation = bd_protect($bd,$_POST['t'.$i]);
 
-    		$sql = "SELECT op_id FROM operation WHERE op_contenu = '".$operation."'";
+    		$sql = "SELECT op_id FROM OPERATION WHERE op_contenu = '".$operation."'";
     		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     		$tableau = mysqli_fetch_assoc($res);
 
-    		$sql = "INSERT INTO compo_fiche
+    		$sql = "INSERT INTO COMPO_FICHE
     				VALUES (".$id.",".$tableau['op_id'].",".$i.")";
     		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	}

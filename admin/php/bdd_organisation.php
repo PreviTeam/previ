@@ -15,10 +15,10 @@
 	if(isset($_POST['id_delete'])){
 		$id = bd_protect($bd,$_POST['id_delete']);
 
-		$sql = "DELETE FROM modele WHERE mo_or_id = ".$id;
+		$sql = "DELETE FROM MODELE WHERE mo_or_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM organisation WHERE or_id = ".$id;
+		$sql = "DELETE FROM ORGANISATION WHERE or_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 	// Demande de Modifiction d'un élément
@@ -28,7 +28,7 @@
 		$code = bd_protect($bd,$_POST['code']);
 		$inactif = bd_protect($bd,$_POST['inactif']);
 
-		$sql = "UPDATE organisation
+		$sql = "UPDATE ORGANISATION
 				SET or_designation='".$designation."',or_code = '".$code."',or_inactif=".$inactif." 
 				WHERE or_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -41,7 +41,7 @@
 		$code = bd_protect($bd,$_POST['code']);
 		$inactif = bd_protect($bd,$_POST['inactif']);
 
-		$sql = "INSERT INTO organisation (or_code, or_designation, or_inactif)
+		$sql = "INSERT INTO ORGANISATION (or_code, or_designation, or_inactif)
         			VALUES ('".$code."','".$designation."',".$inactif.")";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}

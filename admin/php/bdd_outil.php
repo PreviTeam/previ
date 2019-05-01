@@ -15,10 +15,10 @@
 	if(isset($_POST['id_delete'])){
 		$id=bd_protect($bd, $_POST['id_delete']);
 
-		$sql = "DELETE FROM realisation_visite WHERE rv_ou_id = ".$id;
+		$sql = "DELETE FROM REALISATION_VISITE WHERE rv_ou_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM outil WHERE ou_id = ".$id;
+		$sql = "DELETE FROM OUTIL WHERE ou_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 	// Demande de Modifiction d'un élément
@@ -29,11 +29,11 @@
 		$modele = bd_protect($bd, $_POST['modele']);
 		$inactif = bd_protect($bd, $_POST['inactif']);
 
-		$sql = "SELECT mo_id FROM modele WHERE mo_designation = '".$modele."'";
+		$sql = "SELECT mo_id FROM MODELE WHERE mo_designation = '".$modele."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 
-		$sql = "UPDATE outil 
+		$sql = "UPDATE OUTIL 
 				SET ou_code = '".$code."', ou_designation = '".$designation."', ou_mo_id = ".$tableau['mo_id'].", ou_inactif = ".$inactif."
 				WHERE ou_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
@@ -47,11 +47,11 @@
 		$modele = bd_protect($bd, $_POST['modele']);
 		$inactif = bd_protect($bd, $_POST['inactif']);
 
-		$sql = "SELECT mo_id FROM modele WHERE mo_designation = '".$modele."'";
+		$sql = "SELECT mo_id FROM MODELE WHERE mo_designation = '".$modele."'";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		$tableau = mysqli_fetch_assoc($res);
 
-		$sql = "INSERT INTO outil
+		$sql = "INSERT INTO OUTIL
 				VALUES (".$id.",'".$code."','".$designation."',".$tableau['mo_id'].",".$inactif.")";
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}

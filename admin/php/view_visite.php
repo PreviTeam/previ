@@ -13,7 +13,7 @@
 	$bd = bd_connect();
 
 	$sql = "SELECT DISTINCT fi_id, vi_id, mo_designation, fi_designation, vi_designation, vi_num_vers 
-			FROM  compo_visite, fiche, visite LEFT OUTER JOIN visite_attachement ON va_vi_id = vi_id LEFT OUTER JOIN modele ON va_mo_id = mo_id
+			FROM  COMPO_VISITE, FICHE, VISITE LEFT OUTER JOIN VISITE_ATTACHEMENT ON va_vi_id = vi_id LEFT OUTER JOIN MODELE ON va_mo_id = mo_id
 			WHERE vi_id = cv_vi_id
 			AND cv_fi_id = fi_id
 			AND vi_id=".$_POST['id'];

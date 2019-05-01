@@ -22,8 +22,8 @@
 		$bd = bd_connect();
 		$id2 = bd_protect($bd,$_POST['id']);
 		$sql = "SELECT *
-				FROM visite left outer join compo_visite on vi_id = cv_vi_id
-				left outer join fiche on fi_id = cv_fi_id
+				FROM VISITE left outer join COMPO_VISITE on vi_id = cv_vi_id
+				left outer join FICHE on fi_id = cv_fi_id
 				WHERE vi_id=".$id2;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 		while($tableau = mysqli_fetch_assoc($res))

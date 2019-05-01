@@ -17,7 +17,7 @@
 	$entete=array("Code", "Contenu", "Demande", '', '');
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM operation";
+			FROM OPERATION";
 	$content =array();
 
 

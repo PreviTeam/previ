@@ -1,18 +1,21 @@
-CREATE USER 'previuser'@'localhost' IDENTIFIED BY '123';
-GRANT SELECT, UPDATE, INSERT ON previ.* TO 'previuser'@'localhost';
+#CREATE USER 'previuser'@'localhost' IDENTIFIED BY '123';
+#GRANT SELECT, UPDATE, INSERT ON previ.* TO 'previuser'@'localhost';
+
+CREATE DATABASE IF NOT EXISTS Previ ;
+USE Previ;
 
 ##########################################################
 #					Equipement
 ##########################################################
 
-create table ORGANISATION(
+create table IF NOT EXISTS ORGANISATION(
 	or_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	or_code VARCHAR(10),
 	or_designation VARCHAR(50),
 	or_inactif BOOLEAN
 );
 
-create table MODELE(
+create table IF NOT EXISTS MODELE(
 	mo_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	mo_code VARCHAR(10),
 	mo_designation VARCHAR(50),
@@ -20,7 +23,7 @@ create table MODELE(
 	mo_inactif BOOLEAN
 );
 
-create table OUTIL(
+create table IF NOT EXISTS OUTIL(
 	ou_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	ou_code VARCHAR(10),
 	ou_designation VARCHAR(50),
@@ -32,7 +35,7 @@ create table OUTIL(
 #					Employé
 ##########################################################
 
-create table EMPLOYE(
+create table IF NOT EXISTS EMPLOYE(
 	em_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	em_code VARCHAR(10),
 	em_prenom VARCHAR(60),
@@ -46,12 +49,12 @@ create table EMPLOYE(
 #					Visites
 ##########################################################
 
-create table EPI(
+create table IF NOT EXISTS EPI(
 	epi_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	epi_designation VARCHAR(50)
 );
 
-create table VISITE(
+create table IF NOT EXISTS VISITE(
 	vi_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	vi_designation VARCHAR(100),
 	vi_num_vers VARCHAR(10),
@@ -59,14 +62,14 @@ create table VISITE(
 	vi_inactif BOOLEAN
 );
 
-create table FICHE(
+create table IF NOT EXISTS  FICHE(
 	fi_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	fi_designation VARCHAR(100),
 	fi_num_vers VARCHAR(10),
 	fi_inactif BOOLEAN
 );
 
-create table OPERATION(
+create table IF NOT EXISTS OPERATION(
 	op_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	op_contenu VARCHAR(600),
 	op_type INT,
@@ -77,26 +80,26 @@ create table OPERATION(
 #					Compositions
 ##########################################################
 
-create table COMPO_OPERATION(
+create table IF NOT EXISTS COMPO_OPERATION(
 	co_op_id INT NOT NULL,
 	co_epi_id INT NOT NULL,
 	constraint pk_compoO PRIMARY KEY (co_op_id,co_epi_id)
 );
 
-create table COMPO_FICHE(
+create table IF NOT EXISTS COMPO_FICHE(
 	cf_fi_id INT NOT NULL,
 	cf_op_id INT NOT NULL,
 	cf_ordre INT,
 	constraint pk_compoF PRIMARY KEY (cf_fi_id,cf_op_id)
 );
 
-create table COMPO_VISITE(
+create table IF NOT EXISTS COMPO_VISITE(
 	cv_vi_id INT NOT NULL,
 	cv_fi_id INT NOT NULL,
 	constraint pk_compoV PRIMARY KEY (cv_vi_id,cv_fi_id)
 );
 
-create table VISITE_ATTACHEMENT(
+create table IF NOT EXISTS VISITE_ATTACHEMENT(
 	va_vi_id INT NOT NULL,
 	va_mo_id INT NOT NULL,
 	constraint pk_vAtt PRIMARY KEY (va_vi_id,va_mo_id)
@@ -106,7 +109,7 @@ create table VISITE_ATTACHEMENT(
 #					REALISATION
 ##########################################################
 
-create table REALISATION_VISITE(
+create table IF NOT EXISTS REALISATION_VISITE(
 	rv_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	rv_vi_id INT,
 	rv_ou_id INT,
@@ -115,7 +118,7 @@ create table REALISATION_VISITE(
 	rv_etat BOOLEAN
 );
 
-create table REALISATION_FICHE(
+create table IF NOT EXISTS REALISATION_FICHE(
 	rf_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	rf_fi_id INT,
 	rf_rv_id INT,
@@ -125,7 +128,7 @@ create table REALISATION_FICHE(
 	rf_etat BOOLEAN
 );
 
-create table REALISATION_OPERATION(
+create table IF NOT EXISTS REALISATION_OPERATION(
 	ro_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	ro_op_id INT,
 	ro_rf_id INT,
@@ -137,7 +140,7 @@ create table REALISATION_OPERATION(
 #					Historisation
 ##########################################################
 
-create table HISTO_REALISATION_VISITE(
+create table IF NOT EXISTS HISTO_REALISATION_VISITE(
 	h_rv_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	h_rv_vi_id INT,
 	h_rv_ou_id INT,
@@ -146,7 +149,7 @@ create table HISTO_REALISATION_VISITE(
 	h_rv_etat BOOLEAN
 );
 
-create table HISTO_REALISATION_FICHE(
+create table IF NOT EXISTS HISTO_REALISATION_FICHE(
 	h_rf_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	h_rf_fi_id INT,
 	h_rf_rv_id INT,
@@ -156,7 +159,7 @@ create table HISTO_REALISATION_FICHE(
 	h_rf_etat BOOLEAN
 );
 
-create table HISTO_REALISATION_OPERATION(
+create table IF NOT EXISTS HISTO_REALISATION_OPERATION(
 	h_ro_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	h_ro_op_id INT,
 	h_ro_rf_id INT,
@@ -168,7 +171,7 @@ create table HISTO_REALISATION_OPERATION(
 #					ADMIN PARAM
 ##########################################################
 
-create table admin_parameters(
+create table IF NOT EXISTS admin_parameters(
 	ap_KEY INT NOT NULL DEFAULT 1,
 	ap_pslvl1 VARCHAR(15) NOT NULL DEFAULT 'Visites',
 	ap_pslvl2 VARCHAR(15) NOT NULL DEFAULT 'Fiches',

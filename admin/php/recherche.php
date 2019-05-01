@@ -17,12 +17,12 @@
 	$entete=array("Id", "Désignation",);
 	$bd = bd_connect();
 	$insert = '"%'.bd_protect($bd, $_POST['id']).'%"';
-	$sql = "SELECT vi_id, vi_designation FROM visite WHERE vi_designation LIKE ".$insert;
-	$sql2 = "SELECT fi_id, fi_designation FROM fiche WHERE fi_designation LIKE ".$insert;
-	$sql3 = " SELECT op_id, op_contenu FROM operation WHERE op_contenu LIKE ".$insert;
-	$sql4 = " SELECT or_id, or_designation FROM organisation WHERE or_designation LIKE ".$insert;
-	$sql5 = " SELECT mo_id, mo_designation FROM modele WHERE mo_designation LIKE ".$insert;
-	$sql6 = " SELECT ou_id, ou_designation FROM outil WHERE ou_designation LIKE ".$insert;
+	$sql = "SELECT vi_id, vi_designation FROM VISITE WHERE vi_designation LIKE ".$insert;
+	$sql2 = "SELECT fi_id, fi_designation FROM FICHE WHERE fi_designation LIKE ".$insert;
+	$sql3 = " SELECT op_id, op_contenu FROM OPERATION WHERE op_contenu LIKE ".$insert;
+	$sql4 = " SELECT or_id, or_designation FROM ORGANISATION WHERE or_designation LIKE ".$insert;
+	$sql5 = " SELECT mo_id, mo_designation FROM MODELE WHERE mo_designation LIKE ".$insert;
+	$sql6 = " SELECT ou_id, ou_designation FROM OUTIL WHERE ou_designation LIKE ".$insert;
 
 	$contentVisite =array();
 	$contentFiche =array();

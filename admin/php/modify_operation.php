@@ -25,7 +25,7 @@
 		$bd = bd_connect();
 		$id2=bd_protect($bd, $_POST['id']);
 		$sql = "SELECT * 
-		        FROM operation left OUTER JOIN compo_operation ON op_id = co_op_id 
+		        FROM OPERATION left OUTER JOIN COMPO_OPERATION ON op_id = co_op_id 
 		        left OUTER JOIN epi ON epi_id = co_epi_id 
 		        where op_id =".$id2;
 

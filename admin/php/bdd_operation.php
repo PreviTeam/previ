@@ -15,16 +15,16 @@
 	if(isset($_POST['id_delete'])){
 		$id=bd_protect($bd, $_POST['id_delete']);
 
-		$sql = "DELETE FROM compo_fiche WHERE cf_op_id=".$id;
+		$sql = "DELETE FROM COMPO_FICHE WHERE cf_op_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$sql = "DELETE FROM REALISATION_OPERATION WHERE ro_op_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM compo_operation WHERE co_op_id=".$id;
+		$sql = "DELETE FROM COMPO_OPRERATION WHERE co_op_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "DELETE FROM operation WHERE op_id=".$id;
+		$sql = "DELETE FROM OPERATION WHERE op_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	}
 	// Demande de Modifiction d'un élément
@@ -34,12 +34,12 @@
 		$select = ($_POST['select'] === "texte")? 2 : 1;
 		$inactif = bd_protect($bd, $_POST['inactif']);
 
-		$sql = "UPDATE operation
+		$sql = "UPDATE OPERATION
 				SET op_contenu='".$contenu."',op_type='".$select."',op_inactif=".$inactif." 
 				WHERE op_id=".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
-		$sql = "SELECT * FROM compo_operation,epi WHERE co_epi_id = epi_id AND co_op_id = ".$id;
+		$sql = "SELECT * FROM COMPO_OPRERATION, EPI WHERE co_epi_id = epi_id AND co_op_id = ".$id;
 		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
 		$sizeModif = sizeof($_POST)-mysqli_num_rows($res)-4;
@@ -64,7 +64,7 @@
 
 			for($i = 0; $i < sizeof($tabSup); $i++)
 			{
-				$sql = "DELETE FROM compo_operation WHERE co_op_id=".$id." AND co_epi_id=".$tabSup[$i];
+				$sql = "DELETE FROM COMPO_OPRERATION WHERE co_op_id=".$id." AND co_epi_id=".$tabSup[$i];
 				$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 			}
 		}
@@ -76,11 +76,11 @@
 				{
 					$epi = bd_protect($bd,$_POST['t'.$i]);
 
-					$sql = "SELECT epi_id FROM epi WHERE epi_designation = '".$epi."'";
+					$sql = "SELECT epi_id FROM EPI WHERE epi_designation = '".$epi."'";
 	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	        		$tableau = mysqli_fetch_assoc($res);
 
-	        		$sql = "INSERT INTO compo_operation 
+	        		$sql = "INSERT INTO COMPO_OPRERATION 
 	        				VALUES (".$id.",".$tableau['epi_id'].")";
 	        		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 				}
@@ -95,7 +95,7 @@
     	$select = ($_POST['select'] === 'texte')? 2 : 1;
     	$inactif = bd_protect($bd,$_POST['inactif']);
 
-    	$sql = "INSERT INTO operation (op_contenu, op_type)
+    	$sql = "INSERT INTO PRERATION (op_contenu, op_type)
     			VALUES ('".$contenu."',".$select.")";
     	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	$id = mysqli_insert_id($bd);
@@ -106,11 +106,11 @@
     	{
     		$epi = bd_protect($bd,$_POST['t'.$i]);
 
-    		$sql = "SELECT epi_id FROM epi WHERE epi_designation = '".$epi."'";
+    		$sql = "SELECT epi_id FROM EPI WHERE epi_designation = '".$epi."'";
     		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     		$tableau = mysqli_fetch_assoc($res);
 
-    		$sql = "INSERT INTO compo_operation
+    		$sql = "INSERT INTO COMPO_OPRERATION
     				VALUES (".$id.",".$tableau['epi_id'].")";
     		$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
     	}

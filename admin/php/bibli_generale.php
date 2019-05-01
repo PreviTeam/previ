@@ -20,7 +20,7 @@ function get_chart($bd,$id)
   {
     $currentMonth = date('n', mktime(0, 0, 0, date('m')-$i));
     $sql = 'SELECT COUNT(DISTINCT h_rv_vi_id) AS numVi
-            FROM histo_realisation_visite, histo_realisation_fiche
+            FROM HISTO_REALISATION_VISITE, HISTO_REALISATION_FICHE
             WHERE h_rf_rv_id = h_rv_id 
             AND h_rf_etat="1"
             AND h_rf_em_id = '.$id.'
@@ -86,13 +86,13 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFichesMoisEnCours,&$nbVisite
 
   //Modifier pour limiter la sélection au deux mois voulus
   $sql='SELECT *
-            FROM histo_realisation_visite, histo_realisation_fiche
+            FROM HISTO_REALISATION_VISITE, HISTO_REALISATION_FICHE
             WHERE h_rf_rv_id = h_rv_id
             AND h_rf_etat = 1
             AND h_rv_fin LIKE "%-'. $m . '-%"
         UNION 
         SELECT *
-            FROM histo_realisation_visite, histo_realisation_fiche
+            FROM HISTO_REALISATION_VISITE, HISTO_REALISATION_FICHE
             WHERE h_rf_rv_id = h_rv_id 
             AND h_rf_etat = 1
             AND h_rv_fin LIKE "%-'. $lastM. '-%"';
@@ -136,11 +136,11 @@ function get_sider_stats(&$nbVisiteMoisEnCours, &$nbFichesMoisEnCours,&$nbVisite
 function get_sider_admin(&$nbVisites, &$nbFiches,&$nbOp, $bd){
 
   //Modifier pour limiter la sélection au deux mois voulus
-  $sql='SELECT count(vi_id) as nb FROM visite
+  $sql='SELECT count(vi_id) as nb FROM VISITE
         UNION
-        SELECT count(fi_id) FROM fiche
+        SELECT count(fi_id) FROM FICHE
         UNION
-        SELECT count(op_id) FROM operation';
+        SELECT count(op_id) FROM OPERATION';
 
   $res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 
@@ -433,7 +433,7 @@ function modal_preferences($bd){
 function get_visites($bd, $entete){
     
     $sql = "SELECT vi_id, vi_designation, ou_designation, rv_debut, count(rf_fi_id) as totFiches
-        FROM visite LEFT OUTER JOIN realisation_visite ON vi_id = rv_vi_id, realisation_fiche,  outil
+        FROM VISITE LEFT OUTER JOIN REALISATION_VISITE ON vi_id = rv_vi_id, REALISATION_FICHE,  OUTIL
         WHERE rv_id = rf_rv_id
         AND rv_ou_id = ou_id
         AND rv_etat = 0
@@ -445,7 +445,7 @@ function get_visites($bd, $entete){
 
     while($tableau = mysqli_fetch_assoc($res)){
       $sql2 = "SELECT count(fi_id) as nbFiches
-           FROM fiche, compo_visite, visite 
+           FROM FICHE, COMPO_VISITE, VISITE 
            WHERE fi_id = cv_fi_id
            AND vi_id = cv_vi_id
            AND vi_id = '".$tableau['vi_id']."'";
@@ -475,7 +475,7 @@ function get_visites($bd, $entete){
 function get_fiches($bd, $entete){
     
   $sql = "SELECT fi_id, fi_designation, ou_designation, rf_debut, rf_em_id, rf_id
-             FROM realisation_visite, outil, fiche, realisation_fiche
+             FROM REALISATION_VISITE, OUTIL, FICHE, REALISATION_FICHE
              WHERE rf_fi_id = fi_id
              AND rf_rv_id = rv_id
              AND rv_ou_id = ou_id
@@ -487,7 +487,7 @@ function get_fiches($bd, $entete){
 
   while($tableau = mysqli_fetch_assoc($res)){
 
-    $sql3 = "SELECT * FROM realisation_operation WHERE ro_rf_id = ".$tableau['rf_id'];
+    $sql3 = "SELECT * FROM REALISATION_OPERATION WHERE ro_rf_id = ".$tableau['rf_id'];
      $res3 = mysqli_query($bd, $sql3) or bd_erreur($bd, $sql3);
      $nbOpRealisees = 0;
      while($tableau2 = mysqli_fetch_assoc($res3)){
@@ -495,7 +495,7 @@ function get_fiches($bd, $entete){
      }
          
     $sql2 = "SELECT count(op_id) as nbOp
-         FROM fiche, compo_fiche, operation
+         FROM FICHE, COMPO_FICHE, OPERATION
          WHERE fi_id = cf_fi_id
          AND op_id = cf_op_id
          AND fi_id = '".$tableau['fi_id']."'";
@@ -994,8 +994,8 @@ function redirection($destination){
 
 define ('BS_SERVER', 'localhost'); // nom d'hôte ou adresse IP du serveur MySQL
 define('BS_DB', 'Previ'); // nom de la base sur le serveur MySQL
-define('BS_USER', 'root'); // nom de l'utilisateur de la base
-define('BS_PASS', ''); // mot de passe de l'utilisateur de la base
+define('BS_USER', 'glopulus'); // nom de l'utilisateur de la base
+define('BS_PASS', 'dbRootP@sswrd'); // mot de passe de l'utilisateur de la base
 
 /** 
  *	Ouverture de la connexion à la base de données
@@ -1004,6 +1004,7 @@ define('BS_PASS', ''); // mot de passe de l'utilisateur de la base
  */
 function bd_connect() {
     $conn = mysqli_connect(BS_SERVER, BS_USER, BS_PASS, BS_DB);
+
     if ($conn !== FALSE) {
         //mysqli_set_charset() définit le jeu de caractères par défaut à utiliser lors de l'envoi
         //de données depuis et vers le serveur de base de données.

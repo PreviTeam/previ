@@ -16,7 +16,7 @@
 	$entete=array("Code Utilisateur", "Nom", "Prénom", "Status", '' ,'');
 	$bd = bd_connect();
 	$sql = "SELECT *
-			FROM employe";
+			FROM EMPLOYE";
 	$content =array();
 
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);

@@ -9,7 +9,7 @@
 	###################################################################*/
 	$bd = bd_connect();
 
-	$sql = "SELECT * FROM epi";
+	$sql = "SELECT * FROM EPI";
 
 	$res = mysqli_query($bd, $sql) or bd_erreur($bd, $sql);
 	echo'<div class="list">';
